@@ -7,6 +7,7 @@ public enum Especialidad {
     PEDIATRIA,
     CLINICA,
     GINECOLOGIA,
+    ODONTOLOGIA,
     CARDIOLOGIA;
     
 }
