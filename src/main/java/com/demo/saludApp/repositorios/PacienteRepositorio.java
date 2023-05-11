@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.demo.saludApp.repositorios;
 
 /**
  *
  * @author German
  */
-public class PacienteRepositorio {
-    
+@Repository
+public interface PacienteRepositorio extends JpaRepository <Paciente, Int>{
+//realiza una búsqueda a través de los parámetros señalados
+ @Query("SELECT p FROM Paciente p WHERE p.nombre = :nombre")
+ public Paciente buscarNombre(@Param("nombre") String nombre);
 }
