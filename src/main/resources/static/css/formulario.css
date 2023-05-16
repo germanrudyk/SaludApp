@@ -1,5 +1,8 @@
 .navBar{
+    display: flex;
     background-color: #fff !important;
+    justify-content: center;
+    align-items: center;
 }
 
 .elementosNav{
@@ -14,28 +17,6 @@
     margin-right: 50px;
 }
 
-.containerImg{
-    width: 20%;
-}
-
-.logo{
-    width: 40%;
-    margin: auto;
-}
-
-
-.mensajeExito{
-    width: 20%;
-    margin: auto;
-    text-align: center;
-}
-
-.mensajeError{
-    width: 20%;
-    margin: auto;
-    text-align: center;
-}
-
 .formulario{
     width: 50%;
     margin: auto;
@@ -43,30 +24,52 @@
     flex-direction: column;
 }
 
-.divVolver{
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-}
-
-.botonVolver{
-    width: 70%;
-}
-
 .botones{
-    box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
-    -webkit-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
-    -moz-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
+
+    background-color: rgba(31, 50, 198, 0.792);
+    border-radius: 0%;
+
 }
 
 .botones:active{
     box-shadow: none;
 }
 
-.containerFooter{
+
+.contenedor{
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.imagen{
+    width: 65%;
+}
+
+.texto-imagen {
+    position: absolute;
+    font-size: 310%;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 1);
+    top: 60%;
+    left: 37%;
+    line-height: 1em;
+    font-family: 'Lato', sans-serif;
+}
+
+h3 {
+    font-family: 'Lato', sans-serif;
+}
+
+.items{
+    margin: 20px;
+    padding: 10px;
+    font-size: 23px;
+    
+}
+
+.opciones{
+    background-color: rgba(238, 239, 244, 0.343);
 }

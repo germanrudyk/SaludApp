@@ -12,7 +12,6 @@ import javax.persistence.Id;
 @Entity
 public class Profesional extends Usuario {
     
-    @Id
     private Integer matricula;
     
     private Integer calificacion;
@@ -26,6 +25,7 @@ public class Profesional extends Usuario {
     private ArrayList<ObraSocial> obraSocialAceptada;
 
     public Profesional() {
+        super();
     }
 
     public Integer getMatricula() {

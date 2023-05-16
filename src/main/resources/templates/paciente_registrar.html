@@ -19,7 +19,7 @@ and open the template in the editor.
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="css/formulario.css" />
+    <link rel="stylesheet" href="/css/formulario.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,7 +27,7 @@ and open the template in the editor.
       rel="stylesheet"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
     <!-- Barra de navegacion -->
@@ -59,17 +59,12 @@ and open the template in the editor.
             </a>
             <ul class="dropdown-menu items" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item"
-                  >Registrar</a
-                >
+                <a class="dropdown-item">Registrar</a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
-                <a class="dropdown-item"
-                  >Modificar</a
-                >
+                <a class="dropdown-item">Modificar</a>
               </li>
-
             </ul>
           </li>
 
@@ -86,16 +81,12 @@ and open the template in the editor.
             </a>
             <ul class="dropdown-menu items" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item"
-                  >Registrar</a
-                >
+                <a class="dropdown-item">Registrar</a>
               </li>
               <li><hr class="dropdown-divider" /></li>
 
               <li>
-                <a class="dropdown-item"
-                  >Modificar</a
-                >
+                <a class="dropdown-item">Modificar</a>
               </li>
             </ul>
           </li>
@@ -113,33 +104,40 @@ and open the template in the editor.
             </a>
             <ul class="dropdown-menu items" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item"
-                  >Buscar turno</a
-                >
+                <a class="dropdown-item">Buscar turno</a>
               </li>
-
-
             </ul>
           </li>
         </ul>
       </div>
     </nav>
 
+    <div class="contenedor">
+            <div th:if="${error != null}" class="card text-white bg-danger m-5 mensajeError align-center" >
+                <div class="card-body">
+                    <h4 class="card-title">Error!</h4>
+                    <h5 class="card-text" th:text="${error}"></h5>
+                </div>
+            </div>
+            <div th:if="${exito != null}" class="card text-white bg-success m-5 mensajeExito w-50 align-center" >
+                <div class="card-body align-center justify-content-center">
+                    <h3 class="card-title justify-content-center align-center">Exito!</h3>
+                    <h4 class="card-text" th:text="${exito}"></h4>
+                </div>
+            </div>
+        </div>
+    
     <!-- Imagen de portada -->
 
-    <h1 class="texto-imagen">Cuidado de calidad para tu bienestar</h1>
-
-    <div class="contenedor-imagen">
-      <div class="imagen">
-        <img class="" src="/img/registro_paciente.jpg" alt="" width=1200px"
-        height="600px">
-      </div>
+    <div class="contenedor">
+      <img class="imagen" th:src="@{/img/registro_paciente.jpg}" alt="">
+      <h1 class="texto-imagen">Cuidado de calidad para tu bienestar</h1>
     </div>
 
     <!-- Formulario de Registro -->
 
     <div class="container-fluid m-5 contenedor">
-      <form class="formulario" action="" method="POST">
+      <form class="formulario" th:action="@{/paciente/registro}" method="POST">
         <div class="form-group my-3">
           <h3 class="mb-5">Registro de Paciente</h3>
           <input
@@ -174,39 +172,32 @@ and open the template in the editor.
             name="dni"
             placeholder="DNI"
           />
-        </div>  
-        
+        </div>
+
         <div class="form-group my-3">
           <span>Fecha de nacimiento</span>
           <input
             type="date"
             class="form-control mt-2 w-50"
-            name="fechanacimiento"
+            name="fechaNacimiento"
             placeholder="Fecha de nacimiento"
-          />
+            required />
         </div>
 
         <div class="form-group my-3">
-          <select name="genero" id="" class="opciones">
-            <option value="">Genero</option>
-            <option value="masculino">Masculino</option>
-            <option value="femenino">Femenino</option>
-            <option value="otro">Otro</option>
-          </select>
+          <span>Genero</span>
+          <select name="genero">
+            <option th:each="genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}" 
+                    th:value="${genero}" th:text="${genero}"></option>
+        </select>
         </div>
 
         <div class="form-group my-3">
-          <select name="obrasocial" id="" class="opciones">
-            <option value="">Obra Social</option>
-            <option value="osde">OSDE</option>
-            <option value="osep">OSEP</option>
-            <option value="pami">PAMI</option>
-            <option value="medifre">MEDIFRE</option>
-            <option value="omint">OMINT</option>
-            <option value="ioma">IOMA</option>
-            <option value="obsba">OBSBA</option>
-            <option value="obsba">No tengo</option>
-          </select>
+          <span>Obra Social</span>
+          <select name="obraSocial">
+            <option th:each="obrasocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}" 
+                    th:value="${obrasocial}" th:text="${obrasocial}"></option>
+        </select>
         </div>
 
         <div class="text-center">
