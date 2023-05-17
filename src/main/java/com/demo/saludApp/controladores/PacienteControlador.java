@@ -43,7 +43,7 @@ public class PacienteControlador {
     public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo) {
         //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
         try {
-            ps.crearPaciente(nombre, email, password, dni, genero, obraSocial, new Date());
+            ps.crearPaciente(nombre, email, password, dni, genero, obraSocial, fechaNacimiento);
             modelo.put("exito", "Paciente registrado con exito");
         } catch (Exception ex) {            
             modelo.put("error", ex.getMessage());
@@ -62,10 +62,10 @@ public class PacienteControlador {
     }
     
     @PostMapping("/modificacion")
-    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, ModelMap modelo) {
+    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo) {
         
         try {           
-            ps.modificarPaciente(id, nombre, email, genero, obraSocial, password, dni, new Date());
+            ps.modificarPaciente(id, nombre, email, genero, obraSocial, password, dni, fechaNacimiento);
             modelo.put("exito", "Modificación exitosa");
             modelo.put("modificar", ps.buscarPorEmail(email));
             
