@@ -10,6 +10,8 @@ import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.repositorios.PacienteRepositorio;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,11 +28,9 @@ public class PacienteServicio {
     private PacienteRepositorio pacienteRepositorio;
 
     @Transactional
-    public void crearPaciente(String nombre, String email, String password, String dni, Genero genero, ObraSocial obraSocial, Date fechaNacimiento) throws MiException {
+    public void crearPaciente(String nombre, String email, String password, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
 
-        System.out.println("Entro al validar");
-        
-        validar(nombre, email, password, dni);
+        validar(nombre, email, password, dni, fechaNacimiento);
 
         Paciente paciente = new Paciente();
 
@@ -40,10 +40,12 @@ public class PacienteServicio {
         paciente.setDni(dni);
         paciente.setGenero(genero);
         paciente.setObraSocial(obraSocial);
-        paciente.setFechaNacimiento(fechaNacimiento);
 
-        System.out.println("Seteo atributos");
-        
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = format.parse(fechaNacimiento);
+
+        paciente.setFechaNacimiento(fecha);
+
         pacienteRepositorio.save(paciente);
     }
 
@@ -53,26 +55,24 @@ public class PacienteServicio {
         pacientes = pacienteRepositorio.findAll();
         return pacientes;
     }
-    
-    public Paciente buscarPorEmail(String email){
-        
+
+    public Paciente buscarPorEmail(String email) {
+
         return pacienteRepositorio.buscarPorEmail(email);
-        
+
     }
-    
-    public Paciente getOne(String id){
-        
+
+    public Paciente getOne(String id) {
+
         return pacienteRepositorio.getOne(id);
-        
+
     }
-    
+
     @Transactional
-    public void modificarPaciente(String id, String nombre, String email, Genero genero, ObraSocial obraSocial, String password, String dni, Date fechaNacimiento) throws MiException {
+    public void modificarPaciente(String id, String nombre, String email, Genero genero, ObraSocial obraSocial, String password, String dni, String fechaNacimiento) throws MiException, ParseException {
 
-        validar(nombre, email, password, dni);
+        validar(nombre, email, password, dni, fechaNacimiento);
 
-        System.out.println("Llega a modificar");
-        
         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
@@ -85,7 +85,11 @@ public class PacienteServicio {
             paciente.setDni(dni);
             paciente.setGenero(genero);
             paciente.setObraSocial(obraSocial);
-            paciente.setFechaNacimiento(new Date());
+            
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date fecha = format.parse(fechaNacimiento);
+
+            paciente.setFechaNacimiento(fecha);
 
             pacienteRepositorio.save(paciente);
 
@@ -106,7 +110,7 @@ public class PacienteServicio {
         }
     }
 
-    private void validar(String nombre, String email, String password, String dni) throws MiException {
+    private void validar(String nombre, String email, String password, String dni, String fechaNacimiento) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("el nombre no puede ser nulo o estar vacio"); //
@@ -121,9 +125,9 @@ public class PacienteServicio {
         if (dni.isEmpty() || dni == null) {
             throw new MiException("el dni no puede ser nulo o estar vacio"); //
         }
-//        if (fechaNacimiento.toString().isEmpty() || fechaNacimiento == null) {
-//            throw new MiException("la fecha de nacimiento no puede estar vacia o ser nula");
-//        }
+        if (fechaNacimiento.isEmpty() || fechaNacimiento == null) {
+            throw new MiException("la fecha de nacimiento no puede estar vacia o ser nula");
+        }
 
     }
 
