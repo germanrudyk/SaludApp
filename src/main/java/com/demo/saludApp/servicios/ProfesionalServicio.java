@@ -17,7 +17,7 @@ public class ProfesionalServicio {
     @Autowired
     private ProfesionalRepositorio pr;  
     
-    public List<Profesional> listarProfesional() {
+    public List<Profesional> listarProfesionales() {
         List<Profesional> profesionales = new ArrayList();
         profesionales = pr.findAll();
     return profesionales;
