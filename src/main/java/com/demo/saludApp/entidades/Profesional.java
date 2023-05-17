@@ -10,9 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 @Entity
-public class Profesional {
+public class Profesional extends Usuario {
     
-    @Id
     private Integer matricula;
     
     private Integer calificacion;
@@ -26,6 +25,7 @@ public class Profesional {
     private ArrayList<ObraSocial> obraSocialAceptada;
 
     public Profesional() {
+        super();
     }
 
     public Integer getMatricula() {
@@ -96,7 +96,5 @@ public class Profesional {
     public String toString() {
         return "Profesional{" + "matricula=" + matricula + ", calificacion=" + calificacion + ", consultas=" + consultas + ", locacion=" + locacion + ", detalleEspecialidad=" + detalleEspecialidad + ", turnos=" + turnos + ", especialidad=" + especialidad + ", obraSocialAceptada=" + obraSocialAceptada + '}';
     }
-    
-    
     
 }

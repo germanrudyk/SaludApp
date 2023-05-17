@@ -1,0 +1,75 @@
+.navBar{
+    display: flex;
+    background-color: #fff !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.elementosNav{
+    display: flex;
+    width: 30%;
+    justify-content: space-around;
+    color: #37474f;
+    font-weight: 700;
+}
+
+.elementos{
+    margin-right: 50px;
+}
+
+.formulario{
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.botones{
+
+    background-color: rgba(31, 50, 198, 0.792);
+    border-radius: 0%;
+
+}
+
+.botones:active{
+    box-shadow: none;
+}
+
+
+.contenedor-imagen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.imagen{
+    width: 65%;
+}
+
+.texto-imagen {
+    position: absolute;
+    font-size: 310%;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 1);
+    top: 60%;
+    left: 37%;
+    line-height: 1em;
+    font-family: 'Lato', sans-serif;
+}
+
+h3 {
+    font-family: 'Lato', sans-serif;
+}
+
+.items{
+    margin: 20px;
+    padding: 10px;
+    font-size: 23px;
+    
+}
+
+.opciones{
+    background-color: rgba(238, 239, 244, 0.343);
+}

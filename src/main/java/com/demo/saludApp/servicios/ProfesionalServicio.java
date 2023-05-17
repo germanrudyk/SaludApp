@@ -33,15 +33,7 @@ public class ProfesionalServicio {
     return profesionales;
     }
     
-    public List<Profesional> ordenarPrecio() {
-        List<Profesional> profesionales = new ArrayList();
-        profesionales = pr.ordenarPrecio();
-    return profesionales;
-    }
-        
-    public List<Profesional> ordenarCalificacion() {
-        List<Profesional> profesionales = new ArrayList();
-        profesionales = pr.ordenarCalificacion();
-    return profesionales;
-    }
-}
+  }
+     
+
+
