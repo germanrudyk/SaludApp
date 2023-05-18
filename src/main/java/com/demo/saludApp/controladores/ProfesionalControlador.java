@@ -39,22 +39,4 @@ public class ProfesionalControlador {
     return "panelAdmin.html";
     }
     
-    @GetMapping("/ordenarPrecio")
-    public String ordenarPrecio(ModelMap modelo){
-        
-        List<Profesional> profesionales = ps.ordenarPrecio();
-        modelo.addAttribute("profesionales", profesionales);
-         
-    return "panelAdmin.html";
-    }
-    
-    @GetMapping("/ordenarCalificacion")
-    public String ordenarCalificacion(ModelMap modelo){
-        
-        List<Profesional> profesionales = ps.ordenarCalificacion();
-        modelo.addAttribute("profesionales", profesionales);
-         
-    return "panelAdmin.html";
-    }
-
 }
