@@ -63,7 +63,6 @@ public class ProfesionalServicio {
             profesional.setObraSocialAceptada(obraSocialAceptada);
             
             pr.save(profesional);
-
         }
     }
 
