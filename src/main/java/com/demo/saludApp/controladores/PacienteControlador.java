@@ -8,7 +8,6 @@ package com.demo.saludApp.controladores;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.servicios.PacienteServicio;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
