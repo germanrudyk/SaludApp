@@ -4,6 +4,7 @@ import com.demo.saludApp.enumeraciones.Estado;
 import com.demo.saludApp.enumeraciones.Modalidad;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,10 +34,9 @@ public class Consulta {
     private Profesional matriculaProfesional;
     
     @Temporal(TemporalType.DATE)
-    private LocalDate fechaConsulta;
+    private Date fechaConsulta;
     
     /* HACER ENUMS*/
-    @Enumerated(EnumType.STRING)
     private String horario;
     
     @Enumerated(EnumType.STRING)
@@ -62,7 +62,7 @@ public class Consulta {
     
     
 
-    public Consulta(String id, String nombre, Profesional matriculaProfesional, LocalDate fechaConsulta, String horario, ObraSocial obrasocial, Modalidad modalidad, Paciente dniPaciente, Estado estado, String precioConsulta, String detalleConsulta, Imagen estudios) {
+    public Consulta(String id, String nombre, Profesional matriculaProfesional, Date fechaConsulta, String horario, ObraSocial obrasocial, Modalidad modalidad, Paciente dniPaciente, Estado estado, String precioConsulta, String detalleConsulta, Imagen estudios) {
         this.id = id;
         this.nombre = nombre;
         this.matriculaProfesional = matriculaProfesional;
@@ -103,11 +103,11 @@ public class Consulta {
         this.matriculaProfesional = matriculaProfesional;
     }
 
-    public LocalDate getFechaConsulta() {
+    public Date getFechaConsulta() {
         return fechaConsulta;
     }
 
-    public void setFechaConsulta(LocalDate fechaConsulta) {
+    public void setFechaConsulta(Date fechaConsulta) {
         this.fechaConsulta = fechaConsulta;
     }
 
