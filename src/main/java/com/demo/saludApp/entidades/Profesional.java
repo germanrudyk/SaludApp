@@ -2,26 +2,28 @@ package com.demo.saludApp.entidades;
 
 
 import com.demo.saludApp.enumeraciones.Especialidad;
-import com.demo.saludApp.enumeraciones.ObraSocial;
-import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Profesional extends Usuario {
     
     private Integer matricula;
-    
     private Double calificacion;
-    private String consultas;
     private String locacion;
     private String detalleEspecialidad;
-    private ArrayList<String> turnos;
-    
+        
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
-    private ArrayList<ObraSocial> obraSocialAceptada;
+    
+    
+    @ElementCollection(targetClass=String.class)
+    private List<String> obraSocialAceptada;
 
     public Profesional() {
         super();
@@ -43,14 +45,6 @@ public class Profesional extends Usuario {
         this.calificacion = calificacion;
     }
 
-    public String getConsultas() {
-        return consultas;
-    }
-
-    public void setConsultas(String consultas) {
-        this.consultas = consultas;
-    }
-
     public String getLocacion() {
         return locacion;
     }
@@ -67,14 +61,6 @@ public class Profesional extends Usuario {
         this.detalleEspecialidad = detalleEspecialidad;
     }
 
-    public ArrayList<String> getTurnos() {
-        return turnos;
-    }
-
-    public void setTurnos(ArrayList<String> turnos) {
-        this.turnos = turnos;
-    }
-
     public Especialidad getEspecialidad() {
         return especialidad;
     }
@@ -83,17 +69,20 @@ public class Profesional extends Usuario {
         this.especialidad = especialidad;
     }
 
-    public ArrayList<ObraSocial> getObraSocialAceptada() {
+    public List<String> getObraSocialAceptada() {
         return obraSocialAceptada;
     }
 
-    public void setObraSocialAceptada(ArrayList<ObraSocial> obraSocialAceptada) {
+    public void setObraSocialAceptada(List<String> obraSocialAceptada) {
         this.obraSocialAceptada = obraSocialAceptada;
     }
 
     @Override
     public String toString() {
-        return "Profesional{" + "matricula=" + matricula + ", calificacion=" + calificacion + ", consultas=" + consultas + ", locacion=" + locacion + ", detalleEspecialidad=" + detalleEspecialidad + ", turnos=" + turnos + ", especialidad=" + especialidad + ", obraSocialAceptada=" + obraSocialAceptada + '}';
+        return "Profesional{" + "matricula=" + matricula + ", calificacion=" + calificacion + ", locacion=" + locacion + ", detalleEspecialidad=" + detalleEspecialidad + ", especialidad=" + especialidad + ", obraSocialAceptada=" + obraSocialAceptada + '}';
     }
+
+
+
     
 }

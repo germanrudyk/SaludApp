@@ -1,9 +1,10 @@
 package com.demo.saludApp.entidades;
 
+import com.demo.saludApp.enumeraciones.Especialidad;
 import com.demo.saludApp.enumeraciones.Estado;
+import com.demo.saludApp.enumeraciones.Horario;
 import com.demo.saludApp.enumeraciones.Modalidad;
 import com.demo.saludApp.enumeraciones.ObraSocial;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,16 +29,15 @@ public class Consulta {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     
-    private String nombre;
+    private Especialidad especialidad;
     
     @ManyToOne
-    private Profesional matriculaProfesional;
+    private Profesional profesional;
     
     @Temporal(TemporalType.DATE)
     private Date fechaConsulta;
     
-    /* HACER ENUMS*/
-    private String horario;
+    private Horario horario;
     
     @Enumerated(EnumType.STRING)
     private ObraSocial obrasocial;
@@ -46,11 +46,11 @@ public class Consulta {
     private Modalidad modalidad;
 
     @ManyToOne
-    private Paciente dniPaciente;
+    private Paciente paciente;
     
     private Estado estado;
         
-    private String precioConsulta;
+    private Integer precioConsulta;
     
     private String detalleConsulta;
     
@@ -62,15 +62,15 @@ public class Consulta {
     
     
 
-    public Consulta(String id, String nombre, Profesional matriculaProfesional, Date fechaConsulta, String horario, ObraSocial obrasocial, Modalidad modalidad, Paciente dniPaciente, Estado estado, String precioConsulta, String detalleConsulta, Imagen estudios) {
+    public Consulta(String id, Especialidad especialidad, Profesional profesional, Date fechaConsulta,Horario horario, ObraSocial obrasocial, Modalidad modalidad, Paciente paciente, Estado estado, Integer precioConsulta, String detalleConsulta, Imagen estudios) {
         this.id = id;
-        this.nombre = nombre;
-        this.matriculaProfesional = matriculaProfesional;
+        this.especialidad = especialidad;
+        this.profesional = profesional;
         this.fechaConsulta = fechaConsulta;
         this.horario = horario;
         this.obrasocial = obrasocial;
         this.modalidad = modalidad;
-        this.dniPaciente = dniPaciente;
+        this.paciente = paciente;
         this.estado = estado;
         this.precioConsulta = precioConsulta;
         this.detalleConsulta = detalleConsulta;
@@ -87,20 +87,21 @@ public class Consulta {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Especialidad getEspecialidad() {
+        return especialidad;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
     }
 
-    public Profesional getMatriculaProfesional() {
-        return matriculaProfesional;
+    
+    public Profesional getprofesional() {
+        return profesional;
     }
 
-    public void setMatriculaProfesional(Profesional matriculaProfesional) {
-        this.matriculaProfesional = matriculaProfesional;
+    public void setProfesional(Profesional profesional) {
+        this.profesional = profesional;
     }
 
     public Date getFechaConsulta() {
@@ -111,11 +112,11 @@ public class Consulta {
         this.fechaConsulta = fechaConsulta;
     }
 
-    public String getHorario() {
+    public Horario getHorario() {
         return horario;
     }
 
-    public void setHorario(String horario) {
+    public void setHorario(Horario horario) {
         this.horario = horario;
     }
 
@@ -135,20 +136,20 @@ public class Consulta {
         this.modalidad = modalidad;
     }
 
-    public Paciente getDniPaciente() {
-        return dniPaciente;
+    public Paciente getpaciente() {
+        return paciente;
     }
 
-    public void setDniPaciente(Paciente dniPaciente) {
-        this.dniPaciente = dniPaciente;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
-    public String getPrecioConsulta() {
+    public Integer getPrecioConsulta() {
         return precioConsulta;
     }
 
-    public void setPrecioConsulta(String precioConsulta) {
-        this.precioConsulta = precioConsulta;
+    public void setPrecioConsulta(Integer precio) {
+        this.precioConsulta = precio;
     }
 
     public String getDetalleConsulta() {

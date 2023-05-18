@@ -2,7 +2,6 @@ package com.demo.saludApp.controladores;
 
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.enumeraciones.Especialidad;
-import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.ArrayList;
@@ -34,10 +33,10 @@ public class ProfesionalControlador {
     }
     
     @PostMapping("/registro") //asigna solicitudes HTTP POST
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam Integer calificacion, @RequestParam String consultas, @RequestParam String locacion, @RequestParam String detalleEspecialidad, @RequestParam ArrayList<String> turnos, @RequestParam Especialidad especialidad, @RequestParam ArrayList<ObraSocial> obraSocialAceptada,ModelMap modelo) {
+    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam String locacion, @RequestParam Especialidad especialidad,@RequestParam String detalleEspecialidad, @RequestParam List<String> obraSocialAceptada,ModelMap modelo) throws Exception {
         //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
         try {
-            ps.crearProfesional(nombre,email,password,matricula,calificacion,consultas,locacion,detalleEspecialidad,turnos,especialidad,obraSocialAceptada);
+            ps.crearProfesional(nombre, email, password, matricula, locacion, especialidad, detalleEspecialidad, obraSocialAceptada);
             modelo.put("exito", "Paciente registrado con exito");
         } catch (Exception ex) {            
             modelo.put("error", ex.getMessage());
@@ -48,20 +47,20 @@ public class ProfesionalControlador {
     }
     
     @GetMapping("/modificar/{nombre}")
-    public String modificar(@PathVariable String nombre, ModelMap modelo) {
+    public String modificar(@PathVariable String id, ModelMap modelo) {
         
-        modelo.put("modificar", ps.getOne(nombre));
+        modelo.put("modificar", ps.getOne(id));
         
         return "profesional_modificar.html";
     }
     
     @PostMapping("/modificacion")
-    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam Integer calificacion, @RequestParam String consultas, @RequestParam String locacion, @RequestParam String detalleEspecialidad, @RequestParam ArrayList<String> turnos, @RequestParam Especialidad especialidad, @RequestParam ArrayList<ObraSocial> obraSocialAceptada,ModelMap modelo) {
+    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam String locacion,@RequestParam Especialidad especialidad, @RequestParam List<String> obraSocialAceptada,ModelMap modelo) {
         
         try {           
-            ps.modificarProfesional(id,nombre,email,password,matricula,calificacion,consultas,locacion,detalleEspecialidad,turnos,especialidad,obraSocialAceptada);
+            ps.modificarProfesional(id, nombre, email, password, matricula, locacion, especialidad, locacion, obraSocialAceptada);
             modelo.put("exito", "Modificación exitosa");
-            modelo.put("modificar", ps.getOne(nombre));
+            modelo.put("modificar", ps.getOne(id));
             
         } catch (Exception ex) {
             

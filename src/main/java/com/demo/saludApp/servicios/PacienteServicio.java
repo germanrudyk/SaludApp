@@ -26,7 +26,7 @@ public class PacienteServicio {
     @Transactional
     public void crearPaciente(String nombre, String email, String password, Integer telefono, Imagen imagen, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
 
-        validar(nombre, email, password, dni, fechaNacimiento);
+        validar(nombre, email, password, telefono, dni, fechaNacimiento);
 
         Paciente paciente = new Paciente();
 
@@ -36,8 +36,10 @@ public class PacienteServicio {
         paciente.setTelefono(telefono);
         paciente.setActivo(true);               //Cuando se crea el Paciente estado true es activo
         paciente.setRol(Rol.PACIENTE);            //Cuando se crea el Paciente el Rol es seteado a Paciente automaticamente
+        
+        if (imagen != null){
         paciente.setImagen(imagen);
-
+        }
         paciente.setDni(dni);
         paciente.setGenero(genero);
         paciente.setObraSocial(obraSocial);
@@ -70,9 +72,9 @@ public class PacienteServicio {
     }
 
     @Transactional
-    public void modificarPaciente(String id, String nombre, String email, String password, Integer telefono, Imagen imagen, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException{
+    public void modificarPaciente(String id, String nombre, String email, String password, Integer telefono, Imagen imagen, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
 
-        validar(nombre, email, password, dni, fechaNacimiento);
+        validar(nombre, email, password, telefono, dni, fechaNacimiento);
 
         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
 
@@ -112,7 +114,7 @@ public class PacienteServicio {
         }
     }
 
-    private void validar(String nombre, String email, String password, String dni, String fechaNacimiento) throws MiException {
+    private void validar(String nombre, String email, String password, Integer telefono, String dni, String fechaNacimiento) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("el nombre no puede ser nulo o estar vacio"); //
@@ -123,7 +125,10 @@ public class PacienteServicio {
         if (password.isEmpty() || password == null) {
             throw new MiException("el password no puede ser nulo o estar vacio"); //
         }
-
+        if (telefono.toString().isEmpty() || telefono == null) {
+            throw new MiException("el password no puede ser nulo o estar vacio"); //
+        }
+        
         if (dni.isEmpty() || dni == null) {
             throw new MiException("el dni no puede ser nulo o estar vacio"); //
         }
