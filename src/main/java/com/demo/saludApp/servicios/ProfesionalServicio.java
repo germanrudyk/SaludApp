@@ -6,9 +6,7 @@ import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.repositorios.ProfesionalRepositorio;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -24,17 +22,17 @@ public class ProfesionalServicio {
 
 
     private ArrayList<ObraSocial> obraSocialAceptada;
+    private ArrayList<String> turnos;
     
     @Autowired
     private ProfesionalRepositorio pr;  
     
         @Transactional
-    public void crearProfesional(String nombre, String email, String password, Integer matricula, Integer calificacion, String consultas, String locacion, String detalleEspecialidad, Turnos turnos, Especialidad especialidad, ObraSocial obraSocialAceptada) throws MiException, ParseException {
+    public void crearProfesional(String nombre, String email, String password, Integer matricula, Integer calificacion, String consultas, String locacion, String detalleEspecialidad,ArrayList<String> turnos, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException, ParseException {
 
         validar(nombre, email, password, matricula, locacion, especialidad, obraSocialAceptada);
 
         Profesional profesional = new Profesional();
-
         profesional.setNombre(nombre);
         profesional.setEmail(email);
         profesional.setPassword(password);
@@ -47,22 +45,21 @@ public class ProfesionalServicio {
     }
 
     @Transactional
-    public void modificarProfesional() throws MiException, ParseException {
+    public void modificarProfesional(String id, String nombre, String email, String password, Integer matricula, Integer calificacion, String consultas, String locacion, String detalleEspecialidad,ArrayList<String> turnos, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException, ParseException {
 
-        validar();
+        validar(nombre, email, password, matricula, locacion, especialidad, obraSocialAceptada);
 
         Optional<Profesional> respuesta = pr.findById(id);
 
         if (respuesta.isPresent()) {
 
-            Profesional profesional = profesional.get();
+            Profesional profesional = respuesta.get();
 
             profesional.setNombre(nombre);
             profesional.setEmail(email);
             profesional.setPassword(password);
             profesional.setMatricula(matricula);
-            profesional.setLocacion(locacion);
-            profesional.setEspecialidad(especialidad);
+            profesional.setTurnos(turnos);
             profesional.setObraSocialAceptada(obraSocialAceptada);
             
             pr.save(profesional);
@@ -84,7 +81,7 @@ public class ProfesionalServicio {
         }
     }
 
-    private void validar() throws MiException {
+    private void validar(String nombre, String email, String password, Integer matricula, String locacion, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("el nombre no puede ser nulo o estar vacio"); //
@@ -95,12 +92,14 @@ public class ProfesionalServicio {
         if (password.isEmpty() || password == null) {
             throw new MiException("el password no puede ser nulo o estar vacio"); //
         }
-
         if (matricula.isEmpty() || matricula == null) {
-            throw new MiException("el dni no puede ser nulo o estar vacio"); //
+            throw new MiException("la matricula no puede ser nulo o estar vacio"); //
         }
         if (locacion.isEmpty() || locacion == null) {
             throw new MiException("la locacion no puede ser vacia o nula");
+        }
+        if (especialidad.isEmpty() || especialidad == null) {
+            throw new MiException("la especialidad no puede ser vacia o nula");
         }
         if (obraSocialAceptada.isEmpty() || obraSocialAceptada == null) {
             throw new MiException("la obraSocialAceptada no puede ser vacia o nula");
