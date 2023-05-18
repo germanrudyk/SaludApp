@@ -41,6 +41,17 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(String id, String nombre, String email, String password, Integer telefono, boolean activo, Rol rol, Imagen imagen) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+        this.telefono = telefono;
+        this.activo = activo;
+        this.rol = rol;
+        this.imagen = imagen;
+    }
+
     public String getId() {
         return id;
     }

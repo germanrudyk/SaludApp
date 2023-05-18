@@ -1,18 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.demo.saludApp.servicios;
 
+import com.demo.saludApp.entidades.Imagen;
 import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
+import com.demo.saludApp.enumeraciones.Rol;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.repositorios.PacienteRepositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +24,7 @@ public class PacienteServicio {
     private PacienteRepositorio pacienteRepositorio;
 
     @Transactional
-    public void crearPaciente(String nombre, String email, String password, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
+    public void crearPaciente(String nombre, String email, String password, Integer telefono, Imagen imagen, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
 
         validar(nombre, email, password, dni, fechaNacimiento);
 
@@ -37,6 +33,11 @@ public class PacienteServicio {
         paciente.setNombre(nombre);
         paciente.setEmail(email);
         paciente.setPassword(password);
+        paciente.setTelefono(telefono);
+        paciente.setActivo(true);               //Cuando se crea el Paciente estado true es activo
+        paciente.setRol(Rol.PACIENTE);            //Cuando se crea el Paciente el Rol es seteado a Paciente automaticamente
+        paciente.setImagen(imagen);
+
         paciente.setDni(dni);
         paciente.setGenero(genero);
         paciente.setObraSocial(obraSocial);
@@ -69,7 +70,7 @@ public class PacienteServicio {
     }
 
     @Transactional
-    public void modificarPaciente(String id, String nombre, String email, Genero genero, ObraSocial obraSocial, String password, String dni, String fechaNacimiento) throws MiException, ParseException {
+    public void modificarPaciente(String id, String nombre, String email, String password, Integer telefono, Imagen imagen, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException{
 
         validar(nombre, email, password, dni, fechaNacimiento);
 
@@ -82,10 +83,13 @@ public class PacienteServicio {
             paciente.setNombre(nombre);
             paciente.setEmail(email);
             paciente.setPassword(password);
+            paciente.setTelefono(telefono);
+            paciente.setImagen(imagen);
+
             paciente.setDni(dni);
             paciente.setGenero(genero);
             paciente.setObraSocial(obraSocial);
-            
+
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fecha = format.parse(fechaNacimiento);
 
@@ -98,15 +102,13 @@ public class PacienteServicio {
 
     public void eliminarPaciente(String id) throws MiException {
 
-//        if (dni.isEmpty() || dni == null) {
-//            throw new MiException("el dni no puede ser nulo o estar vacio"); //
-//        }
         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
 
             Paciente paciente = respuesta.get();
-            pacienteRepositorio.delete(paciente);
+            paciente.setActivo(false);
+            pacienteRepositorio.save(paciente);
         }
     }
 
