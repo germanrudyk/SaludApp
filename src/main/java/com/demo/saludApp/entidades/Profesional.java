@@ -14,7 +14,7 @@ public class Profesional extends Usuario {
     
     private Integer matricula;
     
-    private Integer calificacion;
+    private Double calificacion;
     private String consultas;
     private String locacion;
     private String detalleEspecialidad;
@@ -36,11 +36,11 @@ public class Profesional extends Usuario {
         this.matricula = matricula;
     }
 
-    public Integer getCalificacion() {
+    public Double getCalificacion() {
         return calificacion;
     }
 
-    public void setCalificacion(Integer calificacion) {
+    public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
     }
 
