@@ -1,6 +1,7 @@
 package com.demo.saludApp.entidades;
 
 import com.demo.saludApp.enumeraciones.Estado;
+import com.demo.saludApp.enumeraciones.Horario;
 import com.demo.saludApp.enumeraciones.Modalidad;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import java.time.LocalDate;
@@ -36,8 +37,8 @@ public class Consulta {
     @Temporal(TemporalType.DATE)
     private Date fechaConsulta;
     
-    /* HACER ENUMS*/
-    private String horario;
+    @Enumerated(EnumType.STRING)
+    private Horario horario;
     
     @Enumerated(EnumType.STRING)
     private ObraSocial obrasocial;
@@ -50,7 +51,7 @@ public class Consulta {
     
     private Estado estado;
         
-    private String precioConsulta;
+    private Integer precioConsulta;
     
     private String detalleConsulta;
     
@@ -62,7 +63,7 @@ public class Consulta {
     
     
 
-    public Consulta(String id, String nombre, Profesional matriculaProfesional, Date fechaConsulta, String horario, ObraSocial obrasocial, Modalidad modalidad, Paciente dniPaciente, Estado estado, String precioConsulta, String detalleConsulta, Imagen estudios) {
+    public Consulta(String id, String nombre, Profesional matriculaProfesional, Date fechaConsulta, Horario horario, ObraSocial obrasocial, Modalidad modalidad, Paciente dniPaciente, Estado estado, Integer precioConsulta, String detalleConsulta, Imagen estudios) {
         this.id = id;
         this.nombre = nombre;
         this.matriculaProfesional = matriculaProfesional;
@@ -111,11 +112,11 @@ public class Consulta {
         this.fechaConsulta = fechaConsulta;
     }
 
-    public String getHorario() {
+    public Horario getHorario() {
         return horario;
     }
 
-    public void setHorario(String horario) {
+    public void setHorario(Horario horario) {
         this.horario = horario;
     }
 
@@ -143,11 +144,11 @@ public class Consulta {
         this.dniPaciente = dniPaciente;
     }
 
-    public String getPrecioConsulta() {
+    public Integer getPrecioConsulta() {
         return precioConsulta;
     }
 
-    public void setPrecioConsulta(String precioConsulta) {
+    public void setPrecioConsulta(Integer precioConsulta) {
         this.precioConsulta = precioConsulta;
     }
 

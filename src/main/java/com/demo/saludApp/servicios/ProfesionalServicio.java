@@ -20,10 +20,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfesionalServicio {
 
-
-    private ArrayList<ObraSocial> obraSocialAceptada;
-    private ArrayList<String> turnos;
-    
     @Autowired
     private ProfesionalRepositorio pr;  
     
@@ -45,7 +41,7 @@ public class ProfesionalServicio {
     }
 
     @Transactional
-    public void modificarProfesional(String id, String nombre, String email, String password, Integer matricula, Integer calificacion, String consultas, String locacion, String detalleEspecialidad,ArrayList<String> turnos, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException, ParseException {
+    public void modificarProfesional(String id, String nombre, String email, String password, Integer matricula, Integer calificacion, String consultas, String locacion, String detalleEspecialidad, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException {
 
         validar(nombre, email, password, matricula, locacion, especialidad, obraSocialAceptada);
 
@@ -59,7 +55,6 @@ public class ProfesionalServicio {
             profesional.setEmail(email);
             profesional.setPassword(password);
             profesional.setMatricula(matricula);
-            profesional.setTurnos(turnos);
             profesional.setObraSocialAceptada(obraSocialAceptada);
             
             pr.save(profesional);
@@ -91,13 +86,13 @@ public class ProfesionalServicio {
         if (password.isEmpty() || password == null) {
             throw new MiException("el password no puede ser nulo o estar vacio"); //
         }
-        if (matricula.isEmpty() || matricula == null) {
+        if ( matricula == null) {
             throw new MiException("la matricula no puede ser nulo o estar vacio"); //
         }
         if (locacion.isEmpty() || locacion == null) {
             throw new MiException("la locacion no puede ser vacia o nula");
         }
-        if (especialidad.isEmpty() || especialidad == null) {
+        if (especialidad.toString().isEmpty() || especialidad == null) {
             throw new MiException("la especialidad no puede ser vacia o nula");
         }
         if (obraSocialAceptada.isEmpty() || obraSocialAceptada == null) {

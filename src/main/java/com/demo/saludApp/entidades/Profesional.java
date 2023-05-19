@@ -17,7 +17,6 @@ public class Profesional extends Usuario {
     private String consultas;
     private String locacion;
     private String detalleEspecialidad;
-    private ArrayList<String> turnos;
     
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
@@ -67,14 +66,6 @@ public class Profesional extends Usuario {
         this.detalleEspecialidad = detalleEspecialidad;
     }
 
-    public ArrayList<String> getTurnos() {
-        return turnos;
-    }
-
-    public void setTurnos(ArrayList<String> turnos) {
-        this.turnos = turnos;
-    }
-
     public Especialidad getEspecialidad() {
         return especialidad;
     }
@@ -93,7 +84,8 @@ public class Profesional extends Usuario {
 
     @Override
     public String toString() {
-        return "Profesional{" + "matricula=" + matricula + ", calificacion=" + calificacion + ", consultas=" + consultas + ", locacion=" + locacion + ", detalleEspecialidad=" + detalleEspecialidad + ", turnos=" + turnos + ", especialidad=" + especialidad + ", obraSocialAceptada=" + obraSocialAceptada + '}';
+        return "Profesional{" + "matricula=" + matricula + ", calificacion=" + calificacion + ", consultas=" + consultas + ", locacion=" + locacion + ", detalleEspecialidad=" + detalleEspecialidad + ", especialidad=" + especialidad + ", obraSocialAceptada=" + obraSocialAceptada + '}';
     }
-    
+
+ 
 }

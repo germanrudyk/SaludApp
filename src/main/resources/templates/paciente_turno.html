@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaludApp</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .navbar-logo {
+     max-height: 30px;
+    }
+    .custom-form {
+    max-width: 1000px;
+    padding: 20px;
+    border: 2px solid #03989E;
+    border-radius: 5px;
+    }
+    .btn-custom {
+    background-color: #03989E;
+    color: #ffffff;
+    }
+    .btn-custom:hover {
+    background-color: #01767a;
+    color: #ffffff;
+    }
+  </style>
+</head>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\LogoSaludApp.png" alt="Logo" class="navbar-logo">
+        </a>
+    </nav>
+  <body>
+    <div class="container mt-5">
+      <h1>Turnos disponibles:</h1>
+      <table class="table custom-form">
+        <thead>
+          <tr>
+            <th>Nombre del Profesional</th>
+            <th><select id="especialidad" class="especialidad" onchange="filtrarTabla()">
+              <option value="todas">Especialidad</option>
+              <option value="cardiologia">Cardiología</option>
+              <option value="clinica">Clínica</option>
+              <option value="ginecologia">Ginecología</option>
+              <option value="pediatria">Pediatría</option>
+          </select></th>
+            <th>Calificación</th>
+            <th>Valor de la Consulta</th>
+            <th>Turnos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí puedes generar dinámicamente las filas de la tabla -->
+          <tr>
+            <td>Dr. Joaquín Pipinich</td>
+            <td>Cardiología</td>
+            <td>5</td>
+            <td>$5.200</td>
+            <td>
+              <button class="btn-custom">Agendar Turno</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Dra. Marisa Muñoz</td>
+            <td>Dermatología</td>
+            <td>5</td>
+            <td>$5.600</td>
+            <td>
+              <button class="btn-custom">Agendar Turno</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Dr. Pablo Fuentes</td>
+            <td>Odontología</td>
+            <td>5</td>
+            <td>$5.500</td>
+            <td>
+              <button class="btn-custom">Agendar Turno</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Dr. José Ignacio Moreno</td>
+            <td>Psiquiatría</td>
+            <td>5</td>
+            <td>$5.800</td>
+            <td>
+              <button class="btn-custom">Agendar Turno</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Dr. German Rudyk</td>
+            <td>Ginecología</td>
+            <td>5</td>
+            <td>$6.000</td>
+            <td>
+              <button class="btn-custom">Agendar Turno</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Dr. Kevin Lemos</td>
+            <td>Pediatría</td>
+            <td>5</td>
+            <td>$5.300</td>
+            <td>
+              <button class="btn-custom">Agendar Turno</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Dr. Damián Canteros</td>
+            <td>Nutrición</td>
+            <td>5</td>
+            <td>$5.000</td>
+            <td>
+              <button class="btn-custom">Agendar Turno</button>
+            </td>
+          </tr>
+          <!-- Agrega más filas según tus necesidades -->
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

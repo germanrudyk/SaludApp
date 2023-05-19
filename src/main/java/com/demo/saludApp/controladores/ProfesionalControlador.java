@@ -59,7 +59,7 @@ public class ProfesionalControlador {
     public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam Integer calificacion, @RequestParam String consultas, @RequestParam String locacion, @RequestParam String detalleEspecialidad, @RequestParam ArrayList<String> turnos, @RequestParam Especialidad especialidad, @RequestParam ArrayList<ObraSocial> obraSocialAceptada,ModelMap modelo) {
         
         try {           
-            ps.modificarProfesional(id,nombre,email,password,matricula,calificacion,consultas,locacion,detalleEspecialidad,turnos,especialidad,obraSocialAceptada);
+            ps.modificarProfesional(id, nombre, email, password, matricula, calificacion, consultas, locacion, detalleEspecialidad, especialidad, obraSocialAceptada);
             modelo.put("exito", "Modificación exitosa");
             modelo.put("modificar", ps.getOne(nombre));
             
