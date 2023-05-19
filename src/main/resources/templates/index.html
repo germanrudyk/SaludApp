@@ -13,7 +13,27 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-            <form class="form-inline ml-auto">
+                <div>
+                    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+                        <div class="card-body">
+                            <h5 class="card-title">Error!</h5>
+                            <p class="card-text" th:text="${error}"></p>
+                        </div>
+                    </div>
+                    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                        <div class="card-body">
+                            <h5 class="card-title">Exito!</h5>
+                            <p class="card-text" th:text="${exito}"></p>
+                        </div>
+                    </div>
+                    <div th:if="${suspendido != null}" class="card text-white bg-danger mb-3 mt-3 mensajeError" >
+                        <div class="card-body">
+                            <h5 class="card-title">Alerta!</h5>
+                            <p class="card-text" th:text="${suspendido}"></p>
+                        </div>
+                    </div>
+                </div>
+            <form class="form-inline ml-auto" th:action="@{/logincheck}" method="GET">
                 <div class="form-group mr-1">
                 <label for="username" class="sr-only">Usuario</label>
                 <input type="text" class="form-control" id="username" placeholder="Usuario">
@@ -69,9 +89,8 @@
             </div>
             <div class="modal-body">
             <!------------- Formulario en el modal ------------->    
-            <form>
                 <div class="container">
-                    <form class="custom-form" th:action="@{/paciente/registro}" method="POST">
+                    <form class="custom-form" th:action="@{/paciente/registro}" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre">
@@ -118,14 +137,15 @@
                         <label for="profile-image">Foto de Perfil</label>
                         <input type="file" id="profile-image" accept="image/*">
                     </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-custom">Registrar</button>
+                        </div>
                     </form>
                 </div>
-            </form>
+            
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-custom">Registrar</button>
-            </div>
+            
         </div>
         </div>
     </div>

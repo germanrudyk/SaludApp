@@ -35,7 +35,7 @@ public class PacienteControlador {
         
         
 
-        return "paciente_registrar.html";
+        return "admin.html";
     }
     
     @PostMapping("/registro") //asigna solicitudes HTTP POST

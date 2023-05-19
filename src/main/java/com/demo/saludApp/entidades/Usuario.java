@@ -27,6 +27,7 @@ public class Usuario {
     private String id;
 
     private String nombre;
+    private String apellido;
     private String email;
     private String password;
     private Integer telefono;
@@ -34,6 +35,8 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
+
+   
     
     @OneToOne
     private Imagen imagen;
@@ -55,6 +58,13 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+     public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getEmail() {

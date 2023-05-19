@@ -26,6 +26,7 @@ public class AdminControlador {
      @Autowired
     private UsuarioServicio usuarioServicio;
 
+     
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/usuarios")
     public String listar(ModelMap modelo) {

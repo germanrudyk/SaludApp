@@ -24,12 +24,13 @@ public class ProfesionalServicio {
     private ProfesionalRepositorio pr;  
     
         @Transactional
-    public void crearProfesional(String nombre, String email, String password, Integer matricula, Integer calificacion, String consultas, String locacion, String detalleEspecialidad,ArrayList<String> turnos, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException, ParseException {
+    public void crearProfesional(String nombre,String apellido, String email, String password, Integer matricula, Integer calificacion, String consultas, String locacion, String detalleEspecialidad,ArrayList<String> turnos, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException, ParseException {
 
-        validar(nombre, email, password, matricula, locacion, especialidad, obraSocialAceptada);
+        validar(nombre, apellido, email, password, matricula, locacion, especialidad, obraSocialAceptada);
 
         Profesional profesional = new Profesional();
         profesional.setNombre(nombre);
+        profesional.setApellido(apellido);
         profesional.setEmail(email);
         profesional.setPassword(password);
         profesional.setMatricula(matricula);
