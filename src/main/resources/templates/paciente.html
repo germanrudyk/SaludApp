@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaludApp</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <style>
+    .navbar-logo {
+      max-height: 30px;
+    }
+
+    .custom-form {
+      max-width: 1000px;
+      padding: 20px;
+      border: 2px solid #03989E;
+      border-radius: 5px;
+    }
+
+    .btn-custom {
+      background-color: #03989E;
+      color: #ffffff;
+    }
+
+    .btn-custom:hover {
+      background-color: #01767a;
+      color: #ffffff;
+    }
+
+    /* ------- ORDENAR ------- */
+    .sortable-header {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .sort-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      transform: translateY(-50%);
+    }
+
+    .sort-indicator .arrow-up,
+    .sort-indicator .arrow-down {
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+
+    .sort-indicator .arrow-up {
+      border-bottom: 5px solid rgb(60, 60, 60);
+      margin-bottom: 2px;
+    }
+
+    .sort-indicator .arrow-down {
+      border-top: 5px solid rgb(60, 60, 60);
+      margin-top: 2px;
+    }
+
+    /* ------- ESTRELLAS ------- */
+    .stars-outer {
+      display: inline-block;
+      position: relative;
+      font-family: FontAwesome;
+    }
+
+    .stars-outer::before {
+      content: "\f006 \f006 \f006 \f006 \f006";
+    }
+
+    .stars-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+    }
+
+    .stars-inner::before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+      color: #f8ce0b;
+    }
+
+    .attribution {
+      font-size: 12px;
+      color: #444;
+      text-decoration: none;
+      text-align: center;
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      z-index: -1;
+    }
+
+    .attribution:hover {
+      color: #1fa67a;
+    }
+  </style>
+
+
+
+</head>
+<!--Navbar-->
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="./img/LogoSaludApp.png" alt="Logo"
+      class="navbar-logo">
+      <!--LOGOUT-->
+        <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
+                <a class="dropdown-item" href="/logout" >Cerrar Sesión</a>
+        </li>
+  </a>
+</nav>
+
+<body>
+  <div class="container mt-5">
+    <h1>Turnos disponibles:</h1>
+    <table class="table custom-form">
+      <thead>
+        <tr>
+          <th>Nombre del Profesional</th>
+          <th><select id="especialidad" class="especialidad" onchange="filtrarTabla()">
+              <option value="todas">Especialidad</option>
+              <option value="cardiologia">Cardiología</option>
+              <option value="clinica">Clínica</option>
+              <option value="ginecologia">Ginecología</option>
+              <option value="pediatria">Pediatría</option>
+            </select></th>
+          <th class="sortable">
+            <div class="sortable-header" data-column-index="2">
+              <div>Calificación</div>
+              <div class="sort-indicator">
+                <span class="arrow-up"></span>
+                <span class="arrow-down"></span>
+              </div>
+            </div>
+          </th>
+          <th class="sortable">
+            <div class="sortable-header" data-column-index="3">
+              <div>Valor de la Consulta</div>
+              <div class="sort-indicator">
+                <span class="arrow-up"></span>
+                <span class="arrow-down"></span>
+              </div>
+            </div>
+          </th>
+          <th>Turnos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí puedes generar dinámicamente las filas de la tabla -->
+        <tr class="a">
+          <td>Dr. Joaquín Pipinich</td>
+          <td>Cardiología</td>
+          <td>
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+          <td>$5.200</td>
+          <td>
+            <button class="btn-custom">Agendar Turno</button>
+          </td>
+        </tr>
+        <tr class="b">
+          <td>Dra. Marisa Muñoz</td>
+          <td>Dermatología</td>
+          <td>
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+          <td>$5.600</td>
+          <td>
+            <button class="btn-custom">Agendar Turno</button>
+          </td>
+        </tr>
+        <tr class="c">
+          <td>Dr. Pablo Fuentes</td>
+          <td>Odontología</td>
+          <td>
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+          <td>$5.500</td>
+          <td>
+            <button class="btn-custom">Agendar Turno</button>
+          </td>
+        </tr>
+        <tr class="d">
+          <td>Dr. José Ignacio Moreno</td>
+          <td>Psiquiatría</td>
+          <td>
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+          <td>$5.800</td>
+          <td>
+            <button class="btn-custom">Agendar Turno</button>
+          </td>
+        </tr>
+        <tr class="e">
+          <td>Dr. German Rudyk</td>
+          <td>Ginecología</td>
+          <td>
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+          <td>$6.000</td>
+          <td>
+            <button class="btn-custom">Agendar Turno</button>
+          </td>
+        </tr>
+        <tr class="f">
+          <td>Dr. Kevin Lemos</td>
+          <td>Pediatría</td>
+          <td>
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+          <td>$5.300</td>
+          <td>
+            <button class="btn-custom">Agendar Turno</button>
+          </td>
+        </tr>
+        <tr class="g">
+          <td>Dr. Damián Canteros</td>
+          <td>Nutrición</td>
+          <td>
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+          <td>$5.000</td>
+          <td>
+            <button class="btn-custom">Agendar Turno</button>
+          </td>
+        </tr>
+        <!-- Agrega más filas según tus necesidades -->
+      </tbody>
+    </table>
+
+    <a class="attribution" href="http://fontawesome.io/"><i class="fa fa-font-awesome"></i> fontawesome.io</a>
+
+  </div>
+
+
+
+  <script>
+    // ------- ORDENAR ------- 
+    // Obtener la tabla
+    var table = document.querySelector('.table');
+
+    // Obtener los encabezados de la tabla
+    var headers = table.querySelectorAll('.sortable-header');
+
+    // Variable para realizar un seguimiento del orden actual
+    var sortOrder = {
+      columnIndex: null,
+      ascending: true
+    };
+
+    // Agregar un evento clic a los encabezados
+    headers.forEach(function (header) {
+      header.addEventListener('click', function () {
+        // Obtener el índice de la columna desde el atributo data
+        var columnIndex = parseInt(header.getAttribute('data-column-index'));
+
+        // Verificar si se ha hecho clic en la misma columna nuevamente
+        if (sortOrder.columnIndex === columnIndex) {
+          // Cambiar el orden
+          sortOrder.ascending = !sortOrder.ascending;
+        } else {
+          // Establecer la columna actual y el orden ascendente
+          sortOrder.columnIndex = columnIndex;
+          sortOrder.ascending = true;
+        }
+
+        // Obtener todas las filas de la tabla, excepto la primera (encabezados)
+        var rows = Array.from(table.querySelectorAll('tbody tr')).slice(0);
+
+        // Ordenar las filas en función del valor de la columna seleccionada y el orden actual
+        rows.sort(function (a, b) {
+          var aValue = getRatingValue(a);
+          var bValue = getRatingValue(b);
+
+          // Comparar los valores según el orden ascendente o descendente
+          if (sortOrder.ascending) {
+            return aValue - bValue;
+          } else {
+            return bValue - aValue;
+          }
+        });
+
+        // Función para obtener el valor de calificación de una fila
+        function getRatingValue(row) {
+          var starsInner = row.querySelector('.stars-inner');
+          var starWidth = starsInner.style.width;
+
+          // Obtener el ancho de las estrellas internas como un porcentaje
+          var starPercentage = parseFloat(starWidth.replace('%', ''));
+
+          // Convertir el porcentaje en un valor de calificación entre 0 y 5
+          var ratingValue = (starPercentage / 100) * 5;
+
+          return ratingValue;
+        }
+
+        // Obtener el padre de las filas (el tbody)
+        var parent = rows[0].parentNode;
+
+        // Remover las filas existentes de la tabla
+        rows.forEach(function (row) {
+          parent.removeChild(row);
+        });
+
+        // Agregar las filas ordenadas de nuevo a la tabla
+        rows.forEach(function (row) {
+          parent.appendChild(row);
+        });
+      });
+    });
+
+    // ------- ESTRELLAS ------- 
+    const ratings = {
+      a: 2.8,
+      b: 3.3,
+      c: 1.9,
+      d: 4.3,
+      e: 4.74,
+      f: 4.74,
+      g: 4.74
+    };
+
+    // total number of stars
+    const starTotal = 5;
+
+    for (const rating in ratings) {
+      const starPercentage = (ratings[rating] / starTotal) * 100;
+      const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+      document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
+    }
+  </script>
+
+
+</body>
+
+</html>

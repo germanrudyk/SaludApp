@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -26,26 +27,13 @@ public class ProfesionalControlador {
     
     @Autowired
     private ProfesionalServicio ps;
-        
-    @GetMapping("/registrar") //asigna solicitudes HTTP GET
-    public String registrar(ModelMap modelo) {
-        
-        return "profesional_registrar.html";
-    }
     
-    @PostMapping("/registro") //asigna solicitudes HTTP POST
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam Integer calificacion, @RequestParam String consultas, @RequestParam String locacion, @RequestParam String detalleEspecialidad, @RequestParam ArrayList<String> turnos, @RequestParam Especialidad especialidad, @RequestParam ArrayList<ObraSocial> obraSocialAceptada,ModelMap modelo) {
-        //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
-        try {
-            ps.crearProfesional(nombre,email,password,matricula,calificacion,consultas,locacion,detalleEspecialidad,turnos,especialidad,obraSocialAceptada);
-            modelo.put("exito", "Paciente registrado con exito");
-        } catch (Exception ex) {            
-            modelo.put("error", ex.getMessage());
-            return "paciente_registrar.html";
-            
-        }
-        return "profesional_registrar.html";        
+    @GetMapping("") //asigna solicitudes HTTP GET
+    public String vistaProfesional(ModelMap modelo) {
+        
+        return "profesional.html";
     }
+        
     
     @GetMapping("/modificar/{nombre}")
     public String modificar(@PathVariable String nombre, ModelMap modelo) {
@@ -56,10 +44,10 @@ public class ProfesionalControlador {
     }
     
     @PostMapping("/modificacion")
-    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam Integer calificacion, @RequestParam String consultas, @RequestParam String locacion, @RequestParam String detalleEspecialidad, @RequestParam ArrayList<String> turnos, @RequestParam Especialidad especialidad, @RequestParam ArrayList<ObraSocial> obraSocialAceptada,ModelMap modelo) {
+    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam Integer calificacion, @RequestParam String consultas, @RequestParam String locacion, @RequestParam String detalleEspecialidad, @RequestParam ArrayList<String> turnos, @RequestParam Especialidad especialidad, @RequestParam ArrayList<ObraSocial> obraSocialAceptada,ModelMap modelo, MultipartFile archivo) {
         
         try {           
-            ps.modificarProfesional(id,nombre,email,password,matricula,calificacion,consultas,locacion,detalleEspecialidad,turnos,especialidad,obraSocialAceptada);
+            ps.modificarProfesional(archivo, locacion, nombre, email, email, password, id, calificacion, locacion, Genero.FEMENINO, obraSocialAceptada, locacion, detalleEspecialidad, especialidad, matricula);
             modelo.put("exito", "Modificación exitosa");
             modelo.put("modificar", ps.getOne(nombre));
             

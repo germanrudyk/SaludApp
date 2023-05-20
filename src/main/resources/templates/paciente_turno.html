@@ -1,4 +1,38 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaludApp</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .navbar-logo {
+     max-height: 30px;
+    }
+    .custom-form {
+    max-width: 1000px;
+    padding: 20px;
+    border: 2px solid #03989E;
+    border-radius: 5px;
+    }
+    .btn-custom {
+    background-color: #03989E;
+    color: #ffffff;
+    }
+    .btn-custom:hover {
+    background-color: #01767a;
+    color: #ffffff;
+    }
+  </style>
+</head>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\LogoSaludApp.png" alt="Logo" class="navbar-logo">
+        </a>
+    </nav>
+=======
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="/fragments/head  :: head"></head>
@@ -11,6 +45,7 @@
     </a>
   </nav>
 
+>>>>>>> developer
   <body>
     <div class="container mt-5">
       <h1>Turnos disponibles:</h1>
@@ -19,6 +54,16 @@
           <tr>
             <th>Nombre del Profesional</th>
             <th><select id="especialidad" class="especialidad" onchange="filtrarTabla()">
+<<<<<<< HEAD
+              <option value="todas">Especialidad</option>
+              <option value="cardiologia">Cardiología</option>
+              <option value="clinica">Clínica</option>
+              <option value="ginecologia">Ginecología</option>
+              <option value="pediatria">Pediatría</option>
+          </select></th>
+            <th>Calificación</th>
+            <th>Valor de la Consulta</th>
+=======
                 <option value="todas">Especialidad</option>
                 <option value="cardiologia">Cardiología</option>
                 <option value="clinica">Clínica</option>
@@ -43,11 +88,18 @@
                 </div>
               </div>
             </th>
+>>>>>>> developer
             <th>Turnos</th>
           </tr>
         </thead>
         <tbody>
           <!-- Aquí puedes generar dinámicamente las filas de la tabla -->
+<<<<<<< HEAD
+          <tr>
+            <td>Dr. Joaquín Pipinich</td>
+            <td>Cardiología</td>
+            <td>5</td>
+=======
           <tr class="a">
             <td>Dr. Joaquín Pipinich</td>
             <td>Cardiología</td>
@@ -56,11 +108,18 @@
                 <div class="stars-inner"></div>
               </div>
             </td>
+>>>>>>> developer
             <td>$5.200</td>
             <td>
               <button class="btn-custom">Agendar Turno</button>
             </td>
           </tr>
+<<<<<<< HEAD
+          <tr>
+            <td>Dra. Marisa Muñoz</td>
+            <td>Dermatología</td>
+            <td>5</td>
+=======
           <tr class="b">
             <td>Dra. Marisa Muñoz</td>
             <td>Dermatología</td>
@@ -69,11 +128,18 @@
                 <div class="stars-inner"></div>
               </div>
             </td>
+>>>>>>> developer
             <td>$5.600</td>
             <td>
               <button class="btn-custom">Agendar Turno</button>
             </td>
           </tr>
+<<<<<<< HEAD
+          <tr>
+            <td>Dr. Pablo Fuentes</td>
+            <td>Odontología</td>
+            <td>5</td>
+=======
           <tr class="c">
             <td>Dr. Pablo Fuentes</td>
             <td>Odontología</td>
@@ -82,11 +148,18 @@
                 <div class="stars-inner"></div>
               </div>
             </td>
+>>>>>>> developer
             <td>$5.500</td>
             <td>
               <button class="btn-custom">Agendar Turno</button>
             </td>
           </tr>
+<<<<<<< HEAD
+          <tr>
+            <td>Dr. José Ignacio Moreno</td>
+            <td>Psiquiatría</td>
+            <td>5</td>
+=======
           <tr class="d">
             <td>Dr. José Ignacio Moreno</td>
             <td>Psiquiatría</td>
@@ -95,11 +168,18 @@
                 <div class="stars-inner"></div>
               </div>
             </td>
+>>>>>>> developer
             <td>$5.800</td>
             <td>
               <button class="btn-custom">Agendar Turno</button>
             </td>
           </tr>
+<<<<<<< HEAD
+          <tr>
+            <td>Dr. German Rudyk</td>
+            <td>Ginecología</td>
+            <td>5</td>
+=======
           <tr class="e">
             <td>Dr. German Rudyk</td>
             <td>Ginecología</td>
@@ -108,11 +188,18 @@
                 <div class="stars-inner"></div>
               </div>
             </td>
+>>>>>>> developer
             <td>$6.000</td>
             <td>
               <button class="btn-custom">Agendar Turno</button>
             </td>
           </tr>
+<<<<<<< HEAD
+          <tr>
+            <td>Dr. Kevin Lemos</td>
+            <td>Pediatría</td>
+            <td>5</td>
+=======
           <tr class="f">
             <td>Dr. Kevin Lemos</td>
             <td>Pediatría</td>
@@ -121,11 +208,18 @@
                 <div class="stars-inner"></div>
               </div>
             </td>
+>>>>>>> developer
             <td>$5.300</td>
             <td>
               <button class="btn-custom">Agendar Turno</button>
             </td>
           </tr>
+<<<<<<< HEAD
+          <tr>
+            <td>Dr. Damián Canteros</td>
+            <td>Nutrición</td>
+            <td>5</td>
+=======
           <tr class="g">
             <td>Dr. Damián Canteros</td>
             <td>Nutrición</td>
@@ -134,11 +228,19 @@
                 <div class="stars-inner"></div>
               </div>
             </td>
+>>>>>>> developer
             <td>$5.000</td>
             <td>
               <button class="btn-custom">Agendar Turno</button>
             </td>
           </tr>
+<<<<<<< HEAD
+          <!-- Agrega más filas según tus necesidades -->
+        </tbody>
+      </table>
+    </div>
+  </body>
+=======
         </tbody>
       </table>
 
@@ -148,4 +250,5 @@
     <!------------- Footer -------------> 
     <footer th:replace="/fragments/footer  :: footer" ></footer>
 </body>
+>>>>>>> developer
 </html>

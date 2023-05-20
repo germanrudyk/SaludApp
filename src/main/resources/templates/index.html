@@ -13,14 +13,14 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-            <form class="form-inline ml-auto">
+            <form class="form-inline ml-auto" th:action="@{/logincheck}" method="POST">
                 <div class="form-group mr-1">
-                <label for="username" class="sr-only">Usuario</label>
-                <input type="text" class="form-control" id="username" placeholder="Usuario">
+                <label for="email" class="sr-only">Usuario</label>
+                <input type="email" class="form-control" name="email" placeholder="email">
                 </div>
                 <div class="form-group mr-2">
                 <label for="password" class="sr-only">Contraseña</label>
-                <input type="password" class="form-control" id="password" placeholder="Contraseña">
+                <input type="password" class="form-control" name="password" placeholder="Contraseña">
                 </div>
                 <button type="submit" class="btn btn-custom mr-3">Iniciar Sesión</button>
             </form>
@@ -69,9 +69,8 @@
             </div>
             <div class="modal-body">
             <!------------- Formulario en el modal ------------->    
-            <form>
                 <div class="container">
-                    <form class="custom-form" th:action="@{/paciente/registro}" method="POST">
+                    <form class="custom-form" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre">
@@ -118,14 +117,15 @@
                         <label for="profile-image">Foto de Perfil</label>
                         <input type="file" id="profile-image" accept="image/*">
                     </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-custom">Registrar</button>
+                        </div>
                     </form>
                 </div>
-            </form>
+            
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-custom">Registrar</button>
-            </div>
+            
         </div>
         </div>
     </div>
