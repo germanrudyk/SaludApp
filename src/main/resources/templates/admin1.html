@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin SaludApp</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .navbar-logo {
+     max-height: 30px;
+    }
+    .custom-form {
+    max-width: 1000px;
+    padding: 20px;
+    border: 2px solid #03989E;
+    border-radius: 5px;
+    }
+    .btn-custom {
+    background-color: #03989E;
+    color: #ffffff;
+    }
+    .btn-custom:hover {
+    background-color: #01767a;
+    color: #ffffff;
+    }
+    .profile-image {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; 
+    }
+    #agregar-profesional {
+    float: right;
+    margin-right: 10px;
+    }
+  </style>
+</head>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\LogoSaludApp.png" alt="Logo" class="navbar-logo">
+        </a>
+    </nav>
+  <body>
+    <div class="tabla container mt-3">
+        <h1>Profesionales Registrados:</h1>
+        <button class="btn btn-custom mb-2" id="registrar-profesional">Registrar Profesional</button>
+        <div id="modal-registrar-profesional" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Registrar Profesional</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="nombre">Nombre:</label>
+                      <input type="text" id="nombre" name="nombre" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="contraseña">Contraseña:</label>
+                      <input type="password" id="contraseña" name="contraseña" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="especialidad">Especialidad:</label>
+                      <input type="text" id="especialidad" name="especialidad" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="matricula">Matrícula:</label>
+                      <input type="text" id="matricula" name="matricula" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="email">E-mail:</label>
+                      <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="telefono">Teléfono:</label>
+                      <input type="tel" id="telefono" name="telefono" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="foto">Foto de perfil:</label>
+                      <input type="file" id="foto" name="foto" class="form-control-file">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">Registrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <table class="table custom-form">
+          <thead>
+            <tr>
+              <th>Nombre del Profesional</th>
+              <th>
+                <select id="especialidad" class="especialidad" onchange="filtrarTabla()">
+                  <option value="todas">Especialidad</option>
+                  <option value="cardiologia">Cardiología</option>
+                  <option value="clinica">Clínica</option>
+                  <option value="ginecologia">Ginecología</option>
+                  <option value="pediatria">Pediatría</option>
+                </select></th>
+              <th>Calificación</th>
+              <th>Valor de la Consulta</th>
+              <th>Turnos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="profesional : ${profesionales}">
+              <td th:text="${profesional.nombre}"></td>
+              <td th:text="${profesional.especialidad}"></td>
+              <td th:text="${profesional.calificacion}"></td>
+              <td></td>
+              <td>
+                <button class="btn btn-danger btn-delete">Eliminar</button>
+                <button class="btn btn-custom btn-edit">Modificar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+    <div class="container">
+        <h1>Pacientes Registrados</h1>
+        <table class="table custom-form">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
+              <th>DNI</th>
+              <th>Fecha de Nacimiento</th>
+              <th>Género</th>
+              <th>Obra Social</th>
+              <th>Foto de Perfil</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr th:each="$paciente : ${pacientes}">
+              <td th:text="${paciente.nombre}"></td>
+              <td th:text="${paciente.apellido}"></td>
+              <td th:text="${paciente.email}"></td>
+              <td th:text="${paciente.dni}"></td>
+              <td th:text="${paciente.fechaNacimiento}"></td>
+              <td th:text="${paciente.genero}"></td>
+              <td th:text="${paciente.obraSocial}"></td>
+              <td th:src="${paciente.imagen}"><img class= "profile-image" src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\fotoperfilmujer.jpg" alt="Foto de Perfil"></td>
+              <td>
+                <button class="btn btn-danger btn-delete">Eliminar</button>
+                <button class="btn btn-custom btn-edit mt-1">Modificar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </body>
+
+
+</html>
