@@ -2,16 +2,12 @@ package com.demo.saludApp.entidades;
 
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity

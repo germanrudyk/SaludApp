@@ -1,19 +1,12 @@
 package com.demo.saludApp.servicios;
 
 import com.demo.saludApp.entidades.Imagen;
-import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Usuario;
-import com.demo.saludApp.enumeraciones.Genero;
-import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.enumeraciones.Rol;
 import com.demo.saludApp.excepciones.MiException;
-import com.demo.saludApp.repositorios.PacienteRepositorio;
 import com.demo.saludApp.repositorios.UsuarioRepositorio;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -42,9 +35,6 @@ public class UsuarioServicio implements UserDetailsService{
      @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-     @Autowired
-     private PacienteRepositorio pacienteRepositorio;
-     
     @Autowired
     private ImagenServicio imagenServicio;
     
@@ -157,39 +147,7 @@ public class UsuarioServicio implements UserDetailsService{
     }
     
     
-    @Transactional
-    public void modificarPaciente(MultipartFile archivo, String idUsuario,  String nombre, String apellido, String email, String password, String dni, String fechaNacimiento, Genero genero, ObraSocial obrasocial) throws MiException, ParseException {
-        
-
-        Optional<Paciente> respuesta = pacienteRepositorio.findById(idUsuario);
-
-        if (respuesta.isPresent()) {
-
-            Paciente paciente = respuesta.get();
-
-            paciente.setNombre(nombre);
-            paciente.setApellido(apellido);
-            paciente.setEmail(email);
-            paciente.setPassword(new BCryptPasswordEncoder().encode(password));
-            paciente.setRol(Rol.PACIENTE);
-            paciente.setDni(dni);
-            paciente.setGenero(genero);
-            paciente.setObraSocial(obrasocial);
-            
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date fecha = format.parse(fechaNacimiento);
-            paciente.setFechaNacimiento(fecha);
-            
-            String idImagen = null;
-
-            if (usuario.getImagen() != null) {
-                idImagen = usuario.getImagen().getId();
-            }
-
-            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-            usuario.setImagen(imagen);
-
-            usuarioRepositorio.save(usuario);
-        }
-    }
+   
+    
+     
 }

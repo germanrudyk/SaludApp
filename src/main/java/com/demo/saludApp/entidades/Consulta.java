@@ -4,7 +4,6 @@ import com.demo.saludApp.enumeraciones.Estado;
 import com.demo.saludApp.enumeraciones.Horario;
 import com.demo.saludApp.enumeraciones.Modalidad;
 import com.demo.saludApp.enumeraciones.ObraSocial;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

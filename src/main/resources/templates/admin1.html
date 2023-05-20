@@ -38,13 +38,8 @@
     <!--Navbar-->
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <a class="navbar-brand" href="#">
-            <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
+            <img src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\LogoSaludApp.png" alt="Logo" class="navbar-logo">
         </a>
-        
-         <!--LOGOUT-->
-        <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
-                <a class="dropdown-item" href="/logout" >Cerrar Sesión</a>
-        </li>
     </nav>
   <body>
     <div class="tabla container mt-3">
@@ -115,71 +110,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Dr. Joaquín Pipinich</td>
-              <td>Cardiología</td>
-              <td>5</td>
-              <td>$5.200</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dra. Marisa Muñoz</td>
-              <td>Dermatología</td>
-              <td>5</td>
-              <td>$5.600</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. Pablo Fuentes</td>
-              <td>Odontología</td>
-              <td>5</td>
-              <td>$5.500</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. José Ignacio Moreno</td>
-              <td>Psiquiatría</td>
-              <td>5</td>
-              <td>$5.800</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. German Rudyk</td>
-              <td>Ginecología</td>
-              <td>5</td>
-              <td>$6.000</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. Kevin Lemos</td>
-              <td>Pediatría</td>
-              <td>5</td>
-              <td>$5.300</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. Damián Canteros</td>
-              <td>Nutrición</td>
-              <td>5</td>
-              <td>$5.000</td>
+            <tr th:each="profesional : ${profesionales}">
+              <td th:text="${profesional.nombre}"></td>
+              <td th:text="${profesional.especialidad}"></td>
+              <td th:text="${profesional.calificacion}"></td>
+              <td></td>
               <td>
                 <button class="btn btn-danger btn-delete">Eliminar</button>
                 <button class="btn btn-custom btn-edit">Modificar</button>
@@ -207,29 +142,15 @@
           </thead>
           <tbody>
 
-            <tr>
-              <td>QueTal</td>
-              <td>Hola</td>
-              <td>chau@gmail.com</td>
-              <td>12345678</td>
-              <td>01-01-1990</td>
-              <td>Femenino</td>
-              <td>Medifé</td>
-              <td><img class= "profile-image" src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\fotoperfilmujer.jpg" alt="Foto de Perfil"></td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit mt-1">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Hola</td>
-              <td>QueTal</td>
-              <td>holaquetal@gmail.com</td>
-              <td>87654321</td>
-              <td>15-05-1996</td>
-              <td>Masculino</td>
-              <td>OSEP</td>
-              <td><img class= "profile-image" src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\fotoperfilhombre.jpg" alt="Foto de Perfil"></td>
+            <tr th:each="$paciente : ${pacientes}">
+              <td th:text="${paciente.nombre}"></td>
+              <td th:text="${paciente.apellido}"></td>
+              <td th:text="${paciente.email}"></td>
+              <td th:text="${paciente.dni}"></td>
+              <td th:text="${paciente.fechaNacimiento}"></td>
+              <td th:text="${paciente.genero}"></td>
+              <td th:text="${paciente.obraSocial}"></td>
+              <td th:src="${paciente.imagen}"><img class= "profile-image" src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\fotoperfilmujer.jpg" alt="Foto de Perfil"></td>
               <td>
                 <button class="btn btn-danger btn-delete">Eliminar</button>
                 <button class="btn btn-custom btn-edit mt-1">Modificar</button>
