@@ -1,244 +1,170 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin SaludApp</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <style>
-    .navbar-logo {
-     max-height: 30px;
-    }
-    .custom-form {
-    max-width: 1000px;
-    padding: 20px;
-    border: 2px solid #03989E;
-    border-radius: 5px;
-    }
-    .btn-custom {
-    background-color: #03989E;
-    color: #ffffff;
-    }
-    .btn-custom:hover {
-    background-color: #01767a;
-    color: #ffffff;
-    }
-    .profile-image {
-    width: 50px; 
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%; 
-    }
-    #agregar-profesional {
-    float: right;
-    margin-right: 10px;
-    }
-  </style>
-</head>
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
-        </a>
-        
-         <!--LOGOUT-->
-        <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
-                <a class="dropdown-item" href="/logout" >Cerrar Sesión</a>
-        </li>
-    </nav>
-  <body>
-    <div class="tabla container mt-3">
-        <h1>Profesionales Registrados:</h1>
-        <button class="btn btn-custom mb-2" id="registrar-profesional">Registrar Profesional</button>
-        <div id="modal-registrar-profesional" class="modal">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Registrar Profesional</h5>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                      <label for="nombre">Nombre:</label>
-                      <input type="text" id="nombre" name="nombre" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="contraseña">Contraseña:</label>
-                      <input type="password" id="contraseña" name="contraseña" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="especialidad">Especialidad:</label>
-                      <input type="text" id="especialidad" name="especialidad" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="matricula">Matrícula:</label>
-                      <input type="text" id="matricula" name="matricula" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="email">E-mail:</label>
-                      <input type="email" id="email" name="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="telefono">Teléfono:</label>
-                      <input type="tel" id="telefono" name="telefono" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="foto">Foto de perfil:</label>
-                      <input type="file" id="foto" name="foto" class="form-control-file">
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Registrar</button>
-                </div>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/fragments/head  :: head"></head>
+<body>
+    <!------------- Navbar------------->
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
+    </a>
+    <!------------- Logout------------->
+    <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
+      <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
+    </li>
+  </nav>
+  <div class="container">
+    <h1>Profesionales Registrados:</h1>
+    <button class="btn btn-custom" data-toggle="modal" data-target="#registroModal">Registrar Profesional</button>
+  </div>
+  <!-------------Modal del boton "Registrarse"------------->
+  <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registroModalLabel">Registro de Profesional</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!------------- Formulario en el modal ------------->
+        <div class="modal-body">
+          <form class="custom-form" th:action="@{admin/registro}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input type="text" id="nombre" name="nombre" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="apellido">Apellido</label>
+              <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido">
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" class="form-control" name="email" placeholder="Ingrese su e-mail">
+            </div>
+            <div class="form-group">
+              <label for="password">Contraseña</label>
+              <input type="password" class="form-control" name="password" placeholder="Ingrese su contraseña">
+            </div>
+            <div class="form-group">
+              <label for="matricula">Matrícula:</label>
+              <input type="text" id="matricula" name="matricula" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="locacion">Locación:</label>
+              <input type="text" id="locacion" name="locacion" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="especialidad">Especialidad</label>
+              <select class="form-control" name="especialidad">
+                <option 
+                  th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                  th:value="${especialidad}" th:text="${especialidad}">
+                </option>
+              </select>
+          </div>
+            <div class="form-group">
+              <label for="profile-image">Foto de Perfil</label>
+              <input type="file" id="profile-image" accept="image/*">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-custom">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!------------- Tabla Profesionales ------------->
+  <div class="container mt-5">
+    <h1>Profesionales</h1>
+    <table class="table custom-form">
+      <thead>
+        <tr>
+          <th scope="col">Matricula</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Email</th>
+          <th scope="col">Locación</th>
+          <th scope="col">
+            <select name="especialidad" class="especialidad" onchange="filtrarTabla()">
+              <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                th:value="${especialidad}" th:text="${especialidad}">
+              </option>
+            </select>
+          </th>
+          <th scope="col" class="sortable">
+            <div class="sortable-header" data-column-index="2">
+              <div>Calificación</div>
+              <div class="sort-indicator">
+                <span class="arrow-up"></span>
+                <span class="arrow-down"></span>
               </div>
             </div>
-          </div>
-
-        <table class="table custom-form">
-          <thead>
-            <tr>
-              <th>Nombre del Profesional</th>
-              <th>
-                <select id="especialidad" class="especialidad" onchange="filtrarTabla()">
-                  <option value="todas">Especialidad</option>
-                  <option value="cardiologia">Cardiología</option>
-                  <option value="clinica">Clínica</option>
-                  <option value="ginecologia">Ginecología</option>
-                  <option value="pediatria">Pediatría</option>
-                </select></th>
-              <th>Calificación</th>
-              <th>Valor de la Consulta</th>
-              <th>Turnos</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Dr. Joaquín Pipinich</td>
-              <td>Cardiología</td>
-              <td>5</td>
-              <td>$5.200</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dra. Marisa Muñoz</td>
-              <td>Dermatología</td>
-              <td>5</td>
-              <td>$5.600</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. Pablo Fuentes</td>
-              <td>Odontología</td>
-              <td>5</td>
-              <td>$5.500</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. José Ignacio Moreno</td>
-              <td>Psiquiatría</td>
-              <td>5</td>
-              <td>$5.800</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. German Rudyk</td>
-              <td>Ginecología</td>
-              <td>5</td>
-              <td>$6.000</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. Kevin Lemos</td>
-              <td>Pediatría</td>
-              <td>5</td>
-              <td>$5.300</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Dr. Damián Canteros</td>
-              <td>Nutrición</td>
-              <td>5</td>
-              <td>$5.000</td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit">Modificar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    
-    <div class="container">
-        <h1>Pacientes Registrados</h1>
-        <table class="table custom-form">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Email</th>
-              <th>DNI</th>
-              <th>Fecha de Nacimiento</th>
-              <th>Género</th>
-              <th>Obra Social</th>
-              <th>Foto de Perfil</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr>
-              <td>QueTal</td>
-              <td>Hola</td>
-              <td>chau@gmail.com</td>
-              <td>12345678</td>
-              <td>01-01-1990</td>
-              <td>Femenino</td>
-              <td>Medifé</td>
-              <td><img class= "profile-image" src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\fotoperfilmujer.jpg" alt="Foto de Perfil"></td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit mt-1">Modificar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Hola</td>
-              <td>QueTal</td>
-              <td>holaquetal@gmail.com</td>
-              <td>87654321</td>
-              <td>15-05-1996</td>
-              <td>Masculino</td>
-              <td>OSEP</td>
-              <td><img class= "profile-image" src="C:\Users\Kevin\Desktop\PROYECTO FINAL - SALUDAPP\FRONTEND\fotoperfilhombre.jpg" alt="Foto de Perfil"></td>
-              <td>
-                <button class="btn btn-danger btn-delete">Eliminar</button>
-                <button class="btn btn-custom btn-edit mt-1">Modificar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  </body>
-
-
+          </th>
+          <th scope="col">Foto de Perfil</th>
+          <th scope="col">Turnos</th>
+        </tr>
+      </thead>
+      <tbody th:each="profesional : ${profesionales}">
+        <tr>
+          <td scope="col" th:text="${profesional.matricula}"></td>
+          <td scope="col" th:text="${profesional.nombre}"></td>
+          <td scope="col" th:text="${profesional.apellido}"></td>
+          <td scope="col" th:text="${profesional.email}"></td>
+          <td scope="col" th:text="${profesional.locacion}"></td>
+          <td scope="col" th:text="${profesional.especialidad}"></td>
+          <td id="calification" th:value="${profesional.calificacion}">
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+          <td scope="col"></td>
+          <td>
+            <button class="btn-custom">Agendar Turno</button>
+          </td>
+        <tr>
+      </tbody>
+    </table>
+    <a class="attribution" href="http://fontawesome.io/"><i class="fa fa-font-awesome"></i> fontawesome.io</a>
+  </div>
+  </div>
+  <!------------- Tabla Pacientes ------------->
+  <div class="container">
+    <h1>Pacientes Registrados</h1>
+    <table class="table custom-form">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Email</th>
+          <th scope="col">DNI</th>
+          <th scope="col">Fecha de Nacimiento</th>
+          <th scope="col">Género</th>
+          <!--<th scope="col">Obra Social</th>-->
+          <th scope="col">Foto de Perfil</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody th:each="paciente : ${pacientes}">
+        <tr>
+          <td scope="col" th:text="${paciente.nombre}"></td>
+          <td scope="col" th:text="${paciente.apellido}"></td>
+          <td scope="col" th:text="${paciente.email}"></td>
+          <td scope="col" th:text="${paciente.dni}"></td>
+          <td scope="col" th:text="${paciente.fechaNacimiento}"></td>
+          <td scope="col" th:text="${paciente.Genero}"></td>
+          <!--<td scope="col" th:text="${paciente.ObraSocial}"></td>-->
+          <td scope="col"></td>
+          <td scope="col">
+            <button class="btn-custom">Dar de baja</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<!------------- Footer ------------->
+<footer th:replace="/fragments/footer  :: footer"></footer>.
+</body>
 </html>
