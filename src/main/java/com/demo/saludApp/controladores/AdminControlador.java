@@ -58,10 +58,10 @@ public class AdminControlador {
     }
     
     @PostMapping("/registro") //asigna solicitudes HTTP POST
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam Integer calificacion, @RequestParam String consultas, @RequestParam String locacion, @RequestParam String detalleEspecialidad, @RequestParam ArrayList<String> turnos, @RequestParam Especialidad especialidad, @RequestParam ArrayList<ObraSocial> obraSocialAceptada,ModelMap modelo, MultipartFile archivo) {
+    public String registro(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam String locacion, @RequestParam Especialidad especialidad, ModelMap modelo, MultipartFile archivo) {
         //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
         try {
-            profesionalServicio.crearProfesional(nombre, email, email, password, matricula, calificacion, consultas, locacion, detalleEspecialidad, turnos, especialidad, obraSocialAceptada);
+            profesionalServicio.crearProfesional(nombre, apellido, email, password, matricula, locacion,especialidad);
             modelo.put("exito", "Profesional registrado con exito");
         } catch (Exception ex) {            
             modelo.put("error", ex.getMessage());

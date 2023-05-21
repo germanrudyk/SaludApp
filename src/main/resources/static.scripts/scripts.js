@@ -73,21 +73,12 @@ headers.forEach(function (header) {
 });
 
 //------------- Estrella------------- 
-const ratings = {
-    a: 2.8,
-    b: 3.3,
-    c: 1.9,
-    d: 4.3,
-    e: 4.74,
-    f: 4.74,
-    g: 4.74
-};
-
-// total number of stars
 const starTotal = 5;
 
-for (const rating in ratings) {
-    const starPercentage = (ratings[rating] / starTotal) * 100;
-    const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-    document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
-}
+rows.forEach(function (row) {
+    const rating = document.getElementById('calification').value;
+    const starTotal = 5; // Agregar esta línea para definir la variable starTotal
+    const starPercentage = (rating / starTotal) * 100;
+    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+    row.querySelector('.stars-inner').style.width = starPercentageRounded;
+});

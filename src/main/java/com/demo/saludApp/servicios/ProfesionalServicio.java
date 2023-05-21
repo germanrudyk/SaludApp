@@ -32,7 +32,7 @@ public class ProfesionalServicio {
      
     
      @Transactional
-    public void crearProfesional(String nombre,String apellido, String email, String password, Integer matricula, Integer calificacion, String consultas, String locacion, String detalleEspecialidad,ArrayList<String> turnos, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException, ParseException {
+    public void crearProfesional(String nombre, String apellido, String email, String password, Integer matricula, String locacion, Especialidad especialidad) throws MiException, ParseException {
 
 //        validar(nombre, apellido, email, password, matricula, locacion, especialidad, obraSocialAceptada);
 
@@ -44,7 +44,6 @@ public class ProfesionalServicio {
         profesional.setMatricula(matricula);
         profesional.setLocacion(locacion);
         profesional.setEspecialidad(especialidad);
-        profesional.setObraSocialAceptada(obraSocialAceptada);
 
         pr.save(profesional);
     }
