@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.demo.saludApp.controladores;
 
+import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.servicios.PacienteServicio;
-import java.util.Date;
+import com.demo.saludApp.servicios.ProfesionalServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -29,29 +27,19 @@ public class PacienteControlador {
     @Autowired
     private PacienteServicio ps;
     
-    @GetMapping("/registrar") //asigna solicitudes HTTP GET
-    public String registrar(ModelMap modelo) {
+    @Autowired
+    private ProfesionalServicio profesionalServicio; 
+    
+    @GetMapping("") //asigna solicitudes HTTP GET
+    public String vistaPaciente(ModelMap modelo) {
         
 //        modelo.put("registrar", "pagina de registro");
+         List<Profesional> profesionales = profesionalServicio.listarProfesionales();
+        modelo.addAttribute("profesionales", profesionales);
         
-        
-
-        return "paciente_registrar.html";
+        return "paciente.html";
     }
     
-    @PostMapping("/registro") //asigna solicitudes HTTP POST
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo) {
-        //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
-        try {
-            ps.crearPaciente(nombre, email, password, dni, genero, obraSocial, fechaNacimiento);
-            modelo.put("exito", "Paciente registrado con exito");
-        } catch (Exception ex) {            
-            modelo.put("error", ex.getMessage());
-            return "paciente_registrar.html";
-            
-        }
-        return "paciente_registrar.html";        
-    }    
     
     @GetMapping("/modificar/{email}")
     public String modificar(@PathVariable String email, ModelMap modelo) {
@@ -62,12 +50,12 @@ public class PacienteControlador {
     }
     
     @PostMapping("/modificacion")
-    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo) {
+    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo, MultipartFile archivo) {
         
         try {           
-            ps.modificarPaciente(id, nombre, email, genero, obraSocial, password, dni, fechaNacimiento);
+            ps.modificarPaciente(archivo, dni, nombre, email, email, password, dni, fechaNacimiento, genero, obraSocial);
             modelo.put("exito", "Modificación exitosa");
-            modelo.put("modificar", ps.buscarPorEmail(email));
+            modelo.put("modificar", ps.getOne(id));
             
         } catch (Exception ex) {
             

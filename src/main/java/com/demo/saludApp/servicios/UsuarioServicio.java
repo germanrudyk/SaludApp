@@ -9,10 +9,20 @@ import com.demo.saludApp.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -20,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ILMAN
  */
 @Service
-public class UsuarioServicio {
+public class UsuarioServicio implements UserDetailsService{
     
      @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -29,15 +39,16 @@ public class UsuarioServicio {
     private ImagenServicio imagenServicio;
     
      @Transactional
-    public void registrar(MultipartFile archivo, String nombre, String email, String password, String password2, Integer telefono) throws MiException {
+    public void registrar(MultipartFile archivo, String nombre, String apellido, String email, String password, String password2, Integer telefono) throws MiException {
 
-        validar(nombre, email, password, password2);
+        validar(nombre, apellido, email, password, password2);
 
         Usuario usuario = new Usuario();
 
         usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
         usuario.setEmail(email);
-//        usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+        usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         usuario.setRol(Rol.PACIENTE);
         usuario.setTelefono(telefono);
         usuario.setActivo(true);
@@ -87,11 +98,16 @@ public class UsuarioServicio {
         }
     }
     
-    private void validar(String nombre, String email, String password, String password2) throws MiException {
+    private void validar(String nombre, String apellido, String email, String password, String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("el nombre no puede ser nulo o estar vacío");
         }
+        
+        if (apellido.isEmpty() || apellido == null) {
+            throw new MiException("el nombre no puede ser nulo o estar vacío");
+        }
+        
         if (email.isEmpty() || email == null) {
             throw new MiException("el email no puede ser nulo o estar vacio");
         }
@@ -103,4 +119,35 @@ public class UsuarioServicio {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
     }
+    
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
+
+        if (usuario != null) {
+
+            List<GrantedAuthority> permisos = new ArrayList();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
+
+            permisos.add(p);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession sesion = attr.getRequest().getSession(true);
+
+            sesion.setAttribute("usuariosession", usuario);
+
+            return new User(usuario.getNombre(), usuario.getPassword(), permisos);
+        } else {
+            return null;
+        }
+
+    }
+    
+    
+   
+    
+     
 }

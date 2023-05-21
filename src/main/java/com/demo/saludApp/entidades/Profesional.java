@@ -7,18 +7,16 @@ import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 
 @Entity
 public class Profesional extends Usuario {
     
     private Integer matricula;
     
-    private Integer calificacion;
+    private Double calificacion;
     private String consultas;
     private String locacion;
     private String detalleEspecialidad;
-    private ArrayList<String> turnos;
     
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
@@ -36,11 +34,11 @@ public class Profesional extends Usuario {
         this.matricula = matricula;
     }
 
-    public Integer getCalificacion() {
+    public Double getCalificacion() {
         return calificacion;
     }
 
-    public void setCalificacion(Integer calificacion) {
+    public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
     }
 
@@ -68,14 +66,6 @@ public class Profesional extends Usuario {
         this.detalleEspecialidad = detalleEspecialidad;
     }
 
-    public ArrayList<String> getTurnos() {
-        return turnos;
-    }
-
-    public void setTurnos(ArrayList<String> turnos) {
-        this.turnos = turnos;
-    }
-
     public Especialidad getEspecialidad() {
         return especialidad;
     }
@@ -94,7 +84,8 @@ public class Profesional extends Usuario {
 
     @Override
     public String toString() {
-        return "Profesional{" + "matricula=" + matricula + ", calificacion=" + calificacion + ", consultas=" + consultas + ", locacion=" + locacion + ", detalleEspecialidad=" + detalleEspecialidad + ", turnos=" + turnos + ", especialidad=" + especialidad + ", obraSocialAceptada=" + obraSocialAceptada + '}';
+        return "Profesional{" + "matricula=" + matricula + ", calificacion=" + calificacion + ", consultas=" + consultas + ", locacion=" + locacion + ", detalleEspecialidad=" + detalleEspecialidad + ", especialidad=" + especialidad + ", obraSocialAceptada=" + obraSocialAceptada + '}';
     }
-    
+
+ 
 }
