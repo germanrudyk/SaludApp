@@ -1,91 +1,35 @@
 package com.demo.saludApp.entidades;
 
-
 import com.demo.saludApp.enumeraciones.Especialidad;
-import com.demo.saludApp.enumeraciones.ObraSocial;
-import java.util.ArrayList;
 import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Table(name = "profesional")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Profesional extends Usuario {
     
+    @Column
     private Integer matricula;
-    
-    private Double calificacion;
-    private String consultas;
+    @Column
     private String locacion;
-    private String detalleEspecialidad;
-    
+    @Column
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
-    private ArrayList<ObraSocial> obraSocialAceptada;
-
-    public Profesional() {
-        super();
-    }
-
-    public Integer getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(Integer matricula) {
-        this.matricula = matricula;
-    }
-
-    public Double getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(Double calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public String getConsultas() {
-        return consultas;
-    }
-
-    public void setConsultas(String consultas) {
-        this.consultas = consultas;
-    }
-
-    public String getLocacion() {
-        return locacion;
-    }
-
-    public void setLocacion(String locacion) {
-        this.locacion = locacion;
-    }
-
-    public String getDetalleEspecialidad() {
-        return detalleEspecialidad;
-    }
-
-    public void setDetalleEspecialidad(String detalleEspecialidad) {
-        this.detalleEspecialidad = detalleEspecialidad;
-    }
-
-    public Especialidad getEspecialidad() {
-        return especialidad;
-    }
-
-    public void setEspecialidad(Especialidad especialidad) {
-        this.especialidad = especialidad;
-    }
-
-    public ArrayList<ObraSocial> getObraSocialAceptada() {
-        return obraSocialAceptada;
-    }
-
-    public void setObraSocialAceptada(ArrayList<ObraSocial> obraSocialAceptada) {
-        this.obraSocialAceptada = obraSocialAceptada;
-    }
-
-    @Override
-    public String toString() {
-        return "Profesional{" + "matricula=" + matricula + ", calificacion=" + calificacion + ", consultas=" + consultas + ", locacion=" + locacion + ", detalleEspecialidad=" + detalleEspecialidad + ", especialidad=" + especialidad + ", obraSocialAceptada=" + obraSocialAceptada + '}';
-    }
-
- 
+    @Column
+    private String obrasSociales;
+    @Column
+    private String detalleEspecialidad;
+    @Column
+    private Double calificacion;
+    @Column
+    private String consultas;
 }

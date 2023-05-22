@@ -61,16 +61,8 @@ public class PacienteServicio {
         return pacientes;
     }
 
-    public Paciente buscarPorEmail(String email) {
-
-        return pacienteRepositorio.buscarPorEmail(email);
-
-    }
-
     public Paciente getOne(String id) {
-
         return pacienteRepositorio.getOne(id);
-
     }
 
      @org.springframework.transaction.annotation.Transactional

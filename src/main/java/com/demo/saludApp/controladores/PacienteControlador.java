@@ -3,6 +3,7 @@ package com.demo.saludApp.controladores;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
+import com.demo.saludApp.repositorios.UsuarioRepositorio;
 import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.List;
@@ -26,6 +27,8 @@ public class PacienteControlador {
     
     @Autowired
     private PacienteServicio ps;
+    @Autowired
+    private UsuarioRepositorio us;
     
     @Autowired
     private ProfesionalServicio profesionalServicio; 
@@ -33,8 +36,7 @@ public class PacienteControlador {
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(ModelMap modelo) {
         
-//        modelo.put("registrar", "pagina de registro");
-         List<Profesional> profesionales = profesionalServicio.listarProfesionales();
+        List<Profesional> profesionales = profesionalServicio.listarProfesionales();
         modelo.addAttribute("profesionales", profesionales);
         
         return "paciente.html";
@@ -44,7 +46,7 @@ public class PacienteControlador {
     @GetMapping("/modificar/{email}")
     public String modificar(@PathVariable String email, ModelMap modelo) {
         
-        modelo.put("modificar", ps.buscarPorEmail(email));
+        modelo.put("modificar", us.buscarPorEmail(email));
         
         return "paciente_modificar.html";
     }
