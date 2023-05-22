@@ -155,6 +155,9 @@
           <td scope="col" th:text="${paciente.dni}"></td>
           <td scope="col" th:text="${paciente.fechaNacimiento}"></td>
           <td scope="col" th:text="${paciente.Genero}"></td>
+          <td 
+            <a><img th:if="${usuario.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${usuario.id}__}" width='150px'></a>
+          </td>
           <!--<td scope="col" th:text="${paciente.ObraSocial}"></td>-->
           <td scope="col"></td>
           <td scope="col">
