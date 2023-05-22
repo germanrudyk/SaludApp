@@ -4,11 +4,9 @@ import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Especialidad;
-import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import com.demo.saludApp.servicios.UsuarioServicio;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -65,10 +63,10 @@ public class AdminControlador {
             modelo.put("exito", "Profesional registrado con exito");
         } catch (Exception ex) {            
             modelo.put("error", ex.getMessage());
-            return "admin.html";
+            return "redirect:/admin";      
             
         }
-        return "admin.html";        
+        return "redirect:/admin";        
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
