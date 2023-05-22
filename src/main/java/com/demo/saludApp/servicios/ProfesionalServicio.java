@@ -3,7 +3,6 @@ package com.demo.saludApp.servicios;
 import com.demo.saludApp.entidades.Imagen;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.enumeraciones.Especialidad;
-import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.repositorios.ProfesionalRepositorio;
@@ -49,7 +48,7 @@ public class ProfesionalServicio {
     }
 
    @org.springframework.transaction.annotation.Transactional
-    public void modificarProfesional(MultipartFile archivo, String idUsuario, String nombre, String apellido, String email, String password, String dni, Integer telefono, String fechaNacimiento, Genero genero, ArrayList obrasocial, String locacion, String detalleEspecialidad, Especialidad especialidad, Integer matricula) throws MiException, ParseException {
+    public void modificarProfesional(MultipartFile archivo, String idUsuario, String nombre, String apellido, String email, String password, Integer matricula, Integer telefono, ArrayList obrasocial, String locacion, String detalleEspecialidad, Especialidad especialidad) throws MiException, ParseException {
         
         Optional<Profesional> respuesta = pr.findById(idUsuario);
 
@@ -109,10 +108,6 @@ public class ProfesionalServicio {
         List<Profesional> profesionales = new ArrayList();
         profesionales = pr.findAll();
     return profesionales;
-    }
-    
-    public Profesional getOne(String nombre){
-    return pr.buscarNombre(nombre);
     }
         
     public List<Profesional> filtrarEspecialidad(String especialidad) {

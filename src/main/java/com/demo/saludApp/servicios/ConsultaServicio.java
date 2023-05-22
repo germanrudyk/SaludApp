@@ -50,7 +50,7 @@ public class ConsultaServicio {
             Consulta consulta = respuesta.get();
 
             consulta.setDniPaciente(paciente);
-            consulta.setObrasocial(paciente.getObraSocialId());
+            consulta.setObrasocial(paciente.getObraSocial());
 
             consulta.setEstado(Estado.RESERVADA);
 

@@ -18,20 +18,19 @@
     <table class="table custom-form">
       <thead>
         <tr>
-          <th></th>
-          <th>Matricula</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Email</th>
-          <th>Locación</th>
-          <th>
+          <th scope="col">Matricula</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Email</th>
+          <th scope="col">Locación</th>
+          <th scope="col">
             <select name="especialidad" class="especialidad" onchange="filtrarTabla()">
               <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
                 th:value="${especialidad}" th:text="${especialidad}">
               </option>
             </select>
           </th>
-          <th class="sortable">
+          <th scope="col" class="sortable">
             <div class="sortable-header" data-column-index="2">
               <div>Calificación</div>
               <div class="sort-indicator">
@@ -40,26 +39,28 @@
               </div>
             </div>
           </th>
-          <th>Turnos</th>
+          <th scope="col">Foto de Perfil</th>
+          <th scope="col">Turnos</th>
         </tr>
       </thead>
-      <tbody th:each="$profesional : ${profesional}">
+      <tbody th:each="profesional : ${profesional}">
         <tr>
-          <td th:src="${profesional.imagen}"></td>
-          <td th:text="${profesional.matricula}"></td>
-          <td th:text="${profesional.nombre}"></td>
-          <td th:text="${profesional.apellido}"></td>
-          <td th:text="${profesional.email}"></td>
-          <td th:text="${profesional.locacion}"></td>
-          <td th:text="${profesional.especialidad}"></td>
-          <td th:value="${profesional.calificacion}">
+          <td scope="col" th:text="${profesional.matricula}"></td>
+          <td scope="col" th:text="${profesional.nombre}"></td>
+          <td scope="col" th:text="${profesional.apellido}"></td>
+          <td scope="col" th:text="${profesional.email}"></td>
+          <td scope="col" th:text="${profesional.locacion}"></td>
+          <td scope="col" th:text="${profesional.especialidad}"></td>
+          <td id="calification" th:value="${profesional.calificacion}">
             <div class="stars-outer">
               <div class="stars-inner"></div>
             </div>
           </td>
+          <td scope="col"></td>
           <td>
             <button class="btn-custom">Agendar Turno</button>
           </td>
+        <tr>
       </tbody>
     </table>
     <a class="attribution" href="http://fontawesome.io/"><i class="fa fa-font-awesome"></i> fontawesome.io</a>
