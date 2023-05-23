@@ -35,8 +35,8 @@ public class ConsultaServicio {
         consulta.setFechaConsulta(fechaConsulta);
 
         consulta.setHorario(horario);
-        consulta.setMatriculaProfesional(profesional);
-        consulta.setPrecioConsulta(precio);
+//        consulta.setMatriculaProfesional(profesional);
+//        consulta.setPrecioConsulta(precio);
 
         consultaRepositorio.save(consulta);
 
@@ -49,7 +49,7 @@ public class ConsultaServicio {
         if (respuesta.isPresent()) {
             Consulta consulta = respuesta.get();
 
-            consulta.setDniPaciente(paciente);
+//            consulta.setDniPaciente(paciente);
             consulta.setObrasocial(paciente.getObraSocial());
 
             consulta.setEstado(Estado.RESERVADA);

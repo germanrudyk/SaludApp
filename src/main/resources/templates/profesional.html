@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/fragments/head  :: head"></head>
+<body>
+  <!------------- Navbar------------->
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
+      <!------------- Logout------------->
+      <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
+      <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
+    </li>
+    </a>
+  </nav>
+  <!------------- Tabla Profesionales ------------->
+  <div class="container mt-5">
+    <h1>Pacientes</h1>
+    <table class="table custom-form">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Email</th>
+          <th scope="col">DNI</th>
+          <th scope="col">Fecha de Nacimiento</th>
+          <th scope="col">Género</th>
+          <!--<th scope="col">Obra Social</th>-->
+          <th scope="col">Foto de Perfil</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody th:each="paciente : ${pacientes}">
+        <tr>
+          <td scope="col" th:text="${paciente.nombre}"></td>
+          <td scope="col" th:text="${paciente.apellido}"></td>
+          <td scope="col" th:text="${paciente.email}"></td>
+          <td scope="col" th:text="${paciente.dni}"></td>
+          <td scope="col" th:text="${paciente.fechaNacimiento}"></td>
+          <td scope="col" th:text="${paciente.Genero}"></td>
+          <!--<td scope="col" th:text="${paciente.ObraSocial}"></td>-->
+          <td scope="col"></td>
+          <td scope="col">
+            <button class="btn-custom">Dar de baja</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a class="attribution" href="http://fontawesome.io/"><i class="fa fa-font-awesome"></i> fontawesome.io</a>
+  </div>
+  <!------------- Footer ------------->
+  <footer th:replace="/fragments/footer  :: footer"></footer>
+</body>
+</html>
