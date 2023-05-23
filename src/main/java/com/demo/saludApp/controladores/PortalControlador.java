@@ -75,6 +75,6 @@ public class PortalControlador {
             return "redirect:/profesional";
         }
                        
-        return "paciente.html";
+        return "redirect:/paciente";
     }
 }

@@ -8,8 +8,8 @@
       <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
       <!------------- Logout------------->
       <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
-        <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
-      </li>
+                <a class="btn btn-custom dropdown-item" href="/logout">Cerrar Sesión</a>
+            </li>
     </a>
   </nav>
   <!------------- Tabla Profesionales ------------->
@@ -43,7 +43,7 @@
           <th scope="col">Turnos</th>
         </tr>
       </thead>
-      <tbody th:each="profesional : ${profesional}">
+      <tbody th:each="profesional : ${profesionales}">
         <tr>
           <td scope="col" th:text="${profesional.matricula}"></td>
           <td scope="col" th:text="${profesional.nombre}"></td>
@@ -58,7 +58,7 @@
           </td>
           <td scope="col"></td>
           <td>
-            <button class="btn-custom">Agendar Turno</button>
+            <button class="btn btn-custom">Agendar Turno</button>
           </td>
         <tr>
       </tbody>
