@@ -1,11 +1,15 @@
 package com.demo.saludApp.controladores;
 
+import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Profesional;
+import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Especialidad;
 import com.demo.saludApp.repositorios.UsuarioRepositorio;
+import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,11 +30,20 @@ public class ProfesionalControlador {
     
     @Autowired
     private ProfesionalServicio ps;
+    
+    @Autowired
+    private PacienteServicio pacienteServicio;
+    
     @Autowired
     private UsuarioRepositorio us;
     
     @GetMapping("") //asigna solicitudes HTTP GET
-    public String vistaProfesional(ModelMap modelo) {
+    public String vistaProfesional(HttpSession session, ModelMap modelo) {
+        
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        
+        List<Paciente> pacientes = pacienteServicio.listarPacientes();
+        modelo.addAttribute("pacientes", pacientes);
         
         return "profesional.html";
     }

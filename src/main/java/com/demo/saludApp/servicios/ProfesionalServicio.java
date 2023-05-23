@@ -4,6 +4,7 @@ import com.demo.saludApp.entidades.Imagen;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.enumeraciones.Especialidad;
 import com.demo.saludApp.enumeraciones.ObraSocial;
+import com.demo.saludApp.enumeraciones.Rol;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.repositorios.ProfesionalRepositorio;
 import java.text.ParseException;
@@ -39,10 +40,12 @@ public class ProfesionalServicio {
         profesional.setNombre(nombre);
         profesional.setApellido(apellido);
         profesional.setEmail(email);
-        profesional.setPassword(password);
+        profesional.setPassword(new BCryptPasswordEncoder().encode(password));
         profesional.setMatricula(matricula);
         profesional.setLocacion(locacion);
         profesional.setEspecialidad(especialidad);
+        profesional.setRol(Rol.PROFESIONAL);
+        profesional.setActivo(true);
 
         pr.save(profesional);
     }
@@ -64,6 +67,8 @@ public class ProfesionalServicio {
             profesional.setMatricula(matricula);
             profesional.setTelefono(telefono);
             profesional.setLocacion(locacion);
+            profesional.setRol(Rol.PROFESIONAL);
+            profesional.setActivo(true);
             
             String idImagen = null;
 
