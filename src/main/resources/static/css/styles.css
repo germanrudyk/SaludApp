@@ -109,3 +109,480 @@
 .attribution:hover {
     color: #1fa67a;
 }
+
+/*------ CAROUSEL ------*/
+.carousel-container {
+    position: relative;
+    width: 100%;
+    margin-top: 114px;
+    transition: all 0.4s ease;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    .carousel-container {
+        margin-top: 32vh;
+    }
+}
+
+.carousel-slide {
+    width: 400%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s ease;
+    transform: translateX(0%);
+}
+
+.carousel-slide img {
+    display: block;
+    width: 25%;
+    min-height: 10vh;
+    transition: all 0.4s ease;
+}
+
+.carousel-button-prev {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.carousel-button-next {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.carousel-button {
+    width: 50px;
+    font-size: 24px;
+    padding: 10px;
+    outline: none;
+    opacity: 0.5;
+}
+
+.carousel-navigation {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: var(--bg-color);
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.carousel-dot.active {
+    background-color: var(--text-color);
+}
+
+/* --------GENERAL STYLES -------- */
+:root {
+    --primary-bg-color: hsl(156, 100%, 38%);
+    --font: Verdana, Geneva, Tahoma, sans-serif;
+    --transition: color 0.1s, background-color 0.2s ease-in-out;
+    --bar-lenght: 0%; 
+}
+
+[data-theme="light"] {
+--bg-color: hsl(0, 0%, 93%);
+--text-color: hsl(0, 0%, 7%);
+}
+
+[data-theme="dark"] {
+    --bg-color: hsl(0, 0%, 7%);
+    --text-color: hsl(0, 0%, 93%);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font);
+    font-size: 12pt;
+    transition: var(--transition);
+}
+
+header {
+    background-color: var(--bg-color);
+    padding: 0 1.5em;
+}
+
+h2 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bolder;
+    font-size: xx-large;
+    font-size: 32pt;
+    margin-bottom: 20px;
+
+}
+
+@media only screen and (max-width: 600px) {
+    h2  {
+      font-size: 24pt;
+    }
+  }
+
+.bi {
+    fill: var(--text-color);
+  }
+
+.btn {
+    background-color: var( --primary-bg-color);
+    color: var(--text-color);
+}
+
+.btn:hover {
+    border: 1px solid var(--text-color);
+}
+
+.custom-pointer {
+    cursor: pointer;
+}
+
+/* ------- Arrow -------- */
+#myBtn {
+    display: none; /* Ocultamos el botón por defecto */
+    position: fixed; /* Posicionamos el botón fijo en la página */
+    bottom: 5vh; /* Colocamos el botón a 20px desde el borde inferior de la página */
+    right: 5vh; /* Colocamos el botón a 20px desde el borde derecho de la página */
+    z-index: 1; /* Establecemos una posición z superior para el botón */
+    cursor: pointer; /* Cambiamos el cursor del mouse */
+    border-radius: 50%;
+    opacity: 0.5;
+}
+  
+#myBtn:hover {
+    opacity: 1;
+}
+
+/* ------- Section -------- */
+.up-section {
+    opacity: 0; /* Establecemos la opacidad inicial en 0 para la sección */
+    transform: translateY(50px); /* Establecemos una transformación de 50px hacia abajo */
+    transition: all 1s ease; /* Agregamos una transición suave para la transformación */
+  }
+  
+/* ------- HOME -------- */
+.screen {
+    margin-top:45%;
+    min-height: 30vh; /* Altura mínima igual a la altura de la ventana */
+}
+
+#typing, #typing2 {
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
+    border-right: 3px solid var(--text-color);
+    margin: 0;
+}
+
+#typing2 {
+    font-size: 56pt;
+}
+
+@media only screen and (max-width: 600px) {
+    #typing2  {
+      font-size: 40pt;
+    }
+  }
+
+#typing.typing-finished, #typing2.typing-finished {
+    border-right: none;
+  }
+
+.marco {
+    max-width: 75vh;
+    margin-top: 20vh;
+    position: relative;
+    padding: 2%;
+    box-shadow: 0 0 7px 7px var(--primary-bg-color);
+    border-radius: 50%;
+}
+
+.foto {
+    border-radius: 50%;
+    border: 3px solid var(--text-color);
+    max-width: 100%; /* Para asegurarnos de que la imagen ocupe todo el ancho del contenedor */
+    height: auto; /* Para mantener la proporción de la imagen */
+    margin: 0 auto;
+    display: block; /* Para asegurarnos de que la imagen sea un elemento de bloque y no tenga problemas de alineación */
+}
+
+.icon {
+    box-shadow: 0 0 5px 3px var(--primary-bg-color);
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    width: 12%;
+    height: 12%;
+}
+
+.icon:hover {
+    width: 13%;
+    height: 13%;
+    background-color: var( --primary-bg-color);
+    box-shadow: none;
+}
+
+.icon1 {
+    position: absolute;
+    top: 12%;
+    right: 6%;
+}
+
+.icon2 {
+    position: absolute;
+    top: 32%;
+    right: -3%;
+}
+
+.icon3 {
+    position: absolute;
+    top: 56%;
+    right: -3%;
+}
+
+.bi-d {
+    height: 50%;
+    width: 50%;
+}
+
+.marco_nombre {
+    width: 100%;
+    height: 20%;
+    padding: 1rem;
+    box-shadow: 0px -7px 3px -3px var(--primary-bg-color);
+    border-radius: 30%;
+    background-color: var(--bg-color);
+    text-align: center;
+    position: absolute;
+    bottom: -8%;
+}
+
+/* ------- About -------- */
+#about {
+    background-color: var(--text-color);
+    min-height:350px;
+    display: flex;
+    align-items: center;
+}
+  #about h2, #about p {
+    color: var(--bg-color);
+    padding: 0 3% 0 3%;
+  }
+/* ------- Skills -------- */
+.cont__bar {
+    width: 100%;
+    height: 18%;
+    position: relative; 
+  }
+
+  .percent-number {
+    position: absolute;
+    right: 10px;
+  }
+
+
+.bar, .bar::after {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: #888;
+    border: var(--text-color);
+    overflow: hidden;
+}
+
+.bar::after {
+    content: "";
+    position: absolute;
+    left: -100%;
+    background-color: var(--primary-bg-color);
+    transition: var(--transition);
+    animation: bar-fill 2s ease-in-out forwards;
+}
+
+.bar--75::after {
+    --bar-lenght: 75%;
+}
+
+.bar--60::after {
+    --bar-lenght: 60%;
+}
+
+.bar--90::after {
+    --bar-lenght: 90%;
+}
+
+@keyframes bar-fill {
+    to{
+        transform: translateX(var(--bar-lenght));
+    }
+}
+
+.invisible .bar--75::after,
+.invisible .bar--60::after,
+.invisible .bar--90::after {
+  --bar-lenght: 0;
+  animation: none;
+}
+
+.bar--75:not(.invisible) .bar::after {
+  --bar-lenght: 75%;
+  animation: bar-fill 2s ease-in-out forwards;
+}
+
+.bar--60:not(.invisible) .bar::after {
+  --bar-lenght: 60%;
+  animation: bar-fill 2s ease-in-out forwards;
+}
+
+.bar--90:not(.invisible) .bar::after {
+  --bar-lenght: 90%;
+  animation: bar-fill 2s ease-in-out forwards;
+}
+
+
+/* ------- Tecnologies -------- */
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--text-color);
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    height: 6rem;
+    width: 6rem;
+}
+
+/* ------- PORTFOLIO -------- */
+.categories ul li {
+    font-size: 11pt;
+    cursor: pointer;
+}
+
+.categories .filter-item.active {
+    border-bottom: 2px solid var(--primary-bg-color);
+}
+
+.info_text {
+    padding-top: 16px;
+    padding-bottom: 0;
+    font-size: 11pt;
+}
+
+.card {
+    width: 300px;
+    height: 350px;
+    display: block;
+    position: relative;
+}
+.card img {
+    width: 100%;
+    padding: 3%;
+    padding-top: 4%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 30px;
+}
+
+.button  {
+    text-decoration: none;
+    height: 40px;
+    width: 100px;
+    margin: 5px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bolder;
+    font-size: 12px;
+    background-color: hsla(156, 100%, 38%, 0);
+    color: hsl(0, 0%, 93%);
+    border: 1px solid hsl(0, 0%, 93%);
+    border-radius: 50px 50px 50px 50px;
+    fill: hsl(0, 0%, 93%);
+  }
+
+.button:hover  {
+    filter: brightness(1.75);
+}
+
+.btnApp {
+    justify-content: space-between;
+    background-color: hsl(0, 0%, 93%);
+    color: hsl(0, 0%, 7%);
+    fill: hsl(0, 0%, 7%);
+}
+
+.card .overlay {
+    background: var(--primary-bg-color);
+    backdrop-filter: blur(2.7px);
+    -webkit-backdrop-filter: blur(2.7px);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.card .info {
+    font-size: 10px;
+    color: hsl(0, 0%, 93%);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.card:hover .info {
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+    pointer-events: unset;
+}
+
+.card:hover .overlay {
+    opacity: 0.8;
+}
+
+.card.hide {
+    display: none;
+}
+
+/* ------- FOOTER -------- */
+.border__top {
+    border-top: 1px solid var(--text-color);
+}

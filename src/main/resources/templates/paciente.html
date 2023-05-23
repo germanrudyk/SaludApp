@@ -12,17 +12,15 @@
       </li>
     </a>
   </nav>
-  <!------------- Tabla Profesionales ------------->
+  <!------------- Tabla Consultas ------------->
   <div class="container mt-5">
-    <h1>Profesionales</h1>
+    <h1>Consultas</h1>
     <table class="table custom-form">
       <thead>
         <tr>
-          <th scope="col">Matricula</th>
+          <th scope="col">Id</th>
           <th scope="col">Nombre</th>
           <th scope="col">Apellido</th>
-          <th scope="col">Email</th>
-          <th scope="col">Locación</th>
           <th scope="col">
             <select name="especialidad" class="especialidad" onchange="filtrarTabla()">
               <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
@@ -30,33 +28,24 @@
               </option>
             </select>
           </th>
-          <th scope="col" class="sortable">
-            <div class="sortable-header" data-column-index="2">
-              <div>Calificación</div>
-              <div class="sort-indicator">
-                <span class="arrow-up"></span>
-                <span class="arrow-down"></span>
-              </div>
-            </div>
-          </th>
-          <th scope="col">Foto de Perfil</th>
-          <th scope="col">Turnos</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Horario</th>
+          <th scope="col">Modalidad</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Calificación</th>
         </tr>
       </thead>
-      <tbody th:each="profesional : ${profesional}">
+      <tbody th:each="consulta : ${consultas}">
         <tr>
-          <td scope="col" th:text="${profesional.matricula}"></td>
-          <td scope="col" th:text="${profesional.nombre}"></td>
-          <td scope="col" th:text="${profesional.apellido}"></td>
-          <td scope="col" th:text="${profesional.email}"></td>
-          <td scope="col" th:text="${profesional.locacion}"></td>
-          <td scope="col" th:text="${profesional.especialidad}"></td>
-          <td id="calification" th:value="${profesional.calificacion}">
-            <div class="stars-outer">
-              <div class="stars-inner"></div>
-            </div>
-          </td>
-          <td scope="col"></td>
+          <td scope="col" th:text="${consulta.id}"></td>
+          <td scope="col" th:text="${consulta.profesional.nombre}"></td>
+          <td scope="col" th:text="${consulta.profesional.apellido}"></td>
+          <td scope="col" th:text="${consulta.especialidad}"></td>
+          <td scope="col" th:text="${consulta.fechaConsulta}"></td>
+          <td scope="col" th:text="${consulta.horario}"></td>
+          <td scope="col" th:text="${consulta.modalidad}"></td>
+          <td scope="col" th:text="${consulta.precioConsulta}"></td>
+          <td scope="col" th:text="${consulta.profesional.calificacion}"></td>
           <td>
             <button class="btn-custom">Agendar Turno</button>
           </td>

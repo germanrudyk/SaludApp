@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="/fragments/head  :: head"></head>
+
+<body>
+  <!------------- Navbar------------->
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
+      <!------------- Logout------------->
+      <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
+        <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
+      </li>
+    </a>
+  </nav>
+  <!------------- Crear Consulta ------------->
+  <div class="container">
+    <h1>Profesionales Registrados:</h1>
+    <button class="btn btn-custom" data-toggle="modal" data-target="#registroModal">Crear Consulta</button>
+  </div>
+  <!-------------Modal del boton "Crear Consulta"------------->
+  <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registroModalLabel">Crear Consulta</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!------------- Formulario en el modal ------------->
+        <div class="modal-body">
+          <form class="custom-form" th:action="@{profesional/registro}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="fecha">Fecha</label>
+              <input type="date" class="form-control" name="fecha" required>
+            </div>
+            <div class="form-group">
+              <label for="horario">Horario</label>
+              <select class="form-control" name="horario" required>
+                <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}" th:value="${horario}"
+                  th:text="${horario}">
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="modalidad">Modalidad</label>
+              <input type="text" class="form-control" name="modalidad" required>
+            </div>
+            <div class="form-group">
+              <label for="precio">Precio</label>
+              <input type="number" class="form-control" name="precio" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-custom">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!------------- Tabla Consultas ------------->
+  <div class="container mt-5">
+    <h1>Consultas</h1>
+    <table class="table custom-form">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Horario</th>
+          <th scope="col">Modalidad</th>
+          <th scope="col">Detalles</th>
+          <th scope="col">Estudios</th>
+        </tr>
+      </thead>
+      <tbody th:each="consulta : ${consultas}">
+        <tr>
+          <td scope="col" th:text="${consulta.id}"></td>
+          <td scope="col" th:text="${consulta.paciente.nombre}"></td>
+          <td scope="col" th:text="${consulta.paciente.apellido}"></td>
+          <td scope="col" th:text="${consulta.fechaConsulta}"></td>
+          <td scope="col" th:text="${consulta.horario}"></td>
+          <td scope="col" th:text="${consulta.modalidad}"></td>
+          <td scope="col" th:text="${consulta.detalleConsulta}"></td>
+          <td scope="col" th:text="${consulta.estudios}"></td>
+        <tr>
+      </tbody>
+    </table>
+  </div>
+  <!------------- Footer ------------->
+  <footer th:replace="/fragments/footer  :: footer"></footer>
+</body>
+
+</html>
