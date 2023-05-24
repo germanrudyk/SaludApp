@@ -14,6 +14,33 @@
     max-height: 30px;
 }
 
+.navbar-profile {
+    position: relative;
+  }
+
+  #profile-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  #profile-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+
+  .profile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    z-index: 1;
+  }
+
 /*------------- Form -------------*/
 .custom-form {
     max-width: 400px;
@@ -33,6 +60,13 @@
 
 .text-instagram {
     color: #fff;
+}
+
+.footer {
+    position: fixed; 
+    width: 100%; 
+    bottom: 0; 
+    background-color: #03989E;
 }
 
 /*------------- Ordenar -------------*/
