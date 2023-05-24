@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.demo.saludApp.repositorios;
 
 import com.demo.saludApp.entidades.Consulta;
@@ -27,11 +23,11 @@ public interface ConsultaRepositorio extends JpaRepository<Consulta, String> {
 //    @Query("SELECT c FROM Consulta c WHERE c.fecha = :fecha")
 //    public List<Consulta> buscarPorFecha(@Param("fecha") Date fecha);
 
-    @Query("SELECT c FROM Consulta c WHERE c.profesional = :profesional")
-    public List<Consulta> buscarPorProfesional(@Param("profesional") Profesional profesional);
-    
-    @Query("SELECT c FROM Consulta c WHERE c.estado = :estado")
-    public List<Consulta> buscarPorEstado(@Param("estado") Estado estado);
+//    @Query("SELECT c FROM Consulta c WHERE c.profesional = :profesional")
+//    public List<Consulta> buscarPorProfesional(@Param("profesional") Profesional profesional);
+//    
+//    @Query("SELECT c FROM Consulta c WHERE c.estado = :estado")
+//    public List<Consulta> buscarPorEstado(@Param("estado") Estado estado);
     
 //    @Query("SELECT c FROM Consulta c WHERE c.precio = :precio")
 //    public List<Consulta> buscarPorPrecio(@Param("precio") Integer precio);

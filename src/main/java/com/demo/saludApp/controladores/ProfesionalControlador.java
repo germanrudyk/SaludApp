@@ -1,11 +1,15 @@
 package com.demo.saludApp.controladores;
 
+import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Profesional;
+import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Especialidad;
-import com.demo.saludApp.enumeraciones.ObraSocial;
+import com.demo.saludApp.repositorios.UsuarioRepositorio;
+import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,7 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -25,47 +30,45 @@ public class ProfesionalControlador {
     
     @Autowired
     private ProfesionalServicio ps;
-        
-    @GetMapping("/registrar") //asigna solicitudes HTTP GET
-    public String registrar(ModelMap modelo) {
-        
-        return "profesional_registrar.html";
-    }
     
-    @PostMapping("/registro") //asigna solicitudes HTTP POST
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam String locacion, @RequestParam Especialidad especialidad,@RequestParam String detalleEspecialidad, @RequestParam List<String> obraSocialAceptada,ModelMap modelo) throws Exception {
-        //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
-        try {
-            ps.crearProfesional(nombre, email, password, matricula, locacion, especialidad, detalleEspecialidad, obraSocialAceptada);
-            modelo.put("exito", "Paciente registrado con exito");
-        } catch (Exception ex) {            
-            modelo.put("error", ex.getMessage());
-            return "paciente_registrar.html";
-            
-        }
-        return "profesional_registrar.html";        
+    @Autowired
+    private PacienteServicio pacienteServicio;
+    
+    @Autowired
+    private UsuarioRepositorio us;
+    
+    @GetMapping("") //asigna solicitudes HTTP GET
+    public String vistaProfesional(HttpSession session, ModelMap modelo) {
+        
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        
+        List<Paciente> pacientes = pacienteServicio.listarPacientes();
+        modelo.addAttribute("pacientes", pacientes);
+        
+        return "profesional.html";
     }
+        
     
     @GetMapping("/modificar/{nombre}")
-    public String modificar(@PathVariable String id, ModelMap modelo) {
+    public String modificar(@PathVariable String nombre, ModelMap modelo) {
         
-        modelo.put("modificar", ps.getOne(id));
+        modelo.put("modificar", us.getOne(nombre));
         
         return "profesional_modificar.html";
     }
     
     @PostMapping("/modificacion")
-    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam String locacion,@RequestParam Especialidad especialidad, @RequestParam List<String> obraSocialAceptada,ModelMap modelo) {
+    public String modificacion(@PathVariable MultipartFile archivo,@PathVariable String idUsuario,@PathVariable String nombre,@PathVariable String apellido,@PathVariable String email,@PathVariable String password,@PathVariable Integer matricula,@PathVariable Integer telefono,@PathVariable ArrayList obrasocial,@PathVariable String locacion,@PathVariable String detalleEspecialidad,@PathVariable Especialidad especialidad, ModelMap modelo) {
         
-        try {           
-            ps.modificarProfesional(id, nombre, email, password, matricula, locacion, especialidad, locacion, obraSocialAceptada);
+        try {   
+            ps.modificarProfesional(archivo, idUsuario, nombre, apellido, email, password, matricula, telefono, obrasocial, locacion, detalleEspecialidad, especialidad);
             modelo.put("exito", "Modificación exitosa");
-            modelo.put("modificar", ps.getOne(id));
+            modelo.put("modificar", us.getOne(nombre));
             
         } catch (Exception ex) {
             
             modelo.put("error", ex.getMessage());
-            modelo.put("modificar", ps.getOne(id));
+            modelo.put("modificar", us.getOne(nombre));
             return "paciente_modificar";
             
         }

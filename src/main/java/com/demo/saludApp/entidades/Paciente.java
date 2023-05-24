@@ -2,85 +2,38 @@ package com.demo.saludApp.entidades;
 
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.Column;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class Paciente extends Usuario{
+@Table(name = "paciente")
+@Getter
+@Setter
+@NoArgsConstructor
+public class Paciente extends Usuario {
 
+    @Column
     private String dni;
-
+    @Column
     @Enumerated(EnumType.STRING)
     private Genero genero;
-
+    @Column
     @Enumerated(EnumType.STRING)
     private ObraSocial obraSocial;
-
+    @Column
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-
+    @Column
     private String idHistoria;
-
-    public Paciente() {
-        super();
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public Genero getGenero() {
-        return genero;
-    }
-
-    public void setGenero(Genero genero) {
-        this.genero = genero;
-    }
-
-    public ObraSocial getObraSocialId() {
-        return obraSocial;
-    }
-
-    public void setObraSocial(ObraSocial obraSocial) {
-        this.obraSocial = obraSocial;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getIdHistoria() {
-        return idHistoria;
-    }
-
-    public void setIdHistoria(String idHistoria) {
-        this.idHistoria = idHistoria;
-    }
-
-    public Paciente(String dni, Genero genero, ObraSocial obraSocial, Date fechaNacimiento, String idHistoria) {
-        this.dni = dni;
-        this.genero = genero;
-        this.obraSocial = obraSocial;
-        this.fechaNacimiento = fechaNacimiento;
-        this.idHistoria = idHistoria;
-    }
-
 }

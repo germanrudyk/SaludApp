@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PacienteServicio {
@@ -23,23 +25,23 @@ public class PacienteServicio {
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
 
+    @Autowired
+    private ImagenServicio imagenServicio;
+     
     @Transactional
-    public void crearPaciente(String nombre, String email, String password, Integer telefono, Imagen imagen, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
+    public void crearPaciente(String nombre, String apellido, String email, Integer telefono, String password, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
 
-        validar(nombre, email, password, telefono, dni, fechaNacimiento);
+        validar(nombre, email, password, dni, fechaNacimiento);
 
         Paciente paciente = new Paciente();
-
-        paciente.setNombre(nombre);
-        paciente.setEmail(email);
-        paciente.setPassword(password);
-        paciente.setTelefono(telefono);
-        paciente.setActivo(true);               //Cuando se crea el Paciente estado true es activo
-        paciente.setRol(Rol.PACIENTE);            //Cuando se crea el Paciente el Rol es seteado a Paciente automaticamente
         
-        if (imagen != null){
-        paciente.setImagen(imagen);
-        }
+        paciente.setActivo(true);
+        paciente.setRol(Rol.PACIENTE);
+        paciente.setNombre(nombre);
+        paciente.setApellido(apellido);
+        paciente.setEmail(email);
+        paciente.setTelefono(telefono);
+        paciente.setPassword(new BCryptPasswordEncoder().encode(password));
         paciente.setDni(dni);
         paciente.setGenero(genero);
         paciente.setObraSocial(obraSocial);
@@ -59,62 +61,58 @@ public class PacienteServicio {
         return pacientes;
     }
 
-    public Paciente buscarPorEmail(String email) {
-
-        return pacienteRepositorio.buscarPorEmail(email);
-
-    }
-
     public Paciente getOne(String id) {
-
         return pacienteRepositorio.getOne(id);
-
     }
 
-    @Transactional
-    public void modificarPaciente(String id, String nombre, String email, String password, Integer telefono, Imagen imagen, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
-
-        validar(nombre, email, password, telefono, dni, fechaNacimiento);
-
-        Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
+     @org.springframework.transaction.annotation.Transactional
+    public void modificarPaciente(MultipartFile archivo, String idUsuario,  String nombre, String apellido, String email, String password, String dni, String fechaNacimiento, Genero genero, ObraSocial obrasocial) throws MiException, ParseException {
+        
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(idUsuario);
 
         if (respuesta.isPresent()) {
 
             Paciente paciente = respuesta.get();
 
             paciente.setNombre(nombre);
+            paciente.setApellido(apellido);
             paciente.setEmail(email);
-            paciente.setPassword(password);
-            paciente.setTelefono(telefono);
-            paciente.setImagen(imagen);
-
+            paciente.setPassword(new BCryptPasswordEncoder().encode(password));
             paciente.setDni(dni);
             paciente.setGenero(genero);
-            paciente.setObraSocial(obraSocial);
-
+            paciente.setObraSocial(obrasocial);
+            
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fecha = format.parse(fechaNacimiento);
-
             paciente.setFechaNacimiento(fecha);
+            
+            String idImagen = null;
+
+            if (paciente.getImagen() != null) {
+                idImagen = paciente.getImagen().getId();
+            }
+
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            paciente.setImagen(imagen);
 
             pacienteRepositorio.save(paciente);
-
         }
     }
 
     public void eliminarPaciente(String id) throws MiException {
 
-        Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
+         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
 
             Paciente paciente = respuesta.get();
-            paciente.setActivo(false);
-            pacienteRepositorio.save(paciente);
+
+                paciente.setActivo(false);
+                
         }
     }
 
-    private void validar(String nombre, String email, String password, Integer telefono, String dni, String fechaNacimiento) throws MiException {
+    private void validar(String nombre, String email, String password, String dni, String fechaNacimiento) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("el nombre no puede ser nulo o estar vacio"); //
@@ -125,10 +123,7 @@ public class PacienteServicio {
         if (password.isEmpty() || password == null) {
             throw new MiException("el password no puede ser nulo o estar vacio"); //
         }
-        if (telefono.toString().isEmpty() || telefono == null) {
-            throw new MiException("el password no puede ser nulo o estar vacio"); //
-        }
-        
+
         if (dni.isEmpty() || dni == null) {
             throw new MiException("el dni no puede ser nulo o estar vacio"); //
         }

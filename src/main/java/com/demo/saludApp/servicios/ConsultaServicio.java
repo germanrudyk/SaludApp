@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.demo.saludApp.servicios;
 
 import com.demo.saludApp.entidades.Consulta;
@@ -39,9 +35,8 @@ public class ConsultaServicio {
         consulta.setFechaConsulta(fechaConsulta);
 
         consulta.setHorario(horario);
-        consulta.setProfesional(profesional);
-        consulta.setEspecialidad(especialidad);
-        consulta.setPrecioConsulta(precio);
+//        consulta.setMatriculaProfesional(profesional);
+//        consulta.setPrecioConsulta(precio);
 
         consultaRepositorio.save(consulta);
 
@@ -54,8 +49,8 @@ public class ConsultaServicio {
         if (respuesta.isPresent()) {
             Consulta consulta = respuesta.get();
 
-            consulta.setPaciente(paciente);
-            consulta.setObrasocial(paciente.getObraSocialId());
+//            consulta.setDniPaciente(paciente);
+            consulta.setObrasocial(paciente.getObraSocial());
 
             consulta.setEstado(Estado.RESERVADA);
 
