@@ -1,12 +1,17 @@
 package com.demo.saludApp.controladores;
 
+import com.demo.saludApp.entidades.Consulta;
+import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Profesional;
+import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.repositorios.UsuarioRepositorio;
+import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +34,8 @@ public class PacienteControlador {
     private PacienteServicio ps;
     @Autowired
     private UsuarioRepositorio us;
+    @Autowired
+    private ConsultaServicio cs;
     
     @Autowired
     private ProfesionalServicio profesionalServicio; 
@@ -36,10 +43,24 @@ public class PacienteControlador {
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(ModelMap modelo) {
         
-        List<Profesional> profesionales = profesionalServicio.listarProfesionales();
-        modelo.addAttribute("profesionales", profesionales);
+        List<Consulta> consultas = cs.listarTodas();
+        
+        modelo.put("consultas", consultas);
         
         return "paciente.html";
+    }
+    
+    @GetMapping("/reservar/{id}")
+    public String reservar(HttpSession session, @PathVariable String id){
+        
+        Usuario logueado = (Profesional) session.getAttribute("usuariosession");
+        
+        Paciente paciente = (Paciente) logueado;
+        
+        cs.reservarConsulta(id, paciente);
+        
+        return "redirect:/paciente";
+        
     }
     
     

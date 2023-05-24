@@ -1,14 +1,22 @@
 package com.demo.saludApp.controladores;
 
+import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Especialidad;
+import com.demo.saludApp.enumeraciones.Horario;
+import com.demo.saludApp.enumeraciones.Modalidad;
+import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.repositorios.UsuarioRepositorio;
+import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,17 +43,28 @@ public class ProfesionalControlador {
     private PacienteServicio pacienteServicio;
     
     @Autowired
+    private ConsultaServicio consultaServicio;
+    
+    @Autowired
     private UsuarioRepositorio us;
     
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaProfesional(HttpSession session, ModelMap modelo) {
         
-        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        Usuario logueado = (Profesional) session.getAttribute("usuariosession");
         
-        List<Paciente> pacientes = pacienteServicio.listarPacientes();
-        modelo.addAttribute("pacientes", pacientes);
+        try {
+            List<Consulta> consultas = consultaServicio.buscarPorProfesional(logueado.getId());
+            modelo.put("consultas", consultas);
+            return "profesional.html";
+        } catch (Exception e) {
+            return "profesional.html";
+        }
         
-        return "profesional.html";
+        
+        
+        
+        
     }
         
     
@@ -91,6 +110,26 @@ public class ProfesionalControlador {
         modelo.addAttribute("profesionales", profesionales);
          
     return "panelAdmin.html";
+    }
+    
+    @PostMapping("/registro")
+    public String registro(HttpSession session, String fecha, Horario horario, Modalidad modalidad, Double precio, ModelMap modelo){
+        
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        
+        Profesional profesional = (Profesional) logueado;
+        
+        try {
+            consultaServicio.crearConsulta(fecha, horario, profesional, modalidad, precio);
+            return "redirect:../profesional";
+        } catch (MiException ex) {
+            System.out.println(ex.getMessage());
+            return "profesional";
+        } catch (ParseException ex) {
+            Logger.getLogger(ProfesionalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            return "profesional";
+        }
+        
     }
     
 }
