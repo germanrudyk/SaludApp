@@ -89,11 +89,11 @@ public class ConsultaServicio {
 
     }
 
-    public List<Consulta> buscarConsultaPorFecha(Date fecha) {
+    public List<Consulta> buscarPorFecha(Date fecha) {
         return consultaRepositorio.buscarPorFecha(fecha);
     }
 
-    public List<Consulta> buscarConsultaPorProfesional(String idProfesional) {
+    public List<Consulta> buscarPorProfesional(String idProfesional) {
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
         if (respuesta.isPresent()) {
@@ -103,7 +103,7 @@ public class ConsultaServicio {
         return null;        // ver opciones
     }
 
-    public List<Consulta> buscarConsultaPorPaciente(String idPaciente) {
+    public List<Consulta> buscarPorPaciente(String idPaciente) {
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
 
         if (respuesta.isPresent()) {
@@ -113,7 +113,7 @@ public class ConsultaServicio {
         return null;        // ver opciones
     }
 
-    public List<Consulta> buscarConsultaPorPacientePorFecha(String idPaciente, Date fecha) {
+    public List<Consulta> buscarPorPacientePorFecha(String idPaciente, Date fecha) {
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
 
         if (respuesta.isPresent() && fecha != null) {
