@@ -42,7 +42,7 @@ public class Usuario {
     private boolean activo;
     @Column
     @Enumerated(EnumType.STRING)
-    private Rol rol;
+    private Rol rol;  
     @OneToOne
     private Imagen imagen;
 }

@@ -55,7 +55,7 @@ public class PacienteControlador {
     public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo, MultipartFile archivo) {
         
         try {           
-            ps.modificarPaciente(archivo, dni, nombre, email, email, password, dni, fechaNacimiento, genero, obraSocial);
+            ps.modificarPaciente(dni, nombre, email, email, password, dni, fechaNacimiento, genero, obraSocial, archivo);
             modelo.put("exito", "Modificación exitosa");
             modelo.put("modificar", ps.getOne(id));
             

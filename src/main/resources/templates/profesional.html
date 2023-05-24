@@ -24,7 +24,7 @@
           <th scope="col">DNI</th>
           <th scope="col">Fecha de Nacimiento</th>
           <th scope="col">Género</th>
-          <!--<th scope="col">Obra Social</th>-->
+          <th scope="col">Obra Social</th>
           <th scope="col">Foto de Perfil</th>
           <th scope="col">Acciones</th>
         </tr>
@@ -37,15 +37,17 @@
           <td scope="col" th:text="${paciente.dni}"></td>
           <td scope="col" th:text="${paciente.fechaNacimiento}"></td>
           <td scope="col" th:text="${paciente.Genero}"></td>
-          <!--<td scope="col" th:text="${paciente.ObraSocial}"></td>-->
-          <td scope="col"></td>
+          <td scope="col" th:text="${paciente.ObraSocial}"></td>
+          <td scope="col">
+              <a><img th:if="${paciente.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${paciente.id}__}" width='50px'></a>
+          </td>
           <td scope="col">
             <button class="btn-custom">Dar de baja</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <a class="attribution" href="http://fontawesome.io/"><i class="fa fa-font-awesome"></i> fontawesome.io</a>
+    <a class="attribution" href="http://fontawesome.io/"><i class="fa fa-font-awesome"></i> </a>
   </div>
   <!------------- Footer ------------->
   <footer th:replace="/fragments/footer  :: footer"></footer>

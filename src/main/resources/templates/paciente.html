@@ -52,11 +52,16 @@
           <td scope="col" th:text="${profesional.locacion}"></td>
           <td scope="col" th:text="${profesional.especialidad}"></td>
           <td id="calification" th:value="${profesional.calificacion}">
-            <div class="stars-outer">
+             <div class="stars-outer">
               <div class="stars-inner"></div>
             </div>
+               </td>
+           <td scope="col">
+              <a><img th:if="${profesional.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${profesional.id}__}" width='50px'></a>
           </td>
-          <td scope="col"></td>
+            
+         
+          <td scope="col">Ver</td>
           <td>
             <button class="btn btn-custom">Agendar Turno</button>
           </td>

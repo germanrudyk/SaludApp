@@ -13,8 +13,6 @@
             <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
                 <a class="btn btn-custom dropdown-item" href="/logout">Cerrar Sesión</a>
             </li>
-   
-    
     
   </nav>
   <div class="container">
@@ -69,8 +67,8 @@
               </select>
           </div>
             <div class="form-group">
-              <!--<label for="profile-image">Foto de Perfil</label>-->
-              <input type="file" id="profile-image" accept="image/*">
+              <label for="profile-image">Foto de Perfil</label>
+              <input type="file" class="form-control" name="archivo">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -99,6 +97,8 @@
               </option>
             </select>
           </th>
+          
+          <th scope="col">Imagen Perfil</th>
           <th scope="col" class="sortable">
             <div class="sortable-header" data-column-index="2">
               <div>Calificación</div>
@@ -108,7 +108,7 @@
               </div>
             </div>
           </th>
-        <!--  <th scope="col">Foto de Perfil</th> -->
+       
           <th scope="col">Turnos</th>
         </tr>
       </thead>
@@ -120,6 +120,12 @@
           <td scope="col" th:text="${profesional.email}"></td>
           <td scope="col" th:text="${profesional.locacion}"></td>
           <td scope="col" th:text="${profesional.especialidad}"></td>
+            <td scope="col">
+              <a><img th:if="${profesional.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${profesional.id}__}" width='50px'></a>
+          </td>
+          <!-- <td 
+              <a><img th:if="${profesional.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${usuario.id}__}" width='150px'></a>
+           </td>-->
           <td id="calification" th:value="${profesional.calificacion}">
             <div class="stars-outer">
               <div class="stars-inner"></div>
@@ -133,7 +139,7 @@
         <tr>
       </tbody>
     </table>
-    <a class="attribution" href="http://fontawesome.io/"><i class="fa fa-font-awesome"></i> fontawesome.io</a>
+    <a class="attribution" href="http://fontawesome.io/"><i class="fa fa-font-awesome"></i></a>
   </div>
   <!------------- Tabla Pacientes ------------->
   <div class="container">
@@ -148,7 +154,7 @@
           <th scope="col">Fecha de Nacimiento</th>
           <th scope="col">Género</th>
           <!--<th scope="col">Obra Social</th>-->
-          <!--<th scope="col">Foto de Perfil</th>-->
+          <th scope="col">Foto de Perfil</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
@@ -162,7 +168,9 @@
           <td scope="col" th:text="${paciente.Genero}"></td>
          
           <!--<td scope="col" th:text="${paciente.ObraSocial}"></td>-->
-          <td scope="col"></td>
+          <td scope="col">
+              <a><img th:if="${paciente.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${paciente.id}__}" width='50px'></a>
+          </td>
           <td scope="col">
             <button class="btn btn-danger mt-1">Eliminar</button>
             <button class="btn btn-custom mt-1">Modificar</button>

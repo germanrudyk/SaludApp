@@ -32,7 +32,7 @@ public class ProfesionalServicio {
      
     
      @Transactional
-    public void crearProfesional(String nombre, String apellido, String email, String password, Integer matricula, String locacion, Especialidad especialidad) throws MiException, ParseException {
+    public void crearProfesional(String nombre, String apellido, String email, String password, Integer matricula, String locacion, Especialidad especialidad, MultipartFile archivo) throws MiException, ParseException {
 
 //        validar(nombre, apellido, email, password, matricula, locacion, especialidad, obraSocialAceptada);
 
@@ -46,6 +46,8 @@ public class ProfesionalServicio {
         profesional.setEspecialidad(especialidad);
         profesional.setRol(Rol.PROFESIONAL);
         profesional.setActivo(true);
+        Imagen imagen = imagenServicio.guardar(archivo);
+        profesional.setImagen(imagen);
 
         pr.save(profesional);
     }

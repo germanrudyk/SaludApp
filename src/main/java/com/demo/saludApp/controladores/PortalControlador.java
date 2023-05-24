@@ -4,6 +4,12 @@ import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.servicios.PacienteServicio;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -32,10 +39,26 @@ public class PortalControlador {
     }
     
     @PostMapping("/registro") //asigna solicitudes HTTP POST
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo) {
+    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, MultipartFile archivo, ModelMap modelo) {
         //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
+        
+        
         try {
-            pacienteServicio.crearPaciente(nombre, email, email, Integer.SIZE, password, dni, genero, obraSocial, fechaNacimiento);
+           Path directorioImagenes = Paths.get("src//main//resources//static/img");
+           String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+        byte[] bytesImg = archivo.getBytes();
+        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + archivo.getOriginalFilename());
+        
+            Files.write(rutaCompleta, bytesImg);
+        } catch (IOException ex) {
+            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String nombreImagen = archivo.getOriginalFilename();
+       //Se modifica para recibir la imagen por formulario
+        
+        
+        try {
+            pacienteServicio.crearPaciente(nombre, email, email, Integer.SIZE, password, dni, genero, obraSocial, fechaNacimiento, archivo);
             modelo.put("exito", "Paciente registrado con exito");
         } catch (Exception ex) {            
             modelo.put("error", ex.getMessage());
