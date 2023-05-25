@@ -134,6 +134,12 @@
     border-radius: 5px;
 }
 
+.custom-table {
+    border: 2px solid var(--primary-bg-color);
+    box-shadow: 0px 4px 6px var(--text-color);
+    border-radius: 5px;
+}
+
 /* ------- Arrow -------- */
 #myBtn {
     display: none; /* Ocultamos el botón por defecto */

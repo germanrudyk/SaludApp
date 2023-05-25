@@ -7,7 +7,7 @@
       <div class="navbar-profile ms-auto dropdown text-end" th:if="${session.usuariosession != null}">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
           aria-expanded="false">
-          <img id="profile-image" th:src="${session.usuariosession.imagen}" alt="imagen de perfil" width="50"
+          <img th:if="${session.usuariosession.imagen != null}" id="profile-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="imagen de perfil" width="50"
             class="rounded-circle" />
         </a>
         <p th:text="${session.usuariosession.nombre}"></p>
