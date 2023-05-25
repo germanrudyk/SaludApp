@@ -41,6 +41,9 @@
           <td scope="col" th:text="${consulta.modalidad}"></td>
           <td scope="col" th:text="${consulta.precioConsulta}"></td>
           <td scope="col" th:text="${consulta.profesional.calificacion}"></td>
+          <!--<td scope="col">
+            <a><img th:if="${profesional.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${profesional.id}__}" width='50px'></a>
+        </td>>-->
           <td>
             <button class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar Turno</button>
           </td>

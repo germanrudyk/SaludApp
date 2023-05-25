@@ -13,6 +13,7 @@ import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,11 +36,9 @@ public class PacienteControlador {
     @Autowired
     private UsuarioRepositorio us;
     @Autowired
-    private ConsultaServicio cs;
+    private ConsultaServicio cs;     
     
-    @Autowired
-    private ProfesionalServicio profesionalServicio; 
-    
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(ModelMap modelo) {
         
@@ -50,10 +49,11 @@ public class PacienteControlador {
         return "paciente.html";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/reservar/{id}")
     public String reservar(HttpSession session, @PathVariable String id){
         
-        Usuario logueado = (Profesional) session.getAttribute("usuariosession");
+        Usuario logueado = (Paciente) session.getAttribute("usuariosession");
         
         Paciente paciente = (Paciente) logueado;
         
@@ -63,7 +63,7 @@ public class PacienteControlador {
         
     }
     
-    
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/modificar/{email}")
     public String modificar(@PathVariable String email, ModelMap modelo) {
         
@@ -72,6 +72,7 @@ public class PacienteControlador {
         return "paciente_modificar.html";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @PostMapping("/modificacion")
     public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo, MultipartFile archivo) {
         
