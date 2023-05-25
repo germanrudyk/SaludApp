@@ -49,8 +49,10 @@ public class PacienteServicio {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = format.parse(fechaNacimiento);
         
-        Imagen imagen = imagenServicio.guardar(archivo);
-        paciente.setImagen(imagen); //Se agrega la imagen
+        if (!(archivo.isEmpty())){
+            Imagen imagen = imagenServicio.guardar(archivo);
+            paciente.setImagen(imagen); //Se agrega la imagen 
+        }
 
         paciente.setFechaNacimiento(fecha);
 
