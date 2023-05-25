@@ -1,16 +1,16 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <nav class="navbar navbar-expand-md navbar-light bg-light px-5">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
       </a>
+  
       <!------------- Logout ------------->
       <div class="navbar-profile ms-auto dropdown text-end" th:if="${session.usuariosession != null}">
-        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          <img th:if="${session.usuariosession.imagen != null}" id="profile-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="imagen de perfil" width="50"
-            class="rounded-circle" />
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <img th:if="${session.usuariosession.imagen != null}" id="profile-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="imagen de perfil" width="50" class="rounded-circle me-2" />
+          <p th:text="${session.usuariosession.nombre}" class="mb-0"></p>
         </a>
-        <p th:text="${session.usuariosession.nombre}"></p>
+  
         <ul id="profile-menu" class="profile-menu dropdown-menu text-small">
           <li><a class="dropdown-item" href="#">Perfil</a></li>
           <li>
@@ -21,3 +21,4 @@
       </div>
     </div>
   </nav>
+  

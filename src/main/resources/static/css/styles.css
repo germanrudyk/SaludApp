@@ -135,6 +135,7 @@
 }
 
 .custom-table {
+    max-width: 150vh;
     border: 2px solid var(--primary-bg-color);
     box-shadow: 0px 4px 6px var(--text-color);
     border-radius: 5px;
