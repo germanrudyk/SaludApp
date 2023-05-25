@@ -10,7 +10,7 @@
   <!------------- Crear Consulta ------------->
   <div class="container">
     <h1>Profesionales Registrados:</h1>
-    <button class="btn btn-custom" data-toggle="modal" data-target="#registroModal">Crear Consulta</button>
+    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#registroModal">Crear Consulta</button>
   </div>
 
   <!------------- Modal del boton "Crear Consulta" ------------->
@@ -24,7 +24,7 @@
         </div>
         <!------------- Formulario en el modal ------------->
         <div class="modal-body">
-          <form class="custom-form" th:action="@{/profesional/registro}" method="POST" enctype="multipart/form-data">
+          <form class="custom-form" th:action="@{profesional/registro}" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
               <label for="fecha" class="form-label">Fecha</label>
               <input type="date" class="form-control" id="fecha" name="fecha" required>
@@ -77,8 +77,8 @@
       <tbody th:each="consulta : ${consultas}">
         <tr>
           <td scope="col" th:text="${consulta.id}"></td>
-          <td scope="col" th:if="${consulta.paciente != null}" th:text="${consulta.paciente.nombre}"></td>
-          <td scope="col" th:if="${consulta.paciente != null}" th:text="${consulta.paciente.apellido}"></td>
+          <td scope="col" th:text="${consulta.paciente.nombre}"></td>
+          <td scope="col" th:text="${consulta.paciente.apellido}"></td>
           <td scope="col" th:text="${consulta.fechaConsulta}"></td>
           <td scope="col" th:text="${consulta.horario}"></td>
           <td scope="col" th:text="${consulta.modalidad}"></td>

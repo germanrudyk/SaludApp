@@ -35,17 +35,14 @@
           <td scope="col" th:text="${consulta.id}"></td>
           <td scope="col" th:text="${consulta.profesional.nombre}"></td>
           <td scope="col" th:text="${consulta.profesional.apellido}"></td>
-          <td scope="col" th:text="${consulta.profesional.especialidad}"></td>
+          <td scope="col" th:text="${consulta.especialidad}"></td>
           <td scope="col" th:text="${consulta.fechaConsulta}"></td>
           <td scope="col" th:text="${consulta.horario}"></td>
           <td scope="col" th:text="${consulta.modalidad}"></td>
           <td scope="col" th:text="${consulta.precioConsulta}"></td>
           <td scope="col" th:text="${consulta.profesional.calificacion}"></td>
-          <!--<td scope="col">
-            <a><img th:if="${profesional.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${profesional.id}__}" width='50px'></a>
-        </td>>-->
           <td>
-            <button class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar Turno</button>
+            <button class="btn btn-custom">Agendar Turno</button>
           </td>
         <tr>
       </tbody>
