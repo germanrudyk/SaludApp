@@ -47,9 +47,10 @@ public class ProfesionalServicio {
         profesional.setRol(Rol.PROFESIONAL);
         profesional.setActivo(true);
         
-        Imagen imagen = imagenServicio.guardar(archivo);
-        profesional.setImagen(imagen);
-
+        if (!(archivo.isEmpty())){
+            Imagen imagen = imagenServicio.guardar(archivo);
+            profesional.setImagen(imagen); //Se agrega la imagen 
+        }
         pr.save(profesional);
     }
 

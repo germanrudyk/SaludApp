@@ -94,8 +94,10 @@
         <tbody th:each="profesional : ${profesionales}">
           <tr>
             <td scope="row">
-              <a><img th:if="${profesional.imagen != null}" class="rounded-circle"
-                  th:src="@{/imagen/perfil/__${profesional.id}__}" width="30" height="30"></a>
+                <img th:if="${profesional.imagen != null}" class="rounded-circle"
+                  th:src="@{/imagen/perfil/__${profesional.id}__}" height="40" >
+                <img th:if="${profesional.imagen == null}" class="profile-foto" 
+                   src="./img/indefinido.png" width='40px'> 
             </td>
             <td scope="row" th:text="${profesional.nombre}"></td>
             <td scope="row" th:text="${profesional.apellido}"></td>
@@ -136,10 +138,15 @@
         </thead>
         <tbody th:each="paciente : ${pacientes}">
           <tr>
-            <td scope="row">
-              <a><img th:if="${paciente.imagen != null}" class="rounded-circle"
-                  th:src="@{/imagen/perfil/__${paciente.id}__}" width="30" height="30"></a>
-            </td>
+             <td scope="col">
+              <img th:if="${paciente.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${paciente.id}__}" width='40px'>
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'MASCULINO'}" class="profile-foto" 
+                   src="./img/masculino.png" width='40px'>     
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'FEMENINO'}" class="profile-foto" 
+                   src="./img/femenino.png" width='40px'>     
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'INDEFINIDO'}" class="profile-foto" 
+                   src="./img/indefinido.png" width='40px'>     
+          </td>
             <td scope="row" th:text="${paciente.nombre}"></td>
             <td scope="row" th:text="${paciente.apellido}"></td>
             <td scope="row" th:text="${paciente.email}"></td>
