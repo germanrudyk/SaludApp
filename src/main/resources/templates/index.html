@@ -237,7 +237,9 @@
                 <div class="container">
                     <div class="row " th:each="profesional : ${profesionales}">
                         <div class="col-lg-4 card" th:classappend="${profesional.especialidad}">
-                            <img class="bd-placeholder-img rounded-circle ">
+                           <!-- <img class="bd-placeholder-img rounded-circle ">-->
+                            <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img  rounded-circle"
+                  th:src="@{/imagen/perfil/__${profesional.id}__}" height="40" >
                             <h2 class="fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h2>
                             <p th:text="${profesional.detalleEspecialidad}"></p>
                             <p><a class="btn btn-custom" href="#about">Ver Turnos &raquo;</a></p>
