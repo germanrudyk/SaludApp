@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head th:replace="/fragments/head  :: head"></head>
+
+  <body>
+    <!------------- Navbar ------------->
+    <nav th:replace="/fragments/navbar  :: nav"></nav>
+
+    <div class="container">
+      <h1>Profesionales Registrados:</h1>
+      <button
+        class="btn btn-custom"
+        data-toggle="modal"
+        data-target="#registroModal"
+      >
+        Registrar Profesional
+      </button>
+    </div>
+    <!-------------Modal del boton "Registrarse"------------->
+    <div
+      class="modal fade"
+      id="registroModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="registroModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registroModalLabel">
+              Registro de Profesional
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <!------------- Formulario en el modal ------------->
+          <div class="modal-body">
+            <form
+              class="custom-form"
+              th:action="@{admin/registro}"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="apellido"
+                  placeholder="Ingrese su apellido"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="Ingrese su e-mail"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Ingrese su contraseña"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="matricula" class="form-label">Matrícula:</label>
+                <input
+                  type="text"
+                  id="matricula"
+                  name="matricula"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="locacion" class="form-label">Locación:</label>
+                <input
+                  type="text"
+                  id="locacion"
+                  name="locacion"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="especialidad" class="form-label"
+                  >Especialidad</label
+                >
+                <select class="form-select" name="especialidad" required>
+                  <option
+                    th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                    th:value="${especialidad}"
+                    th:text="${especialidad}"
+                  ></option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="profile-image">Foto de Perfil</label>
+                <input type="file" class="form-control" name="archivo" />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cerrar
+                </button>
+                <button type="submit" class="btn btn-custom">Registrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!------------- Tabla Profesionales ------------->
+    <div class="container mt-5">
+      <h1>Profesionales</h1>
+      <table class="table custom-form">
+        <thead>
+          <tr>
+            <th scope="col">Matricula</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Email</th>
+            <th scope="col">Locación</th>
+            <th scope="col">
+              <select
+                name="especialidad"
+                class="form-select especialidad"
+                onchange="filtrarTabla()"
+              >
+                <option
+                  th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                  th:value="${especialidad}"
+                  th:text="${especialidad}"
+                ></option>
+              </select>
+            </th>
+            <th scope="col">Foto de Perfil</th>
+            <th scope="col">Turnos</th>
+          </tr>
+        </thead>
+        <tbody th:each="profesional : ${profesionales}">
+          <tr>
+            <td scope="col" th:text="${profesional.matricula}"></td>
+            <td scope="col" th:text="${profesional.nombre}"></td>
+            <td scope="col" th:text="${profesional.apellido}"></td>
+            <td scope="col" th:text="${profesional.email}"></td>
+            <td scope="col" th:text="${profesional.locacion}"></td>
+            <td scope="col" th:text="${profesional.especialidad}"></td>
+            <td scope="col">
+              <a
+                ><img
+                  th:if="${profesional.imagen != null}"
+                  class="profile-foto"
+                  th:src="@{/imagen/perfil/__${profesional.id}__}"
+                  width="50px"
+              /></a>
+            </td>
+            <td>
+              <button class="btn btn-custom">Agendar Turno</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a class="attribution" href="http://fontawesome.io/"
+        ><i class="fa fa-font-awesome"></i> fontawesome.io</a
+      >
+    </div>
+
+    <!------------- Tabla Pacientes ------------->
+    <div class="container">
+      <h1>Pacientes Registrados</h1>
+      <table class="table custom-form">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Email</th>
+            <th scope="col">DNI</th>
+            <th scope="col">Fecha de Nacimiento</th>
+            <th scope="col">Género</th>
+            <th scope="col">Obra Social</th>
+            <th scope="col">Foto de Perfil</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody th:each="paciente : ${pacientes}">
+          <tr>
+            <td scope="col" th:text="${paciente.nombre}"></td>
+            <td scope="col" th:text="${paciente.apellido}"></td>
+            <td scope="col" th:text="${paciente.email}"></td>
+            <td scope="col" th:text="${paciente.dni}"></td>
+            <td scope="col" th:text="${paciente.fechaNacimiento}"></td>
+            <td scope="col" th:text="${paciente.Genero}"></td>
+            <td scope="col" th:text="${paciente.ObraSocial}"></td>
+            <td scope="col">
+              <a
+                ><img
+                  th:if="${paciente.imagen != null}"
+                  class="profile-foto"
+                  th:src="@{/imagen/perfil/__${paciente.id}__}"
+                  width="50px"
+              /></a>
+            </td>
+            <td scope="col">
+              <button class="btn btn-custom">Dar de baja</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!------------- Footer ------------->
+    <footer th:replace="/fragments/footer  :: footer"></footer>
+    .
+  </body>
+</html>

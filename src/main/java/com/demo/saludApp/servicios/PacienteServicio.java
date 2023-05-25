@@ -29,7 +29,7 @@ public class PacienteServicio {
     private ImagenServicio imagenServicio;
      
     @Transactional
-    public void crearPaciente(String nombre, String apellido, String email, Integer telefono, String password, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento) throws MiException, ParseException {
+    public void crearPaciente(String nombre, String apellido, String email, Integer telefono, String password, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento, MultipartFile archivo) throws MiException, ParseException {
 
         validar(nombre, email, password, dni, fechaNacimiento);
 
@@ -48,6 +48,9 @@ public class PacienteServicio {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = format.parse(fechaNacimiento);
+        
+        Imagen imagen = imagenServicio.guardar(archivo);
+        paciente.setImagen(imagen); //Se agrega la imagen
 
         paciente.setFechaNacimiento(fecha);
 
@@ -85,7 +88,7 @@ public class PacienteServicio {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fecha = format.parse(fechaNacimiento);
             paciente.setFechaNacimiento(fecha);
-            
+                      
             String idImagen = null;
 
             if (paciente.getImagen() != null) {
