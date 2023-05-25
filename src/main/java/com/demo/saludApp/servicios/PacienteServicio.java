@@ -7,6 +7,7 @@ import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.enumeraciones.Rol;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.repositorios.PacienteRepositorio;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,9 +31,9 @@ public class PacienteServicio {
     private ImagenServicio imagenServicio;
      
     @Transactional
-    public void crearPaciente(String nombre, String apellido, String email, Integer telefono, String password, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento,MultipartFile archivo) throws MiException, ParseException {
+    public void crearPaciente(String nombre, String apellido, String email, Integer telefono, String password, String dni, Genero genero, ObraSocial obraSocial, String fechaNacimiento,MultipartFile archivo) throws MiException, ParseException, IOException {
 
-        validar(nombre, email, password, dni, fechaNacimiento);
+        //validar(nombre, email, password, dni, fechaNacimiento);
 
         Paciente paciente = new Paciente();
         
@@ -46,17 +48,21 @@ public class PacienteServicio {
         paciente.setGenero(genero);
         paciente.setObraSocial(obraSocial);
         
-        Imagen imagen = imagenServicio.guardar(archivo);
-        paciente.setImagen(imagen); //Se agrega la imagen 
-        
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = format.parse(fechaNacimiento);
 
         paciente.setFechaNacimiento(fecha);
+        
+        if (!(archivo.isEmpty())){
+            Imagen imagen = imagenServicio.guardar(archivo);
+            paciente.setImagen(imagen); //Se agrega la imagen 
+        }
+        
 
         pacienteRepositorio.save(paciente);
     }
 
+    
     public List<Paciente> listarPacientes() {
 
         List<Paciente> pacientes = new ArrayList();
@@ -68,7 +74,7 @@ public class PacienteServicio {
         return pacienteRepositorio.getOne(id);
     }
 
-     @org.springframework.transaction.annotation.Transactional
+     @Transactional
     public void modificarPaciente(String idUsuario,  String nombre, String apellido, String email, String password, String dni, String fechaNacimiento, Genero genero, ObraSocial obrasocial, MultipartFile archivo) throws MiException, ParseException {
         
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idUsuario);

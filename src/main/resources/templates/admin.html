@@ -120,17 +120,8 @@
           <td scope="col" th:text="${profesional.email}"></td>
           <td scope="col" th:text="${profesional.locacion}"></td>
           <td scope="col" th:text="${profesional.especialidad}"></td>
-            <td scope="col">
-              <a><img th:if="${profesional.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${profesional.id}__}" width='50px'></a>
-          </td>
-          <!-- <td 
-              <a><img th:if="${profesional.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${usuario.id}__}" width='150px'></a>
-           </td>-->
-          <td id="calification" th:value="${profesional.calificacion}">
-            <div class="stars-outer">
-              <div class="stars-inner"></div>
-            </div>
-          </td>
+          <td scope="col">
+              <img th:if="${profesional.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${profesional.id}__}" width='50px'>
           <td scope="col"></td>
           <td scope="col">
             <button class="btn btn-danger mt-1">Eliminar</button>
@@ -144,6 +135,7 @@
   <!------------- Tabla Pacientes ------------->
   <div class="container">
     <h1>Pacientes Registrados</h1>
+     
     <table class="table custom-form">
       <thead>
         <tr>
@@ -169,8 +161,15 @@
          
           <!--<td scope="col" th:text="${paciente.ObraSocial}"></td>-->
           <td scope="col">
-              <a><img th:if="${paciente.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${paciente.id}__}" width='50px'></a>
+              <img th:if="${paciente.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${paciente.id}__}" width='50px'>
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'MASCULINO'}" class="profile-foto" 
+                   src="./img/masculino.jpg" width='50px'>     
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'FEMENINO'}" class="profile-foto" 
+                   src="./img/femenino.jpg" width='50px'>     
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'INDEFINIDO'}" class="profile-foto" 
+                   src="./img/otro.png" width='50px'>     
           </td>
+        
           <td scope="col">
             <button class="btn btn-danger mt-1">Eliminar</button>
             <button class="btn btn-custom mt-1">Modificar</button>
