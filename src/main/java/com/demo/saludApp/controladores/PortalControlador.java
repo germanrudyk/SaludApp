@@ -1,13 +1,16 @@
 package com.demo.saludApp.controladores;
 
+import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.servicios.PacienteServicio;
+import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
@@ -31,13 +34,19 @@ public class PortalControlador {
 
     @Autowired
     PacienteServicio pacienteServicio;
+    
+    @Autowired
+    private ProfesionalServicio profesionalServicio;
 
-    @GetMapping("/")
-    public String index() {
-
+    @GetMapping("")
+    public String index(ModelMap modelo) {
+        
+        List<Profesional> profesionales = profesionalServicio.listarProfesionales();
+        modelo.addAttribute("profesionales", profesionales);
+        
         return "index.html";
     }
-
+    
     @PostMapping("/registro") //asigna solicitudes HTTP POST
     public String registro(MultipartFile archivo, @RequestParam String nombre, @RequestParam String email, @RequestParam String apellido, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo) {
         //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método

@@ -93,42 +93,24 @@
     color: var(--bg-color);
 }
 
+.btn-custom-reverse {
+    border: solid 2px var(--bg-color);
+    color: var(--bg-color);
+}
+
+.btn-custom-reverse:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
 
 /*------------- Navbar -------------*/
 .navbar-logo {
     max-height: 30px;
 }
 
-.navbar-profile {
-    position: relative;
-  }
-
-  #profile-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  #profile-image {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-  }
-
-  .profile-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: var(--bg-color);
-    padding: 10px;
-    border: 1px solid #ccc;
-    z-index: 1;
-  }
-
 /*------------- Form -------------*/
 .custom-form {
-    max-width: 400px;
+
     padding: 20px;
     border: 2px solid var(--primary-bg-color);
     border-radius: 5px;
@@ -164,9 +146,24 @@
     transition: all 1s ease; /* Agregamos una transición suave para la transformación */
   }
 
+/* ------- Carousel -------- */
+.carousel-control-background {
+      width: 50px;
+      height: 50px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+  }
+
+  .carousel-caption {
+    width: 50%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
 /* ------- About -------- */
 #about {
-    background-color: var(--text-color);
+    background-color: var(--primary-bg-color);
     min-height:350px;
     display: flex;
     align-items: center;
@@ -214,6 +211,11 @@
     display: none;
 }
 
+/*------------- Contacto -------------*/
+.contacto {
+    padding-top: 20px;
+    border-top: 2px solid var(--text-color);
+}
 /*------------- Footer -------------*/
 .f-icon {
     fill: var(--bg-color);
