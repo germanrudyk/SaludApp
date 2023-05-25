@@ -1,135 +1,236 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="/fragments/head  :: head"></head>
-<body>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head th:replace="/fragments/head  :: head"></head>
+  <body>
     <!------------- Navbar------------->
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <form class="form-inline ml-auto" th:action="@{/logincheck}" method="POST">
-                        <div class="form-group mr-1">
-                            <label for="email" class="sr-only">Usuario</label>
-                            <input type="email" class="form-control" name="email" placeholder="email">
-                        </div>
-                        <div class="form-group mr-2">
-                            <label for="password" class="sr-only">Contraseña</label>
-                            <input type="password" class="form-control" name="password" placeholder="Contraseña">
-                        </div>
-                        <button type="submit" class="btn btn-custom mr-3">Iniciar Sesión</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
+      <a class="navbar-brand" href="#">
+        <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo" />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <form
+              class="form-inline ml-auto"
+              th:action="@{/logincheck}"
+              method="POST"
+            >
+              <div class="form-group mr-1">
+                <label for="email" class="sr-only">Usuario</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="email"
+                />
+              </div>
+              <div class="form-group mr-2">
+                <label for="password" class="sr-only">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Contraseña"
+                />
+              </div>
+              <button type="submit" class="btn btn-custom mr-3">
+                Iniciar Sesión
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
     </nav>
     <!------------- Alerta de exito o error ------------->
     <div class="contenedor">
-        <div th:if="${error != null}" class="card text-white bg-danger m-5 mensajeError align-center">
-            <div class="card-body">
-                <h4 class="card-title">Error!</h4>
-                <h5 class="card-text" th:text="${error}"></h5>
-            </div>
+      <div
+        th:if="${error != null}"
+        class="card text-white bg-danger m-5 mensajeError align-center"
+      >
+        <div class="card-body">
+          <h4 class="card-title">Error!</h4>
+          <h5 class="card-text" th:text="${error}"></h5>
         </div>
-        <div th:if="${exito != null}" class="card text-white bg-success m-5 mensajeExito w-50 align-center">
-            <div class="card-body align-center justify-content-center">
-                <h3 class="card-title justify-content-center align-center">Exito!</h3>
-                <h4 class="card-text" th:text="${exito}"></h4>
-            </div>
+      </div>
+      <div
+        th:if="${exito != null}"
+        class="card text-white bg-success m-5 mensajeExito w-50 align-center"
+      >
+        <div class="card-body align-center justify-content-center">
+          <h3 class="card-title justify-content-center align-center">Exito!</h3>
+          <h4 class="card-text" th:text="${exito}"></h4>
         </div>
+      </div>
     </div>
     <!------------- Home ------------->
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h1>¡Bienvenido/a a SaludApp!</h1>
-                <p>Registrate, elige una especialidad médica, selecciona un profesional, agenda tu turno y ¡listo!</p>
-                <button class="btn btn-custom" data-toggle="modal" data-target="#registroModal">Registrarse</button>
-            </div>
-            <div class="col-md-6">
-                <img src="./img/ImagenHome.png" alt="Imagen de Salud" class="img-fluid">
-            </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h1>¡Bienvenido/a a SaludApp!</h1>
+          <p>
+            Registrate, elige una especialidad médica, selecciona un
+            profesional, agenda tu turno y ¡listo!
+          </p>
+          <button
+            class="btn btn-custom"
+            data-toggle="modal"
+            data-target="#registroModal"
+          >
+            Registrarse
+          </button>
         </div>
+        <div class="col-md-6">
+          <img
+            src="./img/ImagenHome.png"
+            alt="Imagen de Salud"
+            class="img-fluid"
+          />
+        </div>
+      </div>
     </div>
     <!-------------Modal del boton "Registrarse"------------->
-    <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registroModalLabel">Registro de Usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <div
+      class="modal fade"
+      id="registroModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="registroModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registroModalLabel">
+              Registro de Usuario
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!------------- Formulario en el modal ------------->
+          <div class="modal-body">
+            <div class="container">
+              <form
+                class="custom-form"
+                th:action="@{/registro}"
+                method="POST"
+                enctype="multipart/form-data"
+              >
+                <div class="form-group">
+                  <label for="nombre">Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="nombre"
+                    placeholder="Ingrese su nombre"
+                  />
                 </div>
-                <!------------- Formulario en el modal ------------->
-                <div class="modal-body">
-                    <div class="container">
-                        <form class="custom-form" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="nombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre">
-                            </div>
-                            <div class="form-group">
-                                <label for="apellido">Apellido</label>
-                                <input type="text" class="form-control" name="apellido"
-                                    placeholder="Ingrese su apellido">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">E-mail</label>
-                                <input type="email" class="form-control" name="email" placeholder="Ingrese su e-mail">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Contraseña</label>
-                                <input type="password" class="form-control" name="password"
-                                    placeholder="Ingrese su contraseña">
-                            </div>
-                            <div class="form-group">
-                                <label for="dni">DNI</label>
-                                <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI">
-                            </div>
-                            <div class="form-group">
-                                <label for="fechaNacimiento">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control" name="fechaNacimiento">
-                            </div>
-                            <div class="form-group">
-                                <label for="genero">Género</label>
-                                <select class="form-control" name="genero">
-                                    <option th:each="genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
-                                        th:value="${genero}" th:text="${genero}">
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="obrasocial">Obra Social</label>
-                                <select class="form-control" name="obraSocial">
-                                    <option
-                                        th:each="obrasocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
-                                        th:value="${obrasocial}" th:text="${obrasocial}">
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="profile-image">Foto de Perfil</label>
-                                <input type="file" id="profile-image" accept="image/*">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-custom">Registrar</button>
-                            </div>
-                        </form>
-                    </div>
+                <div class="form-group">
+                  <label for="apellido">Apellido</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="apellido"
+                    placeholder="Ingrese su apellido"
+                  />
                 </div>
+                <div class="form-group">
+                  <label for="email">E-mail</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    placeholder="Ingrese su e-mail"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password">Contraseña</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    placeholder="Ingrese su contraseña"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="dni">DNI</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="dni"
+                    placeholder="Ingrese su DNI"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fechaNacimiento"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="genero">Género</label>
+                  <select class="form-control" name="genero">
+                    <option
+                      th:each="genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
+                      th:value="${genero}"
+                      th:text="${genero}"
+                    ></option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="obrasocial">Obra Social</label>
+                  <select class="form-control" name="obraSocial">
+                    <option
+                      th:each="obrasocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
+                      th:value="${obrasocial}"
+                      th:text="${obrasocial}"
+                    ></option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="archivo">Foto de Perfil</label>
+                  <input type="file" class="form-control" name="archivo" />
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Cerrar
+                  </button>
+                  <button type="submit" class="btn btn-custom">
+                    Registrar
+                  </button>
+                </div>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <!------------- Footer ------------->
     <footer th:replace="/fragments/footer  :: footer"></footer>
-</body>
+  </body>
 </html>

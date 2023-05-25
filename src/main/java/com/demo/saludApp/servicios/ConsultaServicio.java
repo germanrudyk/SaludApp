@@ -89,9 +89,9 @@ public class ConsultaServicio {
 
     }
 
-//    public List<Consulta> buscarPorFecha(Date fecha) {
-//        return consultaRepositorio.buscarPorFecha(fecha);
-//    }
+    public List<Consulta> buscarPorFecha(Date fecha) {
+        return consultaRepositorio.buscarPorFecha(fecha);
+    }
 
     public List<Consulta> buscarPorProfesional(String idProfesional) {
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
