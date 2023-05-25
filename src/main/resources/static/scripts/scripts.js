@@ -1,4 +1,4 @@
-//------------- Ordenar------------- 
+/*//------------- Ordenar------------- 
 // Obtener la tabla
 var table = document.querySelector('.table');
 
@@ -82,3 +82,51 @@ rows.forEach(function (row) {
     const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
     row.querySelector('.stars-inner').style.width = starPercentageRounded;
 });
+
+
+/* ------- UP Button -------- */
+window.onscroll = function () { scrollFunction() };
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+/* ------- Up Section -------- */
+const upSections = document.querySelectorAll('.up-section');
+window.addEventListener('scroll', function () {
+    var upSections = document.querySelectorAll('.up-section'); // Selecionamos todas las secciones
+
+    for (var i = 0; i < upSections.length; i++) {
+        var upSectionPosition = upSections[i].getBoundingClientRect().top;
+        var screenPosition = window.innerHeight / 1.3;
+
+        if (upSectionPosition < screenPosition) {
+            upSections[i].style.opacity = "1";
+            upSections[i].style.transform = "translateY(0)";
+        }
+    }
+});
+
+/* ------- Profesional Filter -------- */
+const filterContainer = document.querySelector(".categories");
+const galleryItems = document.querySelectorAll(".card");
+filterContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("filter-item")) {
+        filterContainer.querySelector(".active").classList.remove("active");
+        event.target.classList.add("active")
+        const filterValue = event.target.getAttribute("data-filter")
+        galleryItems.forEach(item => {
+            if (item.classList.contains(filterValue) || filterValue === "all") {
+                item.classList.remove("hide")
+                item.classList.add("show")
+            } else {
+                item.classList.remove("show")
+                item.classList.add("hide")
+            }
+        })
+    }
+})

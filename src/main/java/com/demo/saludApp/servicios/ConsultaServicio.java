@@ -113,15 +113,15 @@ public class ConsultaServicio {
         return null;        // ver opciones
     }
 
-    public List<Consulta> buscarPorPacientePorFecha(String idPaciente, Date fecha) {
-        Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
-
-        if (respuesta.isPresent() && fecha != null) {
-            Paciente paciente = respuesta.get();
-            return consultaRepositorio.buscarPorPacientePorFecha(paciente, fecha);
-        }
-        return null;        // ver opciones
-    }
+//    public List<Consulta> buscarPorPacientePorFecha(String idPaciente, Date fecha) {
+//        Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
+//
+//        if (respuesta.isPresent() && fecha != null) {
+//            Paciente paciente = respuesta.get();
+//            return consultaRepositorio.buscarPorPacientePorFecha(paciente, fecha);
+//        }
+//        return null;        // ver opciones
+//    }
 
     public List<Consulta> buscarPorEstado(Estado estado) {
         return consultaRepositorio.buscarPorEstado(estado);
@@ -132,6 +132,12 @@ public class ConsultaServicio {
             return consultaRepositorio.buscarPorPrecio(precio);
         }
         return null;
+    }
+    
+    public List<Consulta> listarTodas(){
+        
+        return consultaRepositorio.findAll();
+        
     }
 
     public void darBajaConsulta(String idConsulta) {

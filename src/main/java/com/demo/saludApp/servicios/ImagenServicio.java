@@ -26,15 +26,13 @@ public class ImagenServicio {
                 imagen.setMime(archivo.getContentType());
                 imagen.setNombre(archivo.getName());
                 imagen.setContenido(archivo.getBytes());
-                    System.out.println("recibe la imagen");
-                            
+
                 return imagenRepositorio.save(imagen);
 
             } catch (Exception e) {
 
                 System.err.println(e.getMessage());
             }
-
         }
         return null;
     }

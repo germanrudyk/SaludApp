@@ -59,7 +59,6 @@ public class AdminControlador {
     public String registro(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam String locacion, @RequestParam Especialidad especialidad, ModelMap modelo, MultipartFile archivo) {
         //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
         try {
-            
             profesionalServicio.crearProfesional(nombre, apellido, email, password, matricula, locacion, especialidad, archivo);
             modelo.put("exito", "Profesional registrado con exito");
         } catch (Exception ex) {            

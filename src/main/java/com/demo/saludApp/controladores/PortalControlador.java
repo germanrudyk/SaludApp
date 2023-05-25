@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
-    
+
     @Autowired
     PacienteServicio pacienteServicio;
 
@@ -37,42 +37,38 @@ public class PortalControlador {
 
         return "index.html";
     }
-    
+
     @PostMapping("/registro") //asigna solicitudes HTTP POST
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, MultipartFile archivo, ModelMap modelo) {
+    public String registro(MultipartFile archivo, @RequestParam String nombre, @RequestParam String email, @RequestParam String apellido, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo) {
         //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
-        
-        
+//        try {
+//            Path directorioImagenes = Paths.get("src//main//resources//static/img");
+//            String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+//            byte[] bytesImg = archivo.getBytes();
+//            Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + archivo.getOriginalFilename());
+//
+//            Files.write(rutaCompleta, bytesImg);
+//        } catch (IOException ex) {
+//            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
         try {
-           Path directorioImagenes = Paths.get("src//main//resources//static/img");
-           String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-        byte[] bytesImg = archivo.getBytes();
-        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + archivo.getOriginalFilename());
-        
-            Files.write(rutaCompleta, bytesImg);
-        } catch (IOException ex) {
-            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String nombreImagen = archivo.getOriginalFilename();
-       //Se modifica para recibir la imagen por formulario
-        
-        
-        try {
-            pacienteServicio.crearPaciente(nombre, email, email, Integer.SIZE, password, dni, genero, obraSocial, fechaNacimiento, archivo);
+            pacienteServicio.crearPaciente(nombre, apellido, email, Integer.SIZE, password, dni, genero, obraSocial, fechaNacimiento, archivo);
             modelo.put("exito", "Paciente registrado con exito");
-        } catch (Exception ex) {            
+        } catch (Exception ex) {
             modelo.put("error", ex.getMessage());
             return "index.html";
-            
+
         }
-        return "index.html";        
-    }  
+        return "index.html";
+    }
+
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         System.out.println("llego a login");
         if (error != null) {
             modelo.put("error", "Usuario o contraseña inválidos!");
-            
+
         }
         return "index.html";
     }
@@ -80,24 +76,24 @@ public class PortalControlador {
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE','ROLE_ADMIN','ROLE_PROFESIONAL')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap modelo) {
-         System.out.println("llego a inicio");
+        System.out.println("llego a inicio");
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-      
-        if(logueado.isActivo()==false){
-           modelo.put("suspendido", "Cuenta suspendida!");
-          
-        return "redirect:/logout";
+
+        if (logueado.isActivo() == false) {
+            modelo.put("suspendido", "Cuenta suspendida!");
+
+            return "redirect:/logout";
         }
-        modelo.put("exito","Bienvenido");
-        
+        modelo.put("exito", "Bienvenido");
+
         if (logueado.getRol().toString().equals("ADMIN")) {
             return "redirect:/admin";
         }
-        
+
         if (logueado.getRol().toString().equals("PROFESIONAL")) {
             return "redirect:/profesional";
         }
-                       
+
         return "redirect:/paciente";
     }
 }
