@@ -211,6 +211,34 @@
 .card.hide {
     display: none;
 }
+/* ------- Vista horizonta para Profesionales -------- */
+.overflow-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: #888888 #F5F5F5;
+}
+
+.overflow-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflow-container::-webkit-scrollbar-track {
+    background: #F5F5F5;
+}
+
+.overflow-container::-webkit-scrollbar-thumb {
+    background-color: hsl(175, 100%, 33%);
+    border-radius: 5px;
+}
+
+.card1 {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+
 
 /*------------- Contacto -------------*/
 .contacto {

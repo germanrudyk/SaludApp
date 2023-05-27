@@ -130,3 +130,12 @@ filterContainer.addEventListener("click", (event) => {
         })
     }
 })
+
+/* ------- Profesional horizontalScroll -------- */
+
+function horizontalScroll(event) {
+        if (event.deltaY !== 0) {
+            event.preventDefault();
+            document.querySelector('.overflow-container').scrollLeft += event.deltaY;
+        }
+    }
