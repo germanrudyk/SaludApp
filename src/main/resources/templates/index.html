@@ -171,7 +171,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="dni" class="form-label">DNI</label>
-                                    <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI" required>
+                                    <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
@@ -234,9 +235,8 @@
                 <div class="container">
                     <div class="row " th:each="profesional : ${profesionales}">
                         <div class="col-lg-4 card" th:classappend="${profesional.especialidad}">
-                           <!-- <img class="bd-placeholder-img rounded-circle ">-->
                             <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img  rounded-circle"
-                  th:src="@{/imagen/perfil/__${profesional.id}__}" height="40" >
+                                th:src="@{/imagen/perfil/__${profesional.id}__}" height="40">
                             <h2 class="fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h2>
                             <p th:text="${profesional.detalleEspecialidad}"></p>
                             <p><a class="btn btn-custom" href="#about">Ver Turnos &raquo;</a></p>
