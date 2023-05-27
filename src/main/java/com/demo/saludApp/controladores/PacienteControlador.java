@@ -2,14 +2,12 @@ package com.demo.saludApp.controladores;
 
 import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Paciente;
-import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.repositorios.UsuarioRepositorio;
 import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.PacienteServicio;
-import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +30,18 @@ import org.springframework.web.multipart.MultipartFile;
 public class PacienteControlador {    
     
     @Autowired
-    private PacienteServicio ps;
+    private PacienteServicio pacienteS;
     @Autowired
-    private UsuarioRepositorio us;
+    private UsuarioRepositorio usuarioS;
     @Autowired
-    private ConsultaServicio cs;     
+    private ConsultaServicio consultaS;     
     
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(ModelMap modelo) {
         
-        List<Consulta> consultas = cs.listarTodas();
-        
-        modelo.put("consultas", consultas);
-        
+        List<Consulta> consultas = consultaS.listarTodas();   
+        modelo.put("consultas", consultas); 
         return "paciente.html";
     }
     
@@ -54,39 +50,31 @@ public class PacienteControlador {
     public String reservar(HttpSession session, @PathVariable String id){
         
         Usuario logueado = (Paciente) session.getAttribute("usuariosession");
-        
         Paciente paciente = (Paciente) logueado;
-        
-        cs.reservarConsulta(id, paciente);
-        
-        return "redirect:/paciente";
-        
+        consultaS.reservarConsulta(id, paciente);
+        return "redirect:/paciente";  
     }
     
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/modificar/{email}")
     public String modificar(@PathVariable String email, ModelMap modelo) {
         
-        modelo.put("modificar", us.buscarPorEmail(email));
-        
+        modelo.put("modificar", usuarioS.buscarPorEmail(email));
         return "paciente_modificar.html";
     }
     
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @PostMapping("/modificacion")
-    public String modificacion(@RequestParam String id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam ObraSocial obraSocial, @RequestParam String fechaNacimiento, ModelMap modelo, MultipartFile archivo) {
+    public String modificacion(@RequestParam String idUsuario, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Integer telefono, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam String fechaNacimiento, @RequestParam ObraSocial obraSocial,@RequestParam List<Consulta> idHistoria,@RequestParam Boolean activo, ModelMap modelo, MultipartFile archivo) {
         
         try {           
-            ps.modificarPaciente(archivo, dni, nombre, email, email, password, dni, fechaNacimiento, genero, obraSocial);
+            pacienteS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, password, dni, fechaNacimiento, genero, obraSocial, idHistoria, activo);
             modelo.put("exito", "Modificación exitosa");
-            modelo.put("modificar", ps.getOne(id));
-            
-        } catch (Exception ex) {
-            
+            modelo.put("modificar", pacienteS.getOne(idUsuario)); 
+        } catch (Exception ex) { 
             modelo.put("error", ex.getMessage());
-            modelo.put("modificar", ps.getOne(id));
+            modelo.put("modificar", pacienteS.getOne(idUsuario));
             return "paciente_modificar";
-            
         }
         return "paciente_modificar";
     }    

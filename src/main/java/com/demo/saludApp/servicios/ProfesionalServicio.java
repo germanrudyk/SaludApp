@@ -1,9 +1,9 @@
 package com.demo.saludApp.servicios;
 
+import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Imagen;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.enumeraciones.Especialidad;
-import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.enumeraciones.Rol;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.repositorios.ProfesionalRepositorio;
@@ -29,16 +29,28 @@ public class ProfesionalServicio {
     
     @Autowired
     private ImagenServicio imagenServicio;
-     
     
-     @Transactional
-    public void crearProfesional(String nombre, String apellido, String email, String password, Integer matricula, String locacion, Especialidad especialidad, MultipartFile archivo) throws MiException, ParseException {
+    public List<Profesional> listar() {
+        List<Profesional> profesionales = new ArrayList();
+        profesionales = pr.findAll();
+    return profesionales;
+    }
+        
+    public List<Profesional> filtrar(String especialidad) {
+        List<Profesional> profesionales = new ArrayList();
+        profesionales = pr.buscarEspecialidad(especialidad);
+    return profesionales;
+    }
+    
+    @Transactional
+    public void crear(String nombre, String apellido, Integer telefono, String email, String password, String password2, Integer matricula, String locacion, Especialidad especialidad, MultipartFile archivo) throws MiException, ParseException {
 
-//        validar(nombre, apellido, email, password, matricula, locacion, especialidad, obraSocialAceptada);
+        validar(nombre, password, password2);
 
         Profesional profesional = new Profesional();
         profesional.setNombre(nombre);
         profesional.setApellido(apellido);
+        profesional.setTelefono(telefono);
         profesional.setEmail(email);
         profesional.setPassword(new BCryptPasswordEncoder().encode(password));
         profesional.setMatricula(matricula);
@@ -55,7 +67,7 @@ public class ProfesionalServicio {
     }
 
    @org.springframework.transaction.annotation.Transactional
-    public void modificarProfesional(MultipartFile archivo, String idUsuario, String nombre, String apellido, String email, String password, Integer matricula, Integer telefono, ArrayList obrasocial, String locacion, String detalleEspecialidad, Especialidad especialidad) throws MiException, ParseException {
+    public void modificar(MultipartFile archivo, String idUsuario, String nombre, String apellido, Integer telefono, String email, String password, Integer matricula, String locacion, Especialidad especialidad, String detalleEspecialidad, List<String> obrasocial, Double calificacion, List<Consulta> consultas, Boolean activo) throws MiException, ParseException {
         
         Optional<Profesional> respuesta = pr.findById(idUsuario);
 
@@ -63,16 +75,22 @@ public class ProfesionalServicio {
 
             Profesional profesional = respuesta.get();
 
+            profesional.setRol(Rol.PROFESIONAL);
             profesional.setNombre(nombre);
             profesional.setApellido(apellido);
+            profesional.setTelefono(telefono);
             profesional.setEmail(email);
             profesional.setPassword(new BCryptPasswordEncoder().encode(password));
-            profesional.setEspecialidad(especialidad);
-            profesional.setMatricula(matricula);
-            profesional.setTelefono(telefono);
-            profesional.setLocacion(locacion);
-            profesional.setRol(Rol.PROFESIONAL);
             profesional.setActivo(true);
+            profesional.setMatricula(matricula);
+            profesional.setLocacion(locacion);
+            profesional.setEspecialidad(especialidad);
+            profesional.setDetalleEspecialidad(detalleEspecialidad);
+            profesional.setObrasSociales(obrasocial);
+            profesional.setTelefono(telefono);
+            profesional.setCalificacion(calificacion);
+            profesional.setConsultas(consultas);
+            profesional.setActivo(activo);
             
             String idImagen = null;
 
@@ -87,45 +105,21 @@ public class ProfesionalServicio {
         }
     }
 
-
-    private void validar(String nombre, String email, String password, Integer matricula, String locacion, Especialidad especialidad, ArrayList<ObraSocial> obraSocialAceptada) throws MiException {
-
-        if (nombre.isEmpty() || nombre == null) {
-            throw new MiException("el nombre no puede ser nulo o estar vacio"); //
-        }
-        if (email.isEmpty() || email == null) {
-            throw new MiException("el email no puede ser nulo o estar vacio"); //
-        }
-        if (password.isEmpty() || password == null) {
-            throw new MiException("el password no puede ser nulo o estar vacio"); //
-        }
-        if ( matricula == null) {
-            throw new MiException("la matricula no puede ser nulo o estar vacio"); //
-        }
-        if (locacion.isEmpty() || locacion == null) {
-            throw new MiException("la locacion no puede ser vacia o nula");
-        }
-        if (especialidad.toString().isEmpty() || especialidad == null) {
-            throw new MiException("la especialidad no puede ser vacia o nula");
-        }
-        if (obraSocialAceptada.isEmpty() || obraSocialAceptada == null) {
-            throw new MiException("la obraSocialAceptada no puede ser vacia o nula");
-        }
-
-    }
-    public List<Profesional> listarProfesionales() {
-        List<Profesional> profesionales = new ArrayList();
-        profesionales = pr.findAll();
-    return profesionales;
-    }
+    private void validar(String nombre, String password, String password2) throws MiException{
         
-    public List<Profesional> filtrarEspecialidad(String especialidad) {
-        List<Profesional> profesionales = new ArrayList();
-        profesionales = pr.buscarEspecialidad(especialidad);
-    return profesionales;
+        if (nombre.isEmpty() || nombre == null) {
+            throw new MiException("El nombre no puede ser nulo o estar vacio");
+        }
+       
+        if (password.isEmpty() || password == null || password.length()<6) {
+            throw new MiException("El email no puede ser nulo y debe tener mas de 5 digitos");
+        }
+        
+        if (!password.equals(password2)) {
+            throw new MiException("Las contraseñas ingresasdas deben ser iguales");
+        }
     }
-    
-  }
+}
      
 
 

@@ -1,4 +1,3 @@
-
 /*------------- Ordenar -------------*/
 .sortable-header {
     position: relative;
@@ -125,64 +124,65 @@
 
 /* ------- Arrow -------- */
 #myBtn {
-    display: none; /* Ocultamos el botón por defecto */
-    position: fixed; /* Posicionamos el botón fijo en la página */
-    bottom: 5vh; /* Colocamos el botón a 20px desde el borde inferior de la página */
-    right: 5vh; /* Colocamos el botón a 20px desde el borde derecho de la página */
-    z-index: 1; /* Establecemos una posición z superior para el botón */
-    cursor: pointer; /* Cambiamos el cursor del mouse */
+    display: none;
+    /* Ocultamos el botón por defecto */
+    position: fixed;
+    /* Posicionamos el botón fijo en la página */
+    bottom: 5vh;
+    /* Colocamos el botón a 20px desde el borde inferior de la página */
+    right: 5vh;
+    /* Colocamos el botón a 20px desde el borde derecho de la página */
+    z-index: 1;
+    /* Establecemos una posición z superior para el botón */
+    cursor: pointer;
+    /* Cambiamos el cursor del mouse */
     border-radius: 50%;
     opacity: 0.5;
 }
-  
+
 #myBtn:hover {
     opacity: 1;
 }
 
 /* ------- Section -------- */
 .up-section {
-    opacity: 0; /* Establecemos la opacidad inicial en 0 para la sección */
-    transform: translateY(50px); /* Establecemos una transformación de 50px hacia abajo */
-    transition: all 1s ease; /* Agregamos una transición suave para la transformación */
-  }
+    opacity: 0;
+    /* Establecemos la opacidad inicial en 0 para la sección */
+    transform: translateY(50px);
+    /* Establecemos una transformación de 50px hacia abajo */
+    transition: all 1s ease;
+    /* Agregamos una transición suave para la transformación */
+}
 
 /* ------- Carousel -------- */
 .carousel-control-background {
-      width: 50px;
-      height: 50px;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 50%;
-  }
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+}
 
-  .carousel-caption {
+.carousel-caption {
     width: 50%;
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 15px;
     background-color: rgba(0, 0, 0, 0.6);
-  }
+}
+
 /* ------- About -------- */
 #about {
     background-color: var(--primary-bg-color);
-    min-height:350px;
+    min-height: 350px;
     display: flex;
     align-items: center;
 }
-  #about h2, #about p {
+
+#about h2,
+#about p {
     color: var(--bg-color);
     padding: 0 3% 0 3%;
-  }
-/* ------- Skills -------- */
-.cont__bar {
-    width: 100%;
-    height: 18%;
-    position: relative; 
-  }
-
-  .percent-number {
-    position: absolute;
-    right: 10px;
-  }
+}
 
 /* ------- Profesionales -------- */
 .categories ul li {
@@ -200,6 +200,7 @@
     align-items: center;
     border: none;
 }
+
 .card img {
     border: 2px solid var(--text-color);
     background-color: var(--bg-color);
@@ -216,6 +217,7 @@
     padding-top: 20px;
     border-top: 2px solid var(--text-color);
 }
+
 /*------------- Footer -------------*/
 .f-icon {
     fill: var(--bg-color);
@@ -230,7 +232,7 @@
 }
 
 .footer {
-    width: 100%; 
-    bottom: 0; 
+    width: 100%;
+    bottom: 0;
     background-color: var(--primary-bg-color);
 }
