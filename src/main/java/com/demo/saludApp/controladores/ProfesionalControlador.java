@@ -1,7 +1,6 @@
 package com.demo.saludApp.controladores;
 
 import com.demo.saludApp.entidades.Consulta;
-import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Especialidad;
@@ -13,7 +12,6 @@ import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,13 +36,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfesionalControlador {
 
     @Autowired
-    private ProfesionalServicio ps;
+    private ProfesionalServicio profesionalS;
 
     @Autowired
-    private PacienteServicio pacienteServicio;
+    private PacienteServicio pacienteS;
 
     @Autowired
-    private ConsultaServicio consultaServicio;
+    private ConsultaServicio consultaS;
 
     @Autowired
     private UsuarioRepositorio us;
@@ -56,7 +54,7 @@ public class ProfesionalControlador {
         Usuario logueado = (Profesional) session.getAttribute("usuariosession");
 
         try {
-            List<Consulta> consultas = consultaServicio.buscarPorProfesional(logueado.getId());
+            List<Consulta> consultas = consultaS.buscarPorProfesional(logueado.getId());
             modelo.put("consultas", consultas);
             return "profesional.html";
         } catch (Exception e) {
@@ -70,16 +68,15 @@ public class ProfesionalControlador {
     public String modificar(@PathVariable String nombre, ModelMap modelo) {
 
         modelo.put("modificar", us.getOne(nombre));
-
         return "profesional_modificar.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @PostMapping("/modificacion")
-    public String modificacion(@PathVariable MultipartFile archivo, @PathVariable String idUsuario, @PathVariable String nombre, @PathVariable String apellido, @PathVariable String email, @PathVariable String password, @PathVariable Integer matricula, @PathVariable Integer telefono, @PathVariable ArrayList obrasocial, @PathVariable String locacion, @PathVariable String detalleEspecialidad, @PathVariable Especialidad especialidad, ModelMap modelo) {
+    public String modificacion(MultipartFile archivo, @PathVariable String idUsuario,@PathVariable String nombre,@PathVariable String apellido,@PathVariable Integer telefono,@PathVariable String email,@PathVariable String password,@PathVariable Integer matricula,@PathVariable String locacion,@PathVariable Especialidad especialidad,@PathVariable String detalleEspecialidad,@PathVariable List<String> obrasocial,@PathVariable Double calificacion,@PathVariable List<Consulta> consultas,@PathVariable Boolean activo, ModelMap modelo) {
 
         try {
-            ps.modificarProfesional(archivo, idUsuario, nombre, apellido, email, password, matricula, telefono, obrasocial, locacion, detalleEspecialidad, especialidad);
+            profesionalS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, password, matricula, locacion, especialidad, detalleEspecialidad, obrasocial, calificacion, consultas, activo);
             modelo.put("exito", "Modificación exitosa");
             modelo.put("modificar", us.getOne(nombre));
 
@@ -87,27 +84,27 @@ public class ProfesionalControlador {
 
             modelo.put("error", ex.getMessage());
             modelo.put("modificar", us.getOne(nombre));
-            return "paciente_modificar";
+            return "redirect:/profesional";
 
         }
-        return "paciente_modificar";
+        return "redirect:/profesional";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
 
-        List<Profesional> profesionales = ps.listarProfesionales();
+        List<Profesional> profesionales = profesionalS.listar();
         modelo.addAttribute("profesionales", profesionales);
 
         return "panelAdmin.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
-    @GetMapping("/filtrarEspecialidad/{especialidad}")
-    public String filtrarEspecialidad(@PathVariable String especialidad, ModelMap modelo) {
+    @GetMapping("/filtrar/{especialidad}")
+    public String filtrar(@PathVariable String especialidad, ModelMap modelo) {
 
-        List<Profesional> profesionales = ps.filtrarEspecialidad(especialidad);
+        List<Profesional> profesionales = profesionalS.filtrar(especialidad);
         modelo.addAttribute("profesionales", profesionales);
 
         return "panelAdmin.html";
@@ -122,7 +119,7 @@ public class ProfesionalControlador {
         Profesional profesional = (Profesional) logueado;
 
         try {
-            consultaServicio.crearConsulta(fecha, horario, profesional, modalidad, precio);
+            consultaS.crearConsulta(fecha, horario, profesional, modalidad, precio);
             return "redirect:../profesional";
         } catch (MiException ex) {
             System.out.println(ex.getMessage());

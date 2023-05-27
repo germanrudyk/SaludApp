@@ -3,12 +3,15 @@ package com.demo.saludApp.entidades;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,12 +31,13 @@ public class Paciente extends Usuario {
     @Enumerated(EnumType.STRING)
     private Genero genero;
     @Column
-    @Enumerated(EnumType.STRING)
-    private ObraSocial obraSocial;
-    @Column
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     @Column
-    private String idHistoria;
+    @Enumerated(EnumType.STRING)
+    private ObraSocial obraSocial;
+    @OneToMany
+    @ElementCollection
+    private List<Consulta> idHistoria;
 }
