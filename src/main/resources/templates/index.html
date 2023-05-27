@@ -34,20 +34,7 @@
         </div>
     </nav>
     <!------------- Alerta de exito o error ------------->
-    <div class="container">
-        <div th:if="${error != null}" class="card bg-danger text-white m-5 mensajeError">
-            <div class="card-body">
-                <h4 class="card-title">Error!</h4>
-                <h5 class="card-text" th:text="${error}"></h5>
-            </div>
-        </div>
-        <div th:if="${exito != null}" class="card bg-success text-white m-5 mensajeExito">
-            <div class="card-body">
-                <h3 class="card-title">Exito!</h3>
-                <h4 class="card-text" th:text="${exito}"></h4>
-            </div>
-        </div>
-    </div>
+    <div th:replace="/fragments/alerta  :: div"></div>
 
     <!------------- Flecha ------------->
     <div id="myBtn">
@@ -155,34 +142,44 @@
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" class="form-control" name="nombre"
-                                        placeholder="Ingrese su nombre">
+                                        placeholder="Ingrese su nombre" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="apellido" class="form-label">Apellido</label>
                                     <input type="text" class="form-control" name="apellido"
-                                        placeholder="Ingrese su apellido">
+                                        placeholder="Ingrese su apellido" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input type="text" class="form-control" name="telefono"
+                                        placeholder="Ingrese su Teléfono" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">E-mail</label>
                                     <input type="email" class="form-control" name="email"
-                                        placeholder="Ingrese su e-mail">
+                                        placeholder="Ingrese su e-mail" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Contraseña</label>
                                     <input type="password" class="form-control" name="password"
-                                        placeholder="Ingrese su contraseña">
+                                        placeholder="Ingrese su contraseña" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password2" class="form-label">Repita la Contraseña</label>
+                                    <input type="password" class="form-control" name="password2"
+                                        placeholder="Vuelva a ingresar su contraseña" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="dni" class="form-label">DNI</label>
-                                    <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI">
+                                    <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-                                    <input type="date" class="form-control" name="fechaNacimiento">
+                                    <input type="date" class="form-control" name="fechaNacimiento" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="genero" class="form-label">Género</label>
-                                    <select class="form-control" name="genero">
+                                    <select class="form-control" name="genero" required>
                                         <option th:each="genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
                                             th:value="${genero}" th:text="${genero}">
                                         </option>
@@ -190,7 +187,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="obrasocial" class="form-label">Obra Social</label>
-                                    <select class="form-control" name="obraSocial">
+                                    <select class="form-control" name="obraSocial" required>
                                         <option
                                             th:each="obrasocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
                                             th:value="${obrasocial}" th:text="${obrasocial}">

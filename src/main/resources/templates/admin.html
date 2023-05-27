@@ -6,7 +6,8 @@
 <body>
   <!------------- Navbar ------------->
   <nav th:replace="/fragments/navbar  :: nav"></nav>
-
+  <!------------- Alerta de exito o error ------------->
+  <div th:replace="/fragments/alerta  :: div"></div>
   <div class="container">
     <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#registroModal">Registrar Profesional</button>
 
@@ -32,14 +33,25 @@
                 <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido" required>
               </div>
               <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" name="telefono"
+                    placeholder="Ingrese su Teléfono" required>
+            </div>
+            <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" name="email" placeholder="Ingrese su e-mail" required>
-              </div>
-              <div class="mb-3">
+                <input type="email" class="form-control" name="email"
+                    placeholder="Ingrese su e-mail" required>
+            </div>
+            <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" name="password" placeholder="Ingrese su contraseña"
-                  required>
-              </div>
+                <input type="password" class="form-control" name="password"
+                    placeholder="Ingrese su contraseña" required>
+            </div>
+            <div class="mb-3">
+                <label for="password2" class="form-label">Repita la Contraseña</label>
+                <input type="password" class="form-control" name="password2"
+                    placeholder="Vuelva a ingresar su contraseña" required>
+            </div>
               <div class="mb-3">
                 <label for="matricula" class="form-label">Matrícula:</label>
                 <input type="text" id="matricula" name="matricula" class="form-control" required>
@@ -78,6 +90,7 @@
             <th scope="col">Foto</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
+            <th scope="col">Teléfono</th>
             <th scope="col">Email</th>
             <th scope="col">Matricula</th>
             <th scope="col">Locación</th>
@@ -88,27 +101,40 @@
                 </option>
               </select>
             </th>
+            <th class="text-center" scope="col">Activo</th>
+            <th class="text-center" scope="col">Inactivo</th>
             <th class="text-center" scope="col" colspan="2">Acciones</th>
           </tr>
         </thead>
         <tbody th:each="profesional : ${profesionales}">
           <tr>
             <td scope="row">
-                <img th:if="${profesional.imagen != null}" class="rounded-circle"
-                  th:src="@{/imagen/perfil/__${profesional.id}__}" height="40" >
-                <img th:if="${profesional.imagen == null}" class="profile-foto" 
-                   src="./img/indefinido.png" width='40px'> 
+              <img th:if="${profesional.imagen != null}" class="rounded-circle"
+                th:src="@{/imagen/perfil/__${profesional.id}__}" width="30" height="30"> 
+              <img th:if="${profesional.imagen == null}" class="rounded-circle" src="./img/indefinido.png" width="30" height="30">
             </td>
-            <td scope="row" th:text="${profesional.nombre}"></td>
-            <td scope="row" th:text="${profesional.apellido}"></td>
-            <td scope="row" th:text="${profesional.email}"></td>
-            <td scope="row" th:text="${profesional.matricula}"></td>
-            <td scope="row" th:text="${profesional.locacion}"></td>
-            <td scope="row" th:text="${profesional.especialidad}"></td>
-            <td class="text-center">
-              <button class="btn btn-custom" data-bs-toggle="modal"
-                data-bs-target="#modificarProfesional">Modificar</button>
-            </td>
+            <form th:action="@{/admin/modificacion}" method="POST"
+            enctype="multipart/form-data">
+            <input hidden th:value="${profesional.id}" name="idUsuario">
+              <td scope="row" th:text="${profesional.nombre}"></td>
+              <td scope="row" th:text="${profesional.apellido}"></td>
+              <td scope="row" th:text="${profesional.telefono}"></td>
+              <td scope="row" th:text="${profesional.email}"></td>
+              <td scope="row" th:text="${profesional.matricula}"></td>
+              <td scope="row" th:text="${profesional.locacion}"></td>
+              <td scope="row" th:text="${profesional.especialidad}"></td>
+              <td class=" text-center" scope="row">
+                <input th:if="${profesional.activo == true}" checked value="true" type="radio" name="activo">
+                <input th:if="${profesional.activo != true}" value="true" type="radio" name="activo">
+              </td>
+              <td class=" text-center" scope="row">
+                <input th:if="${profesional.activo != true}" checked value="false" type="radio" name="activo">
+                <input th:if="${profesional.activo == true}" value="false" type="radio" name="activo">
+              </td>
+              <td class="text-center"><a class="btn">
+                  <button type="submit" class="btn btn-custom">Modificar</button>
+                </a></td>
+            </form>
             <td class="text-center"><a class="btn" data-bs-toggle="modal" data-bs-target="#eliminar">
                 <svg class="bi trash">
                   <use xlink:href="#trash" />
@@ -128,32 +154,37 @@
             <th scope="col">Foto</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
+            <th scope="col">Teléfono</th>
             <th scope="col">Email</th>
             <th scope="col">DNI</th>
             <th scope="col">Fecha de Nacimiento</th>
             <th scope="col">Género</th>
-            <!--<th scope="col">Obra Social</th>-->
+            <th scope="col">Obra Social</th>
+            <th scope="col">Activo</th>
             <th scope="col" colspan="2">Acciones</th>
           </tr>
         </thead>
         <tbody th:each="paciente : ${pacientes}">
           <tr>
-             <td scope="col">
-              <img th:if="${paciente.imagen != null}" class="profile-foto" th:src="@{/imagen/perfil/__${paciente.id}__}" width='40px'>
-              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'MASCULINO'}" class="profile-foto" 
-                   src="./img/masculino.png" width='40px'>     
-              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'FEMENINO'}" class="profile-foto" 
-                   src="./img/femenino.png" width='40px'>     
-              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'INDEFINIDO'}" class="profile-foto" 
-                   src="./img/indefinido.png" width='40px'>     
-          </td>
+            <td scope="col">
+              <img th:if="${paciente.imagen != null}" class="rounded-circle" th:src="@{/imagen/perfil/__${paciente.id}__}"
+              width="30" height="30">
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'MASCULINO'}" class="rounded-circle"
+                src="./img/masculino.png" width="30" height="30">
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'FEMENINO'}" class="rounded-circle"
+                src="./img/femenino.png" width="30" height="30">
+              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'INDEFINIDO'}" class="rounded-circle"
+                src="./img/indefinido.png" width="30" height="30">
+            </td>
             <td scope="row" th:text="${paciente.nombre}"></td>
             <td scope="row" th:text="${paciente.apellido}"></td>
+            <td scope="row" th:text="${paciente.telefono}"></td>
             <td scope="row" th:text="${paciente.email}"></td>
             <td scope="row" th:text="${paciente.dni}"></td>
             <td scope="row" th:text="${paciente.fechaNacimiento}"></td>
             <td scope="row" th:text="${paciente.Genero}"></td>
-            <!--<td scope="row" th:text="${paciente.ObraSocial}"></td>-->
+            <td scope="row" th:text="${paciente.ObraSocial}"></td>
+            <td scope="row" th:text="${paciente.activo}"></td>
             <td class="text-center">
               <button class="btn btn-custom" data-bs-toggle="modal"
                 data-bs-target="#modificarPacientes">Modificar</button>
@@ -306,7 +337,7 @@
           </div>
           <div class="modal-body">
             <div class="container">
-              <form class="formulario" action="" method="POST">
+              <form class="formulario" method="POST" enctype="multipart/form-data">
                 <div class="form-group my-3 text-center">
                   <h4 class="mb-5">¿Desea eliminar este usuario?</h4>
                 </div>

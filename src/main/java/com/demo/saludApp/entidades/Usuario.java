@@ -33,11 +33,11 @@ public class Usuario {
     @Column
     private String apellido;
     @Column
+    private Integer telefono;
+    @Column
     private String email;
     @Column
     private String password;
-    @Column
-    private Integer telefono;
     @Column
     private boolean activo;
     @Column

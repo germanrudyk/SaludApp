@@ -76,6 +76,8 @@
         <tr>
           <td scope="row" th:if="${consulta.paciente != null}" th:text="${consulta.paciente.nombre}"></td>
           <td scope="row" th:if="${consulta.paciente != null}" th:text="${consulta.paciente.apellido}"></td>
+          <td scope="row" th:if="${consulta.paciente == null}">-</td>
+          <td scope="row" th:if="${consulta.paciente == null}">-</td>
           <td scope="row" th:text="${consulta.fechaConsulta}"></td>
           <td scope="row" th:text="${consulta.horario}"></td>
           <td scope="row" th:text="${consulta.modalidad}"></td>
