@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="/fragments/head  :: head"></head>
+
+<body>
+  <!------------- Navbar ------------->
+  <nav th:replace="/fragments/navbar  :: nav"></nav>
+
+  <!------------- Tabla Consultas ------------->
+  <div class="container mt-5">
+    <h1>Consultas</h1>
+    <table class="table table-hover custom-table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">
+            <select name="especialidad" class="form-select especialidad" onchange="filtrarTabla()">
+              <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                th:value="${especialidad}" th:text="${especialidad}">
+              </option>
+            </select>
+          </th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Horario</th>
+          <th scope="col">Modalidad</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Calificación</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody th:each="consulta : ${consultas}">
+        <tr>
+          <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.nombre}"></td>
+          <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.apellido}"></td>
+          <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.especialidad}"></td>
+          <td scope="row" th:text="${consulta.fechaConsulta}"></td>
+          <td scope="row" th:text="${consulta.horario}"></td>
+          <td scope="row" th:text="${consulta.modalidad}"></td>
+          <td scope="row" th:text="${consulta.precioConsulta}"></td>
+          <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
+          <td>
+            <button class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar Turno</button>
+          </td>
+        <tr>
+      </tbody>
+    </table>
+  </div>
+  <!------------- Footer ------------->
+  <footer th:replace="/fragments/footer  :: footer"></footer>
+</body>
+
+</html>
