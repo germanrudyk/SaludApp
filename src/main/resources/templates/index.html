@@ -234,10 +234,38 @@
                         <li class="filter-item " data-filter="CARDIOLOGIA">Cardiología</li>
                     </ul>
                 </div>
+                <!------------- VISTA ALTERNATIVA DE PROFESIONALES ------------->
+  
+
+<div class="container"  onwheel="horizontalScroll(event)">
+    <div class="overflow-container">
+        <div class="card-deck text-center">
+            <div class="card card1 text-center mb-3  flex-column " th:each="profesional : ${profesionales}" th:classappend="${profesional.especialidad}" style="width:  250px; height: auto;">
+                <div class="card-body m-2">
+                    <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img rounded-circle"
+                         th:src="@{/imagen/perfil/__${profesional.id}__}" style="width: 120px; height: 120px;">
+                    <img th:if="${profesional.imagen == null}" class="bd-placeholder-img  rounded-circle" 
+                         src="./img/indefinido.png" style="width: 120px; height: 120px;"> 
+                    <h4 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h4>
+                    
+                    <p class="card-text">Profesional de la salud</p>
+                    <a class="btn btn-custom m-2" href="#about">Ver Turnos &raquo;</a>
+                </div>
+                
+            </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</div>
+              
+                <!-- VISTA ANTERIOR VERTICAL
+                
                 <div class="container">
                     <div class="row " th:each="profesional : ${profesionales}">
                         <div class="col-lg-4 card" th:classappend="${profesional.especialidad}">
-                            <!-- <img class="bd-placeholder-img rounded-circle ">-->
+                            <img class="bd-placeholder-img rounded-circle ">-
                             <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img  rounded-circle"
                                  th:src="@{/imagen/perfil/__${profesional.id}__}" height="40" >
                             <h2 class="fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h2>
@@ -245,7 +273,7 @@
                             <p><a class="btn btn-custom" href="#about">Ver Turnos &raquo;</a></p>
                         </div>
                     </div>
-                </div>   
+                </div> -->
         </section>
     </div>
     <section id="contacto" class="contacto px-5">
