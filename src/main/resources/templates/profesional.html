@@ -3,6 +3,18 @@
 
 <head th:replace="/fragments/head  :: head"></head>
 
+<script>
+  function agregarCampoArchivo() {
+    var contenedor = document.getElementById("contenedor-archivos");
+    var nuevoCampo = document.createElement("input");
+    nuevoCampo.type = "file";
+    nuevoCampo.name = "estudios[]";
+    nuevoCampo.classList.add("form-control");
+    nuevoCampo.classList.add("mb-3");
+    contenedor.appendChild(nuevoCampo);
+ }
+</script>
+
 <body>
   <!------------- Navbar ------------->
   <nav th:replace="/fragments/navbar  :: nav"></nav>
@@ -177,6 +189,8 @@
           <th scope="col">Modalidad</th>
           <th scope="col">Detalles</th>
           <th scope="col">Estudios</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody th:each="consulta : ${consultas}">
@@ -190,10 +204,90 @@
           <td scope="row" th:text="${consulta.modalidad}"></td>
           <td scope="row" th:text="${consulta.detalleConsulta}"></td>
           <td scope="row" th:text="${consulta.estudios}"></td>
+          <td scope="row" th:text="${consulta.estado}"></td>
+          <td scope="row">
+            <div class="d-flex justify-content-around w-100">
+              <div th:if="${consulta.estado.toString == 'DISPONIBLE'}">
+                  <button type="button" class="btn btn-custom btn-cancelar">Eliminar</button>            
+              </div>
+              <div th:if="${consulta.estado.toString == 'RESERVADA'}" class="d-flex justify-content-around w-100">
+                <button type="button" class="btn btn-custom">Iniciar</button>
+                <button type="button" class="btn btn-custom btn-cancelar">Cancelar</button>
+              </div>
+              <div th:if="${consulta.estado.toString == 'UTILIZADA'}">
+                <button type="button" class="btn btn-custom" data-bs-toggle="modal" th:data-bs-target="'#registroModal'+${consulta.id}">Cargar</button>
+                    <!------------- Modal del boton "Cargar" ------------->
+                    <div class="modal fade" th:id="'registroModal'+${consulta.id}" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="registroModalLabel" th:text="${consulta.paciente.nombre} + ' ' + ${consulta.paciente.apellido}"></h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!------------- Formulario en el modal ------------->
+                        <div class="modal-body">
+                          <form class="custom-form" th:action="@{/profesional/modificar/__${consulta.id}__}" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                              <label for="nombre" class="form-label">Nombre</label>
+                              <input type="text" class="form-control" id="nombre" th:value="${consulta.paciente.nombre}" disabled>
+                            </div>
+                            <div class="mb-3">
+                              <label for="apellido" class="form-label">Apellido</label>
+                              <input type="text" class="form-control" id="apellido" th:value="${consulta.paciente.apellido}" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" th:value="${consulta.fechaConsulta}" disabled>
+                            </div>
+                            <div class="mb-3">
+                              <label for="horario" class="form-label">Horario</label>
+                              <select class="form-control" id="horario" name="horario" disabled>
+                                <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}" th:value="${horario}"
+                                  th:text="${horario}">
+                                </option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label for="modalidad" class="form-label">Modalidad</label>
+                              <select class="form-control" id="modalidad" name="modalidad" disabled>
+                                <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
+                                  th:value="${modalidad}" th:text="${modalidad}">
+                                </option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label for="precioConsulta" class="form-label">Precio</label>
+                              <input type="number" class="form-control" id="precioConsulta" th:value="${consulta.precioConsulta}" disabled>
+                            </div>
+                            <div class="mb-3">
+                              <label for="detalleConsulta" class="form-label">Detalles</label>
+                              <textarea type="text" class="form-control" id="detalleConsulta" name="detalleConsulta"></textarea>
+                            </div>
+                            <div class="mb-3">
+                              <label for="estudios" class="form-label">Estudios</label>
+                              <div class="mb-3" id="contenedor-archivos">
+                                <input class="form-control mb-3"  type="file" name="estudios[]">
+                              </div>
+                              <button class="btn btn-custom" type="button" onclick="agregarCampoArchivo()">Agregar archivo</button>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                              <button type="submit" class="btn btn-custom">Guardar</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            
+          </div></button></td>
         </tr>
       </tbody>
     </table>
   </div>
+
   <!------------- Footer ------------->
   <footer th:replace="/fragments/footer  :: footer"></footer>
 </body>

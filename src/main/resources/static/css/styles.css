@@ -321,3 +321,13 @@
 .editarFoto {
     display: none;
 }
+
+/*------------- Boton cancelar -------------*/
+
+.btn-cancelar{
+    border: 2px solid rgb(241, 108, 157, 0.881);
+}
+
+.btn-cancelar:hover {
+    background-color: rgb(241, 108, 157, 0.881);
+}
