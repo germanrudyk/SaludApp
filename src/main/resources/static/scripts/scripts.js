@@ -158,6 +158,10 @@ function filtrarTabla(filtro) {
     }
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> developer
 /* ------- Profesional horizontalScroll -------- */
 
 function horizontalScroll(event) {
@@ -185,5 +189,8 @@ function filtrarTabla(filtro) {
     }
   }
 }
+<<<<<<< HEAD
+=======
+>>>>>>> developer
 =======
 >>>>>>> developer
