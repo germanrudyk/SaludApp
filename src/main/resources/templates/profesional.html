@@ -259,7 +259,9 @@
           <td scope="row" th:text="${consulta.horario}"></td>
           <td scope="row" th:text="${consulta.modalidad}"></td>
           <td scope="row" th:text="${consulta.detalleConsulta}"></td>
-          <td scope="row" th:text="${consulta.estudios}"></td>
+          <td scope="row" th:each="estudio : ${consulta.estudios}">        
+            <img class="imagenEstudio" th:src="@{/imagen/estudio/__${consulta.id}__/__${estudio.id}__}">
+          </td>
           <td scope="row" th:text="${consulta.estado}"></td>
           <td scope="row">
             <div class="d-flex justify-content-around w-100">
