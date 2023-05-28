@@ -60,8 +60,8 @@ public class PortalControlador {
 
     //------------- Cambiar Contraseña -------------
     @PostMapping("/password")
-    public String modificarPassword(@RequestParam String id, @RequestParam String passwordAnterior, @RequestParam String passwordNuevo, @RequestParam String password2,ModelMap modelo) throws MiException {
-    usuarioS.modificar(id, passwordAnterior, passwordNuevo, password2);
+    public String modificarPassword(@RequestParam String id, @RequestParam String passwordNuevo, @RequestParam String password2,ModelMap modelo) throws MiException {
+    usuarioS.modificar(id, passwordNuevo, password2);
          return "redirect:/logout";
     } 
     

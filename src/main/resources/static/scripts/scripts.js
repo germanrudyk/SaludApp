@@ -157,6 +157,7 @@ function filtrarTabla(filtro) {
       }
     }
   }
+
 /* ------- Profesional horizontalScroll -------- */
 
 function horizontalScroll(event) {

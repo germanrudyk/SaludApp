@@ -7,7 +7,7 @@ import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.PacienteServicio;
-import com.demo.saludApp.servicios.UsuarioServicio;
+import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ public class PacienteControlador {
     
     @Autowired
     private PacienteServicio pacienteS;
+    @Autowired
+    private ProfesionalServicio profesionalS;
     @Autowired
     private ConsultaServicio consultaS;     
     
@@ -59,6 +61,22 @@ public class PacienteControlador {
         }
         return "redirect:/paciente"; 
     }   
+    
+    //------------- Calificar -------------
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
+    @PostMapping("/calificar")
+    public String calificar(@RequestParam String idUsuario,@RequestParam Double calificacion, ModelMap modelo) {
+
+        try {
+            profesionalS.calificar(idUsuario, calificacion);
+            modelo.put("exito", "Modificación exitosa");
+        } catch (Exception ex) {
+
+            modelo.put("error", ex.getMessage());
+            return "redirect:/paciente"; 
+        }
+        return "redirect:/paciente"; 
+    }
     
     //------------- Login -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
