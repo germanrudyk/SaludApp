@@ -30,10 +30,12 @@ public class UsuarioServicio implements UserDetailsService{
      @Autowired
     private UsuarioRepositorio usuarioRepositorio;
     
+     //------------- Buscar Usuario -------------
     public Usuario getOne(String id) {
         return usuarioRepositorio.getOne(id);
     }   
     
+    //------------- Eliminar Usuario -------------
     @Transactional
     public void eliminar(String id) {
        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
@@ -42,6 +44,7 @@ public class UsuarioServicio implements UserDetailsService{
         }
     }
     
+    //------------- Login Usuario -------------
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 

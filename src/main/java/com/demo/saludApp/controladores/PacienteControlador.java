@@ -36,6 +36,7 @@ public class PacienteControlador {
     @Autowired
     private ConsultaServicio consultaS;     
     
+    //------------- Vista General -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(ModelMap modelo) {
@@ -44,7 +45,24 @@ public class PacienteControlador {
         modelo.put("consultas", consultas); 
         return "paciente.html";
     }
+        
+    //------------- Modificar Paciente -------------
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
+    @PostMapping("/modificar")
+    public String modificarPaciente(MultipartFile archivo,@RequestParam String idUsuario,@RequestParam  String nombre,@RequestParam String apellido,@RequestParam Integer telefono,@RequestParam String email,@RequestParam String dni,@RequestParam String fechaNacimiento,@RequestParam Genero genero,@RequestParam ObraSocial obrasocial,@RequestParam Boolean activo, ModelMap modelo) {
+
+        try {
+            pacienteS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, dni, fechaNacimiento, genero, obrasocial, activo);
+            modelo.put("exito", "Modificación exitosa");
+        } catch (Exception ex) {
+
+            modelo.put("error", ex.getMessage());
+            return "redirect:/admin"; 
+        }
+        return "redirect:/admin"; 
+    }   
     
+    //------------- Login -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/reservar/{id}")
     public String reservar(HttpSession session, @PathVariable String id){
@@ -54,28 +72,4 @@ public class PacienteControlador {
         consultaS.reservarConsulta(id, paciente);
         return "redirect:/paciente";  
     }
-    
-    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-    @GetMapping("/modificar/{email}")
-    public String modificar(@PathVariable String email, ModelMap modelo) {
-        
-        modelo.put("modificar", usuarioS.buscarPorEmail(email));
-        return "paciente_modificar.html";
-    }
-    
-    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-    @PostMapping("/modificacion")
-    public String modificacion(@RequestParam String idUsuario, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Integer telefono, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam String fechaNacimiento, @RequestParam ObraSocial obraSocial,@RequestParam List<Consulta> idHistoria,@RequestParam Boolean activo, ModelMap modelo, MultipartFile archivo) {
-        
-        try {           
-            pacienteS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, password, dni, fechaNacimiento, genero, obraSocial, idHistoria, activo);
-            modelo.put("exito", "Modificación exitosa");
-            modelo.put("modificar", pacienteS.getOne(idUsuario)); 
-        } catch (Exception ex) { 
-            modelo.put("error", ex.getMessage());
-            modelo.put("modificar", pacienteS.getOne(idUsuario));
-            return "paciente_modificar";
-        }
-        return "paciente_modificar";
-    }    
 }

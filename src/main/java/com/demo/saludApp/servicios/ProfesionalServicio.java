@@ -30,18 +30,21 @@ public class ProfesionalServicio {
     @Autowired
     private ImagenServicio imagenServicio;
     
+    //------------- Listar Profesional -------------
     public List<Profesional> listar() {
         List<Profesional> profesionales = new ArrayList();
         profesionales = pr.findAll();
     return profesionales;
     }
         
+    //------------- Filtrar Profesional -------------
     public List<Profesional> filtrar(String especialidad) {
         List<Profesional> profesionales = new ArrayList();
         profesionales = pr.buscarEspecialidad(especialidad);
     return profesionales;
     }
     
+    //------------- Crear Profesional -------------
     @Transactional
     public void crear(String nombre, String apellido, Integer telefono, String email, String password, String password2, Integer matricula, String locacion, Especialidad especialidad, MultipartFile archivo) throws MiException, ParseException {
 
@@ -66,8 +69,9 @@ public class ProfesionalServicio {
         pr.save(profesional);
     }
 
+    //------------- Modificar Profesional -------------
    @org.springframework.transaction.annotation.Transactional
-    public void modificar(MultipartFile archivo, String idUsuario, String nombre, String apellido, Integer telefono, String email, String password, Integer matricula, String locacion, Especialidad especialidad, String detalleEspecialidad, List<String> obrasocial, Double calificacion, List<Consulta> consultas, Boolean activo) throws MiException, ParseException {
+    public void modificar(MultipartFile archivo, String idUsuario, String nombre, String apellido, Integer telefono, String email, Integer matricula, String locacion, Especialidad especialidad, Boolean activo) throws MiException, ParseException {
         
         Optional<Profesional> respuesta = pr.findById(idUsuario);
 
@@ -80,16 +84,11 @@ public class ProfesionalServicio {
             profesional.setApellido(apellido);
             profesional.setTelefono(telefono);
             profesional.setEmail(email);
-            profesional.setPassword(new BCryptPasswordEncoder().encode(password));
             profesional.setActivo(true);
             profesional.setMatricula(matricula);
             profesional.setLocacion(locacion);
             profesional.setEspecialidad(especialidad);
-            profesional.setDetalleEspecialidad(detalleEspecialidad);
-            profesional.setObrasSociales(obrasocial);
             profesional.setTelefono(telefono);
-            profesional.setCalificacion(calificacion);
-            profesional.setConsultas(consultas);
             profesional.setActivo(activo);
             
             String idImagen = null;
@@ -105,6 +104,7 @@ public class ProfesionalServicio {
         }
     }
 
+    //------------- Validar Profesional -------------
     private void validar(String nombre, String password, String password2) throws MiException{
         
         if (nombre.isEmpty() || nombre == null) {

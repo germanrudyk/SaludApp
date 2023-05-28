@@ -9,5 +9,4 @@ public enum Especialidad {
     ODONTOLOGIA,
     CARDIOLOGIA,
     TODOS;
-    
 }

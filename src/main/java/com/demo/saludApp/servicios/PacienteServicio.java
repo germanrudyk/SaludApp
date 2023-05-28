@@ -1,6 +1,5 @@
 package com.demo.saludApp.servicios;
 
-import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Imagen;
 import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.enumeraciones.Genero;
@@ -33,6 +32,7 @@ public class PacienteServicio {
         return pacienteRepositorio.getOne(id);
     }
     
+    //------------- Listar Pacientes -------------
     public List<Paciente> listar() {
 
         List<Paciente> pacientes = new ArrayList();
@@ -40,6 +40,7 @@ public class PacienteServicio {
         return pacientes;
     }
     
+    //------------- Crear Paciente -------------
     @Transactional
     public void crear(String nombre, String apellido, Integer telefono, String email, String password, String password2, String dni, Genero genero, String fechaNacimiento, ObraSocial obraSocial, MultipartFile archivo) throws MiException, ParseException {
 
@@ -68,8 +69,9 @@ public class PacienteServicio {
         pacienteRepositorio.save(paciente);
     }
 
-     @org.springframework.transaction.annotation.Transactional
-    public void modificar(MultipartFile archivo, String idUsuario,  String nombre, String apellido, Integer telefono, String email, String password, String dni, String fechaNacimiento, Genero genero, ObraSocial obrasocial, List<Consulta> idHistoria, Boolean activo) throws MiException, ParseException {
+    //------------- Modificar Paciente -------------
+    @org.springframework.transaction.annotation.Transactional
+    public void modificar(MultipartFile archivo, String idUsuario,  String nombre, String apellido, Integer telefono, String email, String dni, String fechaNacimiento, Genero genero, ObraSocial obrasocial, Boolean activo) throws MiException, ParseException {
         
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idUsuario);
 
@@ -81,14 +83,12 @@ public class PacienteServicio {
             paciente.setApellido(apellido);
             paciente.setTelefono(telefono);
             paciente.setEmail(email);
-            paciente.setPassword(new BCryptPasswordEncoder().encode(password));
             paciente.setDni(dni);
             paciente.setGenero(genero);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fecha = format.parse(fechaNacimiento);
             paciente.setFechaNacimiento(fecha);
             paciente.setObraSocial(obrasocial);
-            paciente.setIdHistoria(idHistoria);
             paciente.setActivo(activo);
             String idImagen = null;
 
@@ -103,6 +103,7 @@ public class PacienteServicio {
         }
     }
 
+    //------------- Validar Paciente -------------
     private void validar(String nombre, String password, String password2) throws MiException{
         
         if (nombre.isEmpty() || nombre == null) {
