@@ -22,7 +22,7 @@
             <div class="m-5 usuario">
               <div class="parte1">
                 <div>
-                  <img class="imagenPerfil" th:src="${session.usuariosession.imagen}">
+                  <img class="imagenPerfil" src="vincular-la-fotito.jpg">
                 </div>
                 <div>
                   <label class="btn btn-dark" for="editarFoto">
@@ -45,13 +45,15 @@
                   <tr scope="row">
                     <td>Apellido:</td>
                     <td>
-                      <input type="text" th:value="${session.usuariosession.apellido}" class="form-control" name="apellido">
+                      <input type="text" th:value="${session.usuariosession.apellido}" class="form-control"
+                        name="apellido">
                     </td>
                   </tr>
                   <tr scope="row">
                     <td>Teléfono:</td>
                     <td>
-                      <input type="text" th:value="${session.usuariosession.telefono}" class="form-control" name="telefono">
+                      <input type="text" th:value="${session.usuariosession.telefono}" class="form-control"
+                        name="telefono">
                     </td>
                   </tr>
                   <tr scope="row">
@@ -78,7 +80,8 @@
                     <td>
                       <select name="genero" class="form-select genero">
                         <option th:each="Genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
-                          th:value="${Genero}" th:text="${Genero}" th:unless="${session.usuariosession.Genero == Genero}">
+                          th:value="${Genero}" th:text="${Genero}"
+                          th:unless="${session.usuariosession.Genero == Genero}">
                         </option>
                         <option th:text="${session.usuariosession.Genero}" selected></option>
                       </select>
@@ -99,10 +102,12 @@
                   <tr scope="row">
                     <td>Darse de baja:</td>
                     <td>NO
-                      <input th:if="${session.usuariosession.activo == true}" checked value="true" type="radio" name="activo">
+                      <input th:if="${session.usuariosession.activo == true}" checked value="true" type="radio"
+                        name="activo">
                       <input th:if="${session.usuariosession.activo != true}" value="true" type="radio" name="activo">
                       SI
-                      <input th:if="${session.usuariosession.activo != true}" checked value="false" type="radio" name="activo">
+                      <input th:if="${session.usuariosession.activo != true}" checked value="false" type="radio"
+                        name="activo">
                       <input th:if="${session.usuariosession.activo == true}" value="false" type="radio" name="activo">
                     </td>
                   </tr>
@@ -176,9 +181,55 @@
           <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
           <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
           <td>
+            <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#calificar"
+              data-paciente-id="${profesional.id}">Calificar</button>
+          </td>
+          <td>
             <button class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
               Turno</button>
           </td>
+          <!------------- Formulario Clificar ------------->
+          <div class="modal fade" id="calificar" tabindex="-1" role="dialog" aria-labelledby="calificarLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="container">
+                    <form id="calificar-form" class="formulario" th:action="@{/paciente/calificar}" method="POST"
+                      enctype="multipart/form-data">
+                      <input type="hidden" name="idUsuario" th:if="${consulta.profesional != null}" th:value="${consulta.profesional.nombre}">
+                      <div class="form-group my-3 text-center">
+                        <h4 class="mb-5">¿Con cuantas estrellas calificaría esta consulta?</h4>
+                      </div>
+                      <div class="stars">
+                        <input class="star star-5" id="star-5" type="radio" name="calificacion" value="5">
+                        <label class="star star-5" for="star-5"></label>
+                        <input class="star star-4" id="star-4" type="radio" name="calificacion" value="4">
+                        <label class="star star-4" for="star-4"></label>
+                        <input class="star star-3" id="star-3" type="radio" name="calificacion" value="3">
+                        <label class="star star-3" for="star-3"></label>
+                        <input class="star star-2" id="star-2" type="radio" name="calificacion" value="2">
+                        <label class="star star-2" for="star-2"></label>
+                        <input class="star star-1" id="star-1" type="radio" name="calificacion" value="1">
+                        <label class="star star-1" for="star-1"></label>
+                      </div>
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">
+                          Aceptar
+                        </button>
+                        <button type="button" class="btn btn-primary mt-3 w-25 cancelar m-3" data-bs-dismiss="modal">
+                          Cancelar
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         <tr>
       </tbody>
     </table>
