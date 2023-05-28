@@ -29,8 +29,7 @@
                     <svg class="bi f-icon">
                       <use xlink:href="#plus" />
                     </svg>
-                  </label>
-                  <input type="file" class="editarFoto" accept="image/*">
+                    <input type="file" class="form-control editarFoto" name="archivo">
                 </div>
               </div>
               <table class="table table-hover custom-table">
@@ -46,15 +45,13 @@
                   <tr scope="row">
                     <td>Apellido:</td>
                     <td>
-                      <input type="text" th:value="${session.usuariosession.apellido}" class="form-control"
-                        name="apellido">
+                      <input type="text" th:value="${session.usuariosession.apellido}" class="form-control" name="apellido">
                     </td>
                   </tr>
                   <tr scope="row">
                     <td>Teléfono:</td>
                     <td>
-                      <input type="text" th:value="${session.usuariosession.telefono}" class="form-control"
-                        name="telefono">
+                      <input type="text" th:value="${session.usuariosession.telefono}" class="form-control" name="telefono">
                     </td>
                   </tr>
                   <tr scope="row">
@@ -81,8 +78,7 @@
                     <td>
                       <select name="genero" class="form-select genero">
                         <option th:each="Genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
-                          th:value="${Genero}" th:text="${Genero}"
-                          th:unless="${session.usuariosession.Genero == Genero}">
+                          th:value="${Genero}" th:text="${Genero}" th:unless="${session.usuariosession.Genero == Genero}">
                         </option>
                         <option th:text="${session.usuariosession.Genero}" selected></option>
                       </select>
@@ -103,17 +99,18 @@
                   <tr scope="row">
                     <td>Darse de baja:</td>
                     <td>NO
-                      <input th:if="${session.usuariosession.activo == true}" checked value="true" type="radio"
-                        name="activo">
+                      <input th:if="${session.usuariosession.activo == true}" checked value="true" type="radio" name="activo">
                       <input th:if="${session.usuariosession.activo != true}" value="true" type="radio" name="activo">
                       SI
-                      <input th:if="${session.usuariosession.activo != true}" checked value="false" type="radio"
-                        name="activo">
+                      <input th:if="${session.usuariosession.activo != true}" checked value="false" type="radio" name="activo">
                       <input th:if="${session.usuariosession.activo == true}" value="false" type="radio" name="activo">
                     </td>
                   </tr>
               </table>
-              <a class="btn"><button type="submit" class="btn btn-custom">Modificar</button></a>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-custom">Modificar</button>
+              </div>
               </form>
             </div>
           </div>

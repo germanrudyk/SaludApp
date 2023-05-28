@@ -29,8 +29,7 @@
                     <svg class="bi f-icon">
                       <use xlink:href="#plus" />
                     </svg>
-                  </label>
-                  <input type="file" class="editarFoto" accept="image/*">
+                    <input type="file" class="form-control editarFoto" name="archivo">
                 </div>
               </div>
               <table class="table table-hover custom-table">
@@ -102,7 +101,11 @@
                     </td>
                   </tr>
               </table>
-              <a class="btn"><button type="submit" class="btn btn-custom">Modificar</button></a>
+              </table>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-custom">Modificar</button>
+              </div>
               </form>
             </div>
           </div>
