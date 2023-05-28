@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/admin")
 public class AdminControlador {
-     @Autowired
+    @Autowired
     private UsuarioServicio usuarioS;
 
     @Autowired

@@ -1,6 +1,5 @@
 package com.demo.saludApp.servicios;
 
-import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Imagen;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.enumeraciones.Especialidad;
@@ -78,19 +77,17 @@ public class ProfesionalServicio {
         if (respuesta.isPresent()) {
 
             Profesional profesional = respuesta.get();
-
+            
+            profesional.setActivo(activo);
             profesional.setRol(Rol.PROFESIONAL);
             profesional.setNombre(nombre);
             profesional.setApellido(apellido);
             profesional.setTelefono(telefono);
             profesional.setEmail(email);
-            profesional.setActivo(true);
             profesional.setMatricula(matricula);
             profesional.setLocacion(locacion);
             profesional.setEspecialidad(especialidad);
-            profesional.setTelefono(telefono);
-            profesional.setActivo(activo);
-            
+
             String idImagen = null;
 
             if (profesional.getImagen() != null) {
@@ -104,17 +101,43 @@ public class ProfesionalServicio {
         }
     }
 
+    //------------- Descripcion -------------
+    @org.springframework.transaction.annotation.Transactional
+    public void descripcion(String idUsuario, String detalleEspecialidad) throws MiException, ParseException {
+        
+        Optional<Profesional> respuesta = pr.findById(idUsuario);
+
+        if (respuesta.isPresent()) {
+            Profesional profesional = respuesta.get();
+            profesional.setDetalleEspecialidad(detalleEspecialidad);
+            pr.save(profesional);
+        }
+    }
+    
+    //------------- Calificar -------------
+    @org.springframework.transaction.annotation.Transactional
+    public void calificar(String idUsuario, Double calificacion) {
+        
+        Optional<Profesional> respuesta = pr.findById(idUsuario);
+
+        if (respuesta.isPresent()) {
+            Profesional profesional = respuesta.get();
+            calificacion = (profesional.getCalificacion() + calificacion)/(profesional.getCalificaciones()+1);
+            profesional.setCalificaciones(profesional.getCalificaciones()+1); 
+            profesional.setCalificacion(calificacion);
+            pr.save(profesional);
+        }
+    }
+    
     //------------- Validar Profesional -------------
     private void validar(String nombre, String password, String password2) throws MiException{
         
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
-       
         if (password.isEmpty() || password == null || password.length()<6) {
             throw new MiException("El email no puede ser nulo y debe tener mas de 5 digitos");
         }
-        
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresasdas deben ser iguales");
         }

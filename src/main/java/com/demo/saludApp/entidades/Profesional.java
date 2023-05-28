@@ -34,6 +34,8 @@ public class Profesional extends Usuario {
     private String detalleEspecialidad;
     @Column
     private Double calificacion;
+    @Column
+    private Integer calificaciones;
     @OneToMany
     @ElementCollection
     private List<Consulta> consultas;
