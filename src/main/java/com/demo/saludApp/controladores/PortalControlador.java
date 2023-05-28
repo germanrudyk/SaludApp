@@ -4,8 +4,10 @@ import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
+import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
+import com.demo.saludApp.servicios.UsuarioServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
-
+    
+    @Autowired
+    private UsuarioServicio usuarioS;
     @Autowired
     PacienteServicio pacienteS;
     
     @Autowired
     private ProfesionalServicio profesionalS;
 
+    //------------- Vista Principal -------------
     @GetMapping("")
     public String index(ModelMap modelo) {
         
@@ -40,6 +45,7 @@ public class PortalControlador {
         return "index.html";
     }
     
+    //------------- Registro de Paciente -------------
     @PostMapping("/registro") //asigna solicitudes HTTP POST
     public String registro(@RequestParam String nombre, @RequestParam String apellido, @RequestParam Integer telefono, @RequestParam String email, @RequestParam String password, @RequestParam String password2, @RequestParam String dni, @RequestParam Genero genero, @RequestParam String fechaNacimiento, @RequestParam ObraSocial obraSocial, MultipartFile archivo, ModelMap modelo) {
         try {
@@ -52,6 +58,14 @@ public class PortalControlador {
         return "index.html";
     }
 
+    //------------- Cambiar Contraseña -------------
+    @PostMapping("/password")
+    public String modificarPassword(@RequestParam String id, @RequestParam String passwordAnterior, @RequestParam String passwordNuevo, @RequestParam String password2,ModelMap modelo) throws MiException {
+    usuarioS.modificar(id, passwordAnterior, passwordNuevo, password2);
+         return "redirect:/logout";
+    } 
+    
+    //------------- Login -------------
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         if (error != null) {
@@ -60,6 +74,7 @@ public class PortalControlador {
         return "index.html";
     }
 
+    //------------- Login -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE','ROLE_ADMIN','ROLE_PROFESIONAL')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap modelo) {

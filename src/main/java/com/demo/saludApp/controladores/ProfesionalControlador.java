@@ -7,10 +7,9 @@ import com.demo.saludApp.enumeraciones.Especialidad;
 import com.demo.saludApp.enumeraciones.Horario;
 import com.demo.saludApp.enumeraciones.Modalidad;
 import com.demo.saludApp.excepciones.MiException;
-import com.demo.saludApp.repositorios.UsuarioRepositorio;
 import com.demo.saludApp.servicios.ConsultaServicio;
-import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
+import com.demo.saludApp.servicios.UsuarioServicio;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,18 +34,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller //Declara un controlador para la gestion de la comunicación usuario/aplicación
 @RequestMapping("/profesional") //Mapea la ruta de la petición y el método del controlador
 public class ProfesionalControlador {
-
+    
     @Autowired
     private ProfesionalServicio profesionalS;
 
     @Autowired
-    private PacienteServicio pacienteS;
-
-    @Autowired
     private ConsultaServicio consultaS;
 
-    @Autowired
-    private UsuarioRepositorio us;
 
     //------------- Vista General -------------
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
@@ -67,7 +61,7 @@ public class ProfesionalControlador {
 
     //------------- Modificar Profesional -------------
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
-    @PostMapping("/modificarProfesional")
+    @PostMapping("/modificar")
     public String modificarProfesional(MultipartFile archivo, @RequestParam String idUsuario,@RequestParam String nombre,@RequestParam String apellido,@RequestParam Integer telefono,@RequestParam String email,@RequestParam Integer matricula,@RequestParam String locacion,@RequestParam Especialidad especialidad, @RequestParam Boolean activo, ModelMap modelo) {
 
         try {
@@ -76,11 +70,11 @@ public class ProfesionalControlador {
         } catch (Exception ex) {
 
             modelo.put("error", ex.getMessage());
-            return "redirect:/admin"; 
+            return "redirect:/profesional"; 
         }
-        return "redirect:/admin"; 
+        return "redirect:/profesional"; 
     }
-
+    
     //------------- Filtrar Especialidad -------------
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/filtrar/{especialidad}")
@@ -92,6 +86,7 @@ public class ProfesionalControlador {
         return "panelAdmin.html";
     }
 
+    //------------- Login -------------
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @PostMapping("/registro")
     public String registro(HttpSession session, String fecha, Horario horario, Modalidad modalidad, Double precio, ModelMap modelo) {

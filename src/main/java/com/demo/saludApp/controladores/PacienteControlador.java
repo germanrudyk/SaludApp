@@ -5,9 +5,9 @@ import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
-import com.demo.saludApp.repositorios.UsuarioRepositorio;
 import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.PacienteServicio;
+import com.demo.saludApp.servicios.UsuarioServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,10 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller //Declara un controlador para la gestion de la comunicación usuario/aplicación
 @RequestMapping("/paciente") //Mapea la ruta de la petición y el método del controlador
-public class PacienteControlador {    
+public class PacienteControlador {  
     
     @Autowired
     private PacienteServicio pacienteS;
-    @Autowired
-    private UsuarioRepositorio usuarioS;
     @Autowired
     private ConsultaServicio consultaS;     
     
@@ -57,9 +55,9 @@ public class PacienteControlador {
         } catch (Exception ex) {
 
             modelo.put("error", ex.getMessage());
-            return "redirect:/admin"; 
+            return "redirect:/paciente"; 
         }
-        return "redirect:/admin"; 
+        return "redirect:/paciente"; 
     }   
     
     //------------- Login -------------

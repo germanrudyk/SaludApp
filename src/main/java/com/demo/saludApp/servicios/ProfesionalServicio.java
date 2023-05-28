@@ -1,6 +1,5 @@
 package com.demo.saludApp.servicios;
 
-import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Imagen;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.enumeraciones.Especialidad;
@@ -78,19 +77,17 @@ public class ProfesionalServicio {
         if (respuesta.isPresent()) {
 
             Profesional profesional = respuesta.get();
-
+            
+            profesional.setActivo(activo);
             profesional.setRol(Rol.PROFESIONAL);
             profesional.setNombre(nombre);
             profesional.setApellido(apellido);
             profesional.setTelefono(telefono);
             profesional.setEmail(email);
-            profesional.setActivo(true);
             profesional.setMatricula(matricula);
             profesional.setLocacion(locacion);
             profesional.setEspecialidad(especialidad);
-            profesional.setTelefono(telefono);
-            profesional.setActivo(activo);
-            
+
             String idImagen = null;
 
             if (profesional.getImagen() != null) {
