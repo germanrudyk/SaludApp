@@ -7,6 +7,7 @@ public enum Especialidad {
     CLINICA,
     GINECOLOGIA,
     ODONTOLOGIA,
-    CARDIOLOGIA;
+    CARDIOLOGIA,
+    TODOS;
     
 }

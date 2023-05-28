@@ -94,8 +94,8 @@
             <th scope="col">Email</th>
             <th scope="col">Matricula</th>
             <th scope="col">Locación</th>
-            <th scope="col">
-              <select name="especialidad" class="form-select especialidad" onchange="filtrarTabla()">
+            <th scope="col" class="text-center">Especialidad
+              <select name="especialidad" class="form-select filtro-especialidad" onchange="filtrarTabla('especialidad')">
                 <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
                   th:value="${especialidad}" th:text="${especialidad}">
                 </option>
@@ -122,7 +122,7 @@
               <td scope="row" th:text="${profesional.email}"></td>
               <td scope="row" th:text="${profesional.matricula}"></td>
               <td scope="row" th:text="${profesional.locacion}"></td>
-              <td scope="row" th:text="${profesional.especialidad}"></td>
+              <td scope="row" class="filtro-especialidad" th:text="${profesional.especialidad}"></td>
               <td class=" text-center" scope="row">
                 <input th:if="${profesional.activo == true}" checked value="true" type="radio" name="activo">
                 <input th:if="${profesional.activo != true}" value="true" type="radio" name="activo">
@@ -158,7 +158,8 @@
             <th scope="col">Email</th>
             <th scope="col">DNI</th>
             <th scope="col">Fecha de Nacimiento</th>
-            <th scope="col">Género</th>
+            <th scope="col" class="text-center">Genero
+            </th>
             <th scope="col">Obra Social</th>
             <th scope="col">Activo</th>
             <th scope="col" colspan="2">Acciones</th>
@@ -182,7 +183,7 @@
             <td scope="row" th:text="${paciente.email}"></td>
             <td scope="row" th:text="${paciente.dni}"></td>
             <td scope="row" th:text="${paciente.fechaNacimiento}"></td>
-            <td scope="row" th:text="${paciente.Genero}"></td>
+            <td class="filtro-genero" scope="row" th:text="${paciente.Genero}"></td>
             <td scope="row" th:text="${paciente.ObraSocial}"></td>
             <td scope="row" th:text="${paciente.activo}"></td>
             <td class="text-center">
@@ -190,11 +191,11 @@
                 data-bs-target="#modificarPacientes">Modificar</button>
             </td>
             <td class="text-center">
-              <a class="btn" data-bs-toggle="modal" data-bs-target="#eliminar">
-                <svg class="bi trash">
-                  <use xlink:href="#trash" />
-                </svg>
-              </a>
+                <a class="btn" data-bs-toggle="modal" data-bs-target="#eliminar">
+                    <svg class="bi trash">
+                    <use xlink:href="#trash" />
+                    </svg>
+                </a>
             </td>
           </tr>
         </tbody>
@@ -325,9 +326,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 
-  !------------- Formulario Eliminar ------------->
+    
+       
+  <!------------- Formulario Eliminar --------------->
     <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -355,7 +358,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
   <!------------- Footer ------------->
   <footer th:replace="/fragments/footer  :: footer"></footer>.
 </body>
