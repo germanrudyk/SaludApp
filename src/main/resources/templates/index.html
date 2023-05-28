@@ -212,7 +212,7 @@
             </div>
         </div>
         <!------------- Nuestros Profesionales ------------->
-        <section id="portfolio" class="up-section pb-5 pt-5">
+        <section id="Profesionales" class="up-section pb-5 pt-5">
             <div class="text-center">
                 <h2>Nuestros Profesionales</h2>
                 <p>Contamos con un equipo de profesionales altamente capacitados en diversas especialidades médicas,
@@ -242,7 +242,7 @@
                                     <img th:if="${profesional.imagen == null}" class="bd-placeholder-img  rounded-circle" 
                                          src="./img/indefinido.png" style="width: 120px; height: 120px;"> 
                                     <h4 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h4>
-                                    <p class="card-text">Profesional de la salud</p>
+                                    <p th:text="${profesional.detalleEspecialidad}" class="card-text"></p>
                                     <a class="btn btn-custom m-2" href="#about">Ver Turnos &raquo;</a>
                                 </div> 
                             </div> 
@@ -251,6 +251,7 @@
                     </div>
                 </div>
         </section>
+    </div>
     <section id="contacto" class="contacto px-5">
         <div class="row">
             <div class="col-12 col-lg-6">
