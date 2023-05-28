@@ -13,11 +13,13 @@ import com.demo.saludApp.repositorios.PacienteRepositorio;
 import com.demo.saludApp.repositorios.ProfesionalRepositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ConsultaServicio {
@@ -30,6 +32,12 @@ public class ConsultaServicio {
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
+
+    @Autowired
+    private PacienteServicio pacienteS;
+
+    @Autowired
+    private ImagenServicio imagenS;
 
     public void crearConsulta(String fecha, Horario horario, Profesional profesional, Modalidad modalidad, Double precio) throws MiException, ParseException {
 
@@ -122,7 +130,6 @@ public class ConsultaServicio {
 //        }
 //        return null;        // ver opciones
 //    }
-
     public List<Consulta> buscarPorEstado(Estado estado) {
         return consultaRepositorio.buscarPorEstado(estado);
     }
@@ -133,11 +140,11 @@ public class ConsultaServicio {
         }
         return null;
     }
-    
-    public List<Consulta> listarTodas(){
-        
+
+    public List<Consulta> listarTodas() {
+
         return consultaRepositorio.findAll();
-        
+
     }
 
     public void darBajaConsulta(String idConsulta) {
@@ -146,15 +153,89 @@ public class ConsultaServicio {
         if (respuesta.isPresent()) {
             Consulta consulta = respuesta.get();
 
-            consulta.setEstado(Estado.CANCELADA);
+            consulta.setEstado(Estado.DISPONIBLE);
+
+            consulta.setPaciente(null);
 
             consultaRepositorio.save(consulta);
         }
 
     }
 
+    public void utilizarConsulta(String idConsulta) {
 
-private void validar(String fecha, Horario horario, Profesional profesional, Modalidad modalidad, Double precio) throws MiException {
+        Optional<Consulta> respuesta = consultaRepositorio.findById(idConsulta);
+
+        if (respuesta.isPresent()) {
+            Consulta consulta = respuesta.get();
+
+            consulta.setEstado(Estado.UTILIZADA);
+
+            consultaRepositorio.save(consulta);
+        }
+
+    }
+
+    public void eliminarConsulta(String idConsulta) {
+        Optional<Consulta> respuesta = consultaRepositorio.findById(idConsulta);
+
+        if (respuesta.isPresent()) {
+            Consulta consulta = respuesta.get();
+
+            consultaRepositorio.delete(consulta);
+        }
+
+    }
+
+    public void cargarDatosConsulta(String idConsulta, List<Imagen> estudios, String detalleConsulta) {
+
+        // Cargar estudios y detalle de la consulta
+        Optional<Consulta> respuestaConsulta = consultaRepositorio.findById(idConsulta);
+
+        if (respuestaConsulta.isPresent()) {
+
+            Consulta consulta = respuestaConsulta.get();
+
+            consulta.setDetalleConsulta(detalleConsulta);
+
+            consulta.setEstudios(estudios);
+
+            consultaRepositorio.save(consulta);
+
+            // Agregar consulta a la historia clinica del paciente
+            Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(consulta.getPaciente().getId());
+
+            if (respuestaPaciente.isPresent()) {
+
+                Paciente paciente = respuestaPaciente.get();
+
+                if (paciente.getIdHistoria() == null) {
+
+                    List<Consulta> primeraConsulta = new ArrayList();
+
+                    primeraConsulta.add(consulta);
+                    
+                    paciente.setIdHistoria(primeraConsulta);
+
+                } else {
+
+                    List<Consulta> consultas = paciente.getIdHistoria();
+
+                    consultas.add(consulta);
+                    
+                    paciente.setIdHistoria(consultas);
+
+                }
+
+                pacienteRepositorio.save(paciente);
+
+            }
+
+        }
+
+    }
+
+    private void validar(String fecha, Horario horario, Profesional profesional, Modalidad modalidad, Double precio) throws MiException {
 
         if (fecha.isEmpty() || fecha == null) {
             throw new MiException("La fecha no puede ser nulo o estar vacio"); //

@@ -320,3 +320,29 @@
     bottom: 0;
     background-color: var(--primary-bg-color);
 }
+
+
+/*------------- Perfil desplegable -------------*/
+.usuario {
+    max-width: 600px;
+}
+.imagenPerfil {
+    border: 2px solid #03989E;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.editarFoto {
+    display: none;
+}
+
+/*------------- Boton cancelar -------------*/
+
+.btn-cancelar{
+    border: 2px solid rgb(241, 108, 157, 0.881);
+}
+
+.btn-cancelar:hover {
+    background-color: rgb(241, 108, 157, 0.881);
+}

@@ -1,6 +1,7 @@
 package com.demo.saludApp.controladores;
 
 import com.demo.saludApp.entidades.Consulta;
+import com.demo.saludApp.entidades.Imagen;
 import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Especialidad;
@@ -8,8 +9,10 @@ import com.demo.saludApp.enumeraciones.Horario;
 import com.demo.saludApp.enumeraciones.Modalidad;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.servicios.ConsultaServicio;
+import com.demo.saludApp.servicios.ImagenServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +42,9 @@ public class ProfesionalControlador {
 
     @Autowired
     private ConsultaServicio consultaS;
+    
+    @Autowired
+    private ImagenServicio imagenS;
 
 
     //------------- Vista General -------------
@@ -121,6 +127,55 @@ public class ProfesionalControlador {
             return "profesional";
         }
 
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @GetMapping("/modificarConsulta/eliminar/{id}")
+    public String eliminarConsulta(@PathVariable String id){
+        
+        consultaS.eliminarConsulta(id);
+        
+        return "redirect:/profesional";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @GetMapping("/modificarConsulta/iniciar/{id}")
+    public String utilizarConsultar(@PathVariable String id){
+        
+        consultaS.utilizarConsulta(id);
+        
+        return "redirect:/profesional";
+        
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @GetMapping("/modificarConsulta/cancelar/{id}")
+    public String darBajaConsulta(@PathVariable String id){
+              
+        consultaS.darBajaConsulta(id);
+        
+        return "redirect:/profesional";
+        
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @PostMapping("/modificarConsulta/cargar/{id}")
+    public String cargarConsulta(@PathVariable String id, @RequestParam String detalleConsulta, MultipartFile estudios[]){
+        
+        List<Imagen> archivosEstudios = new ArrayList();
+
+        for (MultipartFile estudio : estudios) {
+
+             Imagen imagen = imagenS.guardar(estudio);
+
+             archivosEstudios.add(imagen);
+
+        }
+        
+        consultaS.cargarDatosConsulta(id, archivosEstudios, detalleConsulta);
+        
+        return "redirect:/profesional";
+        
     }
 
 }
