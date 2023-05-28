@@ -15,31 +15,51 @@
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Apellido</th>
-          <th scope="col">
-            <select name="especialidad" class="form-select especialidad" onchange="filtrarTabla()">
+          <th scope="col"class="text-center">Especialidad
+            <select name="especialidad" class="form-select filtro-especialidad " onchange="filtrarTabla('especialidad')">
               <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
                 th:value="${especialidad}" th:text="${especialidad}">
               </option>
             </select>
           </th>
           <th scope="col">Fecha</th>
-          <th scope="col">Horario</th>
-          <th scope="col">Modalidad</th>
+          <th scope="col"class="text-center">Horario
+          <select name="horario" class="form-select filtro-horario " onchange="filtrarTabla('horario')">
+              <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}"
+                th:value="${horario}" th:text="${horario}">
+              </option>
+          </select>
+          </th>
+          <th scope="col" class="text-center">Modalidad
+           <select name="modalidad" class="form-select filtro-modalidad " onchange="filtrarTabla('modalidad')">
+              <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
+                th:value="${modalidad}" th:text="${modalidad}">
+              </option>
+          </select>
+          </th>
           <th scope="col">Precio</th>
           <th scope="col">Calificación</th>
-          <th scope="col"></th>
+          <th scope="col"class="text-center">Estado
+          <select name="estado" class="form-select filtro-estado " onchange="filtrarTabla('estado')">
+              <option th:each="estado : ${T(com.demo.saludApp.enumeraciones.Estado).values()}"
+                th:value="${estado}" th:text="${estado}">
+              </option>
+          </select>
+         </th>
+          <th scope="col" class="text-center">Acciones</th>
         </tr>
       </thead>
       <tbody th:each="consulta : ${consultas}">
         <tr>
           <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.nombre}"></td>
           <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.apellido}"></td>
-          <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.especialidad}"></td>
+          <td class="filtro-especialidad" scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.especialidad}"></td>
           <td scope="row" th:text="${consulta.fechaConsulta}"></td>
-          <td scope="row" th:text="${consulta.horario}"></td>
-          <td scope="row" th:text="${consulta.modalidad}"></td>
+          <td class="filtro-horario"scope="row" th:text="${consulta.horario}"></td>
+          <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
           <td scope="row" th:text="${consulta.precioConsulta}"></td>
           <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
+          <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
           <td>
             <button class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar Turno</button>
           </td>

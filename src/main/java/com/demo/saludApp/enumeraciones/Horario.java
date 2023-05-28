@@ -13,7 +13,8 @@ public enum Horario {
     QUINTO("12:00 a 13:00"),
     SEXTO("16:00 a 17:00"),
     SEPTIMO("17:00 a 18:00"),
-    OCTAVO("18:00 a 19:00");
+    OCTAVO("18:00 a 19:00"),
+    TODOS("todos");
 
     public final String texto;
 
