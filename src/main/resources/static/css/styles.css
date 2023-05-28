@@ -73,7 +73,6 @@
     color: #1fa67a;
 }
 
-
 /*------------- GENERAL STYLES -------------*/
 :root {
     --bg-color: hsl(0, 0%, 93%);
@@ -135,6 +134,21 @@
 
 .fecha {
     width: 100px;
+}
+
+/*------------- Perfil desplegable -------------*/
+.usuario {
+    max-width: 600px;
+}
+.imagenPerfil {
+    border: 2px solid #03989E;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.editarFoto {
+    display: none;
 }
 
 /*------------- Arrow -------------*/
@@ -226,7 +240,7 @@
 .card.hide {
     display: none;
 }
-/* ------- Vista horizonta para Profesionales -------- */
+
 .overflow-container {
     overflow-x: auto;
     white-space: nowrap;
@@ -304,20 +318,4 @@
     width: 100%;
     bottom: 0;
     background-color: var(--primary-bg-color);
-}
-
-
-/*------------- Perfil desplegable -------------*/
-.usuario {
-    max-width: 600px;
-}
-.imagenPerfil {
-    border: 2px solid #03989E;
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-}
-
-.editarFoto {
-    display: none;
 }

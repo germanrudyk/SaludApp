@@ -101,17 +101,28 @@ public class ProfesionalServicio {
         }
     }
 
+    //------------- Descripcion -------------
+    @org.springframework.transaction.annotation.Transactional
+    public void descripcion(String idUsuario, String detalleEspecialidad) throws MiException, ParseException {
+        
+        Optional<Profesional> respuesta = pr.findById(idUsuario);
+
+        if (respuesta.isPresent()) {
+            Profesional profesional = respuesta.get();
+            profesional.setDetalleEspecialidad(detalleEspecialidad);
+            pr.save(profesional);
+        }
+    }
+    
     //------------- Validar Profesional -------------
     private void validar(String nombre, String password, String password2) throws MiException{
         
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
-       
         if (password.isEmpty() || password == null || password.length()<6) {
             throw new MiException("El email no puede ser nulo y debe tener mas de 5 digitos");
         }
-        
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresasdas deben ser iguales");
         }

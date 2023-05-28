@@ -13,7 +13,16 @@
         <p th:text="${session.usuariosession.nombre}" class="mb-0"></p>
       </a>
       <ul id="profile-menu" class="profile-menu dropdown-menu dropdown-menu-end text-small">
-        <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#perfilModal">Perfil</a></li>
+        <li>
+          <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#perfilModal">Perfil</a>
+        </li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
+        <li>
+          <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar
+            Contraseña</a>
+        </li>
         <li>
           <hr class="dropdown-divider" />
         </li>
@@ -21,4 +30,43 @@
       </ul>
     </div>
   </div>
+  <!------------- Cambiar Contraseña ------------->
+  <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordModalLabel">Cabiar Contraseña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="m-5 usuario">
+            <table class="table table-hover custom-table">
+              <form  th:action="@{/password}" method="POST" enctype="multipart/form-data">
+                <input hidden th:value="${session.usuariosession.id}" name="id">
+                <tr scope="row">
+                  <td>Nueva Contraseña:</td>
+                  <td>
+                    <input type="password" class="form-control" name="passwordNuevo" required>
+                  </td>
+                </tr>
+                <tr scope="row">
+                  <td>Repita la Contraseña:</td>
+                  <td>
+                    <input type="password" class="form-control" name="password2" required>
+                  </td>
+                </tr>
+            </table>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-custom">Modificar</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </nav>
