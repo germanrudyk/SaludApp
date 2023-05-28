@@ -9,7 +9,6 @@ import com.demo.saludApp.enumeraciones.Modalidad;
 import com.demo.saludApp.excepciones.MiException;
 import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
-import com.demo.saludApp.servicios.UsuarioServicio;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
@@ -66,6 +65,22 @@ public class ProfesionalControlador {
 
         try {
             profesionalS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, matricula, locacion, especialidad, activo);
+            modelo.put("exito", "Modificación exitosa");
+        } catch (Exception ex) {
+
+            modelo.put("error", ex.getMessage());
+            return "redirect:/profesional"; 
+        }
+        return "redirect:/profesional"; 
+    }
+    
+    //------------- Descripción -------------
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @PostMapping("/descripcion")
+    public String descripcion(@RequestParam String idUsuario,@RequestParam String detalleEspecialidad, ModelMap modelo) {
+
+        try {
+            profesionalS.descripcion(idUsuario, detalleEspecialidad);
             modelo.put("exito", "Modificación exitosa");
         } catch (Exception ex) {
 

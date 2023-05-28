@@ -48,34 +48,24 @@ public class UsuarioServicio implements UserDetailsService{
     
     //------------- Cambiar Contraseña -------------
    @org.springframework.transaction.annotation.Transactional
-    public void modificar(String id, String passwordAnterior, String passwordNuevo, String password2) throws MiException {
-        
-        
-        Optional<Usuario> respuesta = ur.findById(id);
-        
-        Usuario usuario = respuesta.get();
-        
-        validar(passwordAnterior, passwordNuevo, password2, usuario.getPassword());
+    public void modificar(String id, String passwordNuevo, String password2) throws MiException {
+                
+        Optional<Usuario> respuesta = ur.findById(id);      
+        Usuario usuario = respuesta.get();        
+        validar(passwordNuevo, password2);
 
         if (respuesta.isPresent()) {
-
             usuario.setPassword(new BCryptPasswordEncoder().encode(password2));
-
             ur.save(usuario);
         }
     }
     
      //------------- Validar Contraseña -------------
-    private void validar(String passwordAnterior, String passwordNuevo, String password2, String passwordActual) throws MiException{
-        
-        if (!passwordAnterior.equals(passwordActual)) {
-            throw new MiException("La contraseña ingresada no coincide con la contraseña actual");
-        }
-       
+    private void validar(String passwordNuevo, String password2) throws MiException{
+
         if (passwordNuevo.isEmpty() || passwordNuevo == null || passwordNuevo.length()<6) {
             throw new MiException("El email no puede ser nulo y debe tener mas de 5 digitos");
         }
-        
         if (!passwordNuevo.equals(password2)) {
             throw new MiException("Las contraseñas ingresasdas deben ser iguales");
         }
@@ -88,7 +78,6 @@ public class UsuarioServicio implements UserDetailsService{
         Usuario usuario = ur.buscarPorEmail(email);
 
         if (usuario != null) {
-
             List<GrantedAuthority> permisos = new ArrayList();
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
             permisos.add(p);

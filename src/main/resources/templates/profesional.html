@@ -113,6 +113,38 @@
       </div>
     </div>
   </div>
+
+  <!------------- Descripción ------------->
+  <div class="container">
+    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#descripcionModal">Crear
+      Descripción</button>
+  </div>
+
+  <!------------- Modal del boton "Crear Consulta" ------------->
+  <div class="modal fade" id="descripcionModal" tabindex="-1" role="dialog" aria-labelledby="descripcionModallLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="descripcionModalLabel">Descripción</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!------------- Formulario en el modal ------------->
+        <div class="modal-body">
+          <form class="custom-form" th:action="@{/profesional/descripcion}" method="POST" enctype="multipart/form-data">
+            <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
+            <div class="mb-3">
+              <textarea type="text" class="form-control" name="detalleEspecialidad" required></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-custom">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <!------------- Tabla Consultas ------------->
   <div class="container">
     <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#registroModal">Crear
