@@ -114,6 +114,21 @@ public class ProfesionalServicio {
         }
     }
     
+    //------------- Calificar -------------
+    @org.springframework.transaction.annotation.Transactional
+    public void calificar(String idUsuario, Double calificacion) {
+        
+        Optional<Profesional> respuesta = pr.findById(idUsuario);
+
+        if (respuesta.isPresent()) {
+            Profesional profesional = respuesta.get();
+            calificacion = (profesional.getCalificacion() + calificacion)/(profesional.getCalificaciones()+1);
+            profesional.setCalificaciones(profesional.getCalificaciones()+1); 
+            profesional.setCalificacion(calificacion);
+            pr.save(profesional);
+        }
+    }
+    
     //------------- Validar Profesional -------------
     private void validar(String nombre, String password, String password2) throws MiException{
         

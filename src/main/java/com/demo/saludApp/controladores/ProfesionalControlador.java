@@ -74,10 +74,10 @@ public class ProfesionalControlador {
         return "redirect:/profesional"; 
     }
     
-    //------------- Modificar Profesional -------------
+    //------------- Descripción -------------
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @PostMapping("/descripcion")
-    public String modificarProfesional(@RequestParam String idUsuario,@RequestParam String detalleEspecialidad, ModelMap modelo) {
+    public String descripcion(@RequestParam String idUsuario,@RequestParam String detalleEspecialidad, ModelMap modelo) {
 
         try {
             profesionalS.descripcion(idUsuario, detalleEspecialidad);
