@@ -84,7 +84,7 @@ rows.forEach(function (row) {
 });
 
 
-/* ------- UP Button -------- */
+/*------------- UP Button -------------*/
 window.onscroll = function () { scrollFunction() };
 
 function scrollFunction() {
@@ -95,7 +95,7 @@ function scrollFunction() {
     }
 }
 
-/* ------- Up Section -------- */
+/*------------- Up Section -------------*/
 const upSections = document.querySelectorAll('.up-section');
 window.addEventListener('scroll', function () {
     var upSections = document.querySelectorAll('.up-section'); // Selecionamos todas las secciones
@@ -111,7 +111,7 @@ window.addEventListener('scroll', function () {
     }
 });
 
-/* ------- Profesional Filter -------- */
+/*------------- Profesional Filter -------------*/
 const filterContainer = document.querySelector(".categories");
 const galleryItems = document.querySelectorAll(".card");
 filterContainer.addEventListener("click", (event) => {
@@ -130,3 +130,30 @@ filterContainer.addEventListener("click", (event) => {
         })
     }
 })
+
+/*------------- Profesional horizontalScroll -------------*/
+function horizontalScroll(event) {
+    if (event.deltaY !== 0) {
+        event.preventDefault();
+        document.querySelector('.overflow-container').scrollLeft += event.deltaY;
+    }
+}
+
+/*------------- Filtrar tabla de turnos -------------*/
+
+function filtrarTabla(filtro) {
+    var filtroElegido = document.querySelector(`.filtro-${filtro}`).value;
+  
+    var tabla = document.querySelector(".table"); 
+    var filas = tabla.getElementsByTagName("tr");
+  
+    for (var i = 1; i < filas.length; i++) { 
+      var celdaFiltro= filas[i].querySelector(`.filtro-${filtro}`);
+  
+      if (celdaFiltro && (filtroElegido === "TODOS" || celdaFiltro.textContent === filtroElegido)) {
+        filas[i].style.display = "";
+      } else {
+        filas[i].style.display = "none";
+      }
+    }
+  }

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,6 +48,7 @@ public class ProfesionalControlador {
     @Autowired
     private UsuarioRepositorio us;
 
+    //------------- Vista General -------------
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaProfesional(HttpSession session, ModelMap modelo) {
@@ -63,43 +65,23 @@ public class ProfesionalControlador {
 
     }
 
+    //------------- Modificar Profesional -------------
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
-    @GetMapping("/modificar/{nombre}")
-    public String modificar(@PathVariable String nombre, ModelMap modelo) {
-
-        modelo.put("modificar", us.getOne(nombre));
-        return "profesional_modificar.html";
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
-    @PostMapping("/modificacion")
-    public String modificacion(MultipartFile archivo, @PathVariable String idUsuario,@PathVariable String nombre,@PathVariable String apellido,@PathVariable Integer telefono,@PathVariable String email,@PathVariable String password,@PathVariable Integer matricula,@PathVariable String locacion,@PathVariable Especialidad especialidad,@PathVariable String detalleEspecialidad,@PathVariable List<String> obrasocial,@PathVariable Double calificacion,@PathVariable List<Consulta> consultas,@PathVariable Boolean activo, ModelMap modelo) {
+    @PostMapping("/modificarProfesional")
+    public String modificarProfesional(MultipartFile archivo, @RequestParam String idUsuario,@RequestParam String nombre,@RequestParam String apellido,@RequestParam Integer telefono,@RequestParam String email,@RequestParam Integer matricula,@RequestParam String locacion,@RequestParam Especialidad especialidad, @RequestParam Boolean activo, ModelMap modelo) {
 
         try {
-            profesionalS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, password, matricula, locacion, especialidad, detalleEspecialidad, obrasocial, calificacion, consultas, activo);
+            profesionalS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, matricula, locacion, especialidad, activo);
             modelo.put("exito", "Modificación exitosa");
-            modelo.put("modificar", us.getOne(nombre));
-
         } catch (Exception ex) {
 
             modelo.put("error", ex.getMessage());
-            modelo.put("modificar", us.getOne(nombre));
-            return "redirect:/profesional";
-
+            return "redirect:/admin"; 
         }
-        return "redirect:/profesional";
+        return "redirect:/admin"; 
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
-    @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-
-        List<Profesional> profesionales = profesionalS.listar();
-        modelo.addAttribute("profesionales", profesionales);
-
-        return "panelAdmin.html";
-    }
-
+    //------------- Filtrar Especialidad -------------
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/filtrar/{especialidad}")
     public String filtrar(@PathVariable String especialidad, ModelMap modelo) {

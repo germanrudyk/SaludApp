@@ -8,5 +8,6 @@ public enum Estado {
     DISPONIBLE,
     RESERVADA,
     UTILIZADA,
-    CANCELADA
+    CANCELADA,
+    TODOS;
 }
