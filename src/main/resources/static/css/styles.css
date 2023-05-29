@@ -351,3 +351,9 @@
     width: 150px;
     height: 150px;
 }
+
+/*------------- Main de vistas de tablas -------------*/
+
+.main{
+    min-height: 84vh;
+}

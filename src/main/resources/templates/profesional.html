@@ -24,16 +24,17 @@
                 <div>
                   <img class="imagenPerfil" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
                 </div>
+               <form th:action="@{/profesional/modificar}" method="POST" enctype="multipart/form-data">    
                 <div>
-                  <label class="btn btn-dark" for="editarFoto">
+                  <label class="btn btn-dark" for="archivo">
                     <svg class="bi f-icon">
                       <use xlink:href="#plus" />
                     </svg>
-                    <input type="file" class="form-control editarFoto" name="archivo">
+                    <input hidden type="file" id="archivo" name="archivo">
                 </div>
               </div>
               <table class="table table-hover custom-table">
-                <form th:action="@{/profesional/modificar}" method="POST" enctype="multipart/form-data">
+               
                   <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
                   <input hidden th:value="${session.usuariosession.imagen}" name="archivo">
                   <tr scope="row">
@@ -171,7 +172,7 @@
               <label for="horario" class="form-label">Horario</label>
               <select class="form-control" id="horario" name="horario" required>
                 <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}" th:value="${horario}"
-                  th:text="${horario}">
+                  th:text="${horario.texto}">
                 </option>
               </select>
             </div>
@@ -197,6 +198,7 @@
     </div>
   </div>
   <!------------- Tabla Consultas ------------->
+   <div class="main">
   <div class="container mt-5">
     <h1>Consultas</h1>
     <table class="table table-hover custom-table">
@@ -220,7 +222,7 @@
           <td scope="row" th:if="${consulta.paciente == null}">-</td>
           <td scope="row" th:if="${consulta.paciente == null}">-</td>
           <td scope="row" th:text="${consulta.fechaConsulta}"></td>
-          <td scope="row" th:text="${consulta.horario}"></td>
+          <td scope="row" th:text="${consulta.horario.texto}"></td>
           <td scope="row" th:text="${consulta.modalidad}"></td>
           <td scope="row" th:text="${consulta.detalleConsulta}"></td>
           <td scope="row">
@@ -316,7 +318,7 @@
     </table>
   </div>
 
-  
+   </div>
 
   <!------------- Footer ------------->
   <footer th:replace="/fragments/footer  :: footer"></footer>

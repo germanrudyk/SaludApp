@@ -31,7 +31,7 @@
                                               <svg class="bi f-icon">
                                               <use xlink:href="#plus" />
                                               </svg>
-                                              <input type="file" name="archivo">
+                                              <input hidden type="file" id="editarFoto" name="archivo">
                                               </div>
                                               </div>
                                               <table class="table table-hover custom-table">
@@ -124,7 +124,8 @@
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div> 
+        <div class="main">
                 <!------------- Tabla Consultas ------------->
                 <div class="container mt-5">
                     <h1>Consultas</h1>
@@ -143,8 +144,8 @@
                                 <th scope="col">Fecha</th>
                                 <th scope="col" class="text-center">Horario
                                     <select name="horario" class="form-select filtro-horario " onchange="filtrarTabla('horario')">
-                                        <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}" th:value="${horario}"
-                                                th:text="${horario}">
+                                        <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}" th:value="${horario.texto}"
+                                                th:text="${horario.texto}">
                                         </option>
                                     </select>
                                 </th>
@@ -176,7 +177,7 @@
                                 <td class="filtro-especialidad" scope="row" th:if="${consulta.profesional != null}"
                                     th:text="${consulta.profesional.especialidad}"></td>
                                 <td scope="row" th:text="${consulta.fechaConsulta}"></td>
-                                <td class="filtro-horario" scope="row" th:text="${consulta.horario}"></td>
+                                <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
                                 <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
                                 <td scope="row" th:text="${consulta.precioConsulta}"></td>
                                 <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
@@ -237,6 +238,7 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
                 <!------------- Footer -------------->
                 <footer th:replace="/fragments/footer  :: footer"></footer> 
                 </body>
