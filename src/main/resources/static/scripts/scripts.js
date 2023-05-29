@@ -143,8 +143,7 @@ function horizontalScroll(event) {
 
 function filtrarTabla(filtro) {
     var filtroElegido = document.querySelector(`.filtro-${filtro}`).value;
-  
-    var tabla = document.querySelector(".table"); 
+    var tabla = document.querySelector(".tablaFiltro"); 
     var filas = tabla.getElementsByTagName("tr");
   
     for (var i = 1; i < filas.length; i++) { 
@@ -157,6 +156,7 @@ function filtrarTabla(filtro) {
       }
     }
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -190,6 +190,8 @@ function filtrarTabla(filtro) {
   }
 }
 <<<<<<< HEAD
+=======
+>>>>>>> developer
 =======
 >>>>>>> developer
 =======
