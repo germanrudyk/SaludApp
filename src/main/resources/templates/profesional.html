@@ -58,18 +58,19 @@
             <div class="m-5 usuario">
               <div class="parte1">
                 <div>
-                  <img class="imagenPerfil" src="vincular-la-fotito.jpg">
+                  <img th:if="${session.usuariosession.imagen != null}" class="imagenPerfil" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                  <img th:if="${session.usuariosession.imagen == null}" class="imagenPerfil" src="./img/indefinido.png">
                 </div>
+                <form th:action="@{/profesional/modificar}" method="POST" enctype="multipart/form-data">
                 <div>
                   <label class="btn btn-dark" for="editarFoto">
                     <svg class="bi f-icon">
                       <use xlink:href="#plus" />
                     </svg>
-                    <input type="file" class="form-control editarFoto" name="archivo">
+                    <input type="file" name="archivo">
                 </div>
               </div>
               <table class="table table-hover custom-table">
-                <form th:action="@{/profesional/modificar}" method="POST" enctype="multipart/form-data">
                   <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
                   <input hidden th:value="${session.usuariosession.imagen}" name="archivo">
                   <tr scope="row">

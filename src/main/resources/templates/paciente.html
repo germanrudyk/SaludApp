@@ -22,18 +22,20 @@
             <div class="m-5 usuario">
               <div class="parte1">
                 <div>
-                  <img class="imagenPerfil" src="vincular-la-fotito.jpg">
+                  <img th:if="${session.usuariosession.imagen != null}" class="imagenPerfil" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                  <img th:if="${session.usuariosession.imagen == null}" class="imagenPerfil" src="./img/indefinido.png">
                 </div>
+                <form th:action="@{/paciente/modificar}" method="POST" enctype="multipart/form-data">
                 <div>
                   <label class="btn btn-dark" for="editarFoto">
                     <svg class="bi f-icon">
                       <use xlink:href="#plus" />
                     </svg>
-                    <input type="file" class="form-control editarFoto" name="archivo">
+                    <input type="file" name="archivo">
                 </div>
               </div>
               <table class="table table-hover custom-table">
-                <form th:action="@{/paciente/modificar}" method="POST" enctype="multipart/form-data">
+
                   <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
                   <input hidden th:value="${session.usuariosession.imagen}" name="archivo">
                   <tr scope="row">
@@ -126,7 +128,7 @@
   <!------------- Tabla Consultas ------------->
   <div class="container mt-5">
     <h1>Consultas</h1>
-    <table class="table table-hover custom-table">
+    <table class="table table-hover tablaFiltro custom-table">
       <thead>
         <tr>
           <th scope="col">Nombre</th>
@@ -134,21 +136,24 @@
           <th scope="col">
             <select name="especialidad" class="form-select especialidad filtro-especialidad " onchange="
               filtrarTabla('especialidad')">
+              <option selected>Especialidad</option>
               <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
                 th:value="${especialidad}" th:text="${especialidad}">
               </option>
             </select>
           </th>
           <th scope="col">Fecha</th>
-          <th scope="col" class="text-center">Horario
+          <th scope="col" class="text-center">
             <select name="horario" class="form-select filtro-horario " onchange="filtrarTabla('horario')">
+              <option selected>Horario</option>
               <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}" th:value="${horario}"
                 th:text="${horario}">
               </option>
             </select>
           </th>
-          <th scope="col" class="text-center">Modalidad
+          <th scope="col" class="text-center">
             <select name="modalidad" class="form-select filtro-modalidad " onchange="filtrarTabla('modalidad')">
+              <option selected>Modalidad</option>
               <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
                 th:value="${modalidad}" th:text="${modalidad}">
               </option>
@@ -156,8 +161,9 @@
           </th>
           <th scope="col">Precio</th>
           <th scope="col">Calificación</th>
-          <th scope="col" class="text-center">Estado
+          <th scope="col" class="text-center">
             <select name="estado" class="form-select filtro-estado " onchange="filtrarTabla('estado')">
+              <option selected>Estado</option>
               <option th:each="estado : ${T(com.demo.saludApp.enumeraciones.Estado).values()}" th:value="${estado}"
                 th:text="${estado}">
               </option>
@@ -188,7 +194,7 @@
             <button class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
               Turno</button>
           </td>
-          <!------------- Formulario Clificar ------------->
+          <!------------- Formulario Calificar ------------->
           <div class="modal fade" id="calificar" tabindex="-1" role="dialog" aria-labelledby="calificarLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
