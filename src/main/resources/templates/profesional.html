@@ -3,42 +3,6 @@
 
 <head th:replace="/fragments/head  :: head"></head>
 
-<script>
-  function agregarCampoArchivo() {
-    var contenedor = document.getElementById("contenedor-archivos");
-    var nuevoCampo = document.createElement("input");
-    nuevoCampo.type = "file";
-    nuevoCampo.name = "estudios[]";
-    nuevoCampo.classList.add("form-control");
-    nuevoCampo.classList.add("mb-3");
-    contenedor.appendChild(nuevoCampo);
- }
-
- // Obtén el elemento de input y el contenedor de archivos seleccionados
- var input = document.getElementById('archivos');
-      var contenedorArchivos = document.getElementById('archivos-seleccionados');
-      var archivosSeleccionados = [];
-
-      // Agrega un evento de cambio al elemento de input
-      input.addEventListener('change', function(event) {
-
-        event.preventDefault();
-          // Obtiene los archivos seleccionados
-          var nuevosArchivos = Array.from(event.target.files);
-
-          // Agrega los nuevos archivos a la lista de archivos seleccionados
-          archivosSeleccionados = archivosSeleccionados.concat(nuevosArchivos);
-
-          // Muestra los archivos seleccionados en el contenedor
-          contenedorArchivos.innerHTML = '';
-          archivosSeleccionados.forEach(function(archivo) {
-              var nombreArchivo = document.createElement('p');
-              nombreArchivo.textContent = archivo.name;
-              contenedorArchivos.appendChild(nombreArchivo);
-          });
-      });
-</script>
-
 <body>
   <!------------- Navbar ------------->
   <nav th:replace="/fragments/navbar  :: nav"></nav>
@@ -58,7 +22,7 @@
             <div class="m-5 usuario">
               <div class="parte1">
                 <div>
-                  <img class="imagenPerfil" src="vincular-la-fotito.jpg">
+                  <img class="imagenPerfil" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
                 </div>
                 <div>
                   <label class="btn btn-dark" for="editarFoto">
@@ -259,7 +223,16 @@
           <td scope="row" th:text="${consulta.horario}"></td>
           <td scope="row" th:text="${consulta.modalidad}"></td>
           <td scope="row" th:text="${consulta.detalleConsulta}"></td>
-          <td scope="row" th:text="${consulta.estudios}"></td>
+          <td scope="row">
+            <div th:if="${consulta.estudios != null}">
+              <div th:each="estudio : ${consulta.estudios}">     
+                <img class="imagenEstudio" th:src="@{/imagen/estudio/__${consulta.id}__/__${estudio.id}__}">
+              </div>
+            </div>
+            <div th:if="${consulta.estudios == null}">
+              <span>Sin estudios</span>
+            </div>
+          </td>
           <td scope="row" th:text="${consulta.estado}"></td>
           <td scope="row">
             <div class="d-flex justify-content-around w-100">
@@ -322,9 +295,8 @@
                             </div>
                             <div class="mb-3">
                               <label for="estudios" class="form-label">Estudios</label>
-                              <div class="mb-3" id="contenedor-archivos">
+                              <div class="mb-3">
                                 <input class="form-control mb-3"  id="archivos" type="file" name="estudios" multiple>
-                                <div id="archivos-seleccionados"></div>
                               </div>
                             </div>
                             <div class="modal-footer">
@@ -348,33 +320,6 @@
 
   <!------------- Footer ------------->
   <footer th:replace="/fragments/footer  :: footer"></footer>
-
-  <script>
-     // Obtén el elemento de input y el contenedor de archivos seleccionados
-      var input = document.getElementById('archivos');
-      var contenedorArchivos = document.getElementById('archivos-seleccionados');
-      var archivosSeleccionados = [];
-
-      // Agrega un evento de cambio al elemento de input
-      input.addEventListener('change', function(event) {
-
-        event.preventDefault();
-
-          // Obtiene los archivos seleccionados
-          var nuevosArchivos = Array.from(event.target.files);
-
-          // Agrega los nuevos archivos a la lista de archivos seleccionados
-          archivosSeleccionados = archivosSeleccionados.concat(nuevosArchivos);
-
-          // Muestra los archivos seleccionados en el contenedor
-          contenedorArchivos.innerHTML = '';
-          archivosSeleccionados.forEach(function(archivo) {
-              var nombreArchivo = document.createElement('p');
-              nombreArchivo.textContent = archivo.name;
-              contenedorArchivos.appendChild(nombreArchivo);
-          });
-      });
-</script>
 </body>
 
 </html>

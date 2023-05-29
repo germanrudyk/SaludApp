@@ -346,3 +346,8 @@
 .btn-cancelar:hover {
     background-color: rgb(241, 108, 157, 0.881);
 }
+
+.imagenEstudio{
+    width: 150px;
+    height: 150px;
+}
