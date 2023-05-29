@@ -18,23 +18,23 @@
                     </div>
                     <div class="modal-body">
                         <div class="container">
-                            ---------- Perfil desplegable -----------
-                            <div class="m-5 usuario">
-                                <div class="parte1">
-                                    <div>
-                                        <img th:if="${session.usuariosession.imagen != null}" id="profile-image"
-                                             th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="imagen de perfil" height="60" width="60"
-                                             class="rounded-circle m-2" />
-                                    </div>
-                                    <div>
-                                        <label class="btn btn-dark" for="editarFoto">
-                                            <svg class="bi f-icon">
-                                            <use xlink:href="#plus" />
-                                            </svg>
-                                            <input type="file" class="form-control editarFoto" name="archivo">
-                                            </div>
-                                            </div>
-                                            <table class="table tabla table-hover custom-table">
+                          <!------------- Perfil desplegable ------------->
+                          <div class="m-5 usuario">
+                              <div class="parte1">
+                                  <div>
+                                      <img th:if="${session.usuariosession.imagen != null}" class="imagenPerfil" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                                      <img th:if="${session.usuariosession.imagen == null}" class="imagenPerfil" src="./img/indefinido.png">
+                                  </div>
+                                  <form th:action="@{/paciente/modificar}" method="POST" enctype="multipart/form-data">
+                                      <div>
+                                          <label class="btn btn-dark" for="editarFoto">
+                                              <svg class="bi f-icon">
+                                              <use xlink:href="#plus" />
+                                              </svg>
+                                              <input type="file" name="archivo">
+                                              </div>
+                                              </div>
+                                              <table class="table table-hover custom-table">
                                                 <form th:action="@{/paciente/modificar}" method="POST" enctype="multipart/form-data">
                                                     <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
                                                     <input hidden th:value="${session.usuariosession.imagen}" name="archivo">
@@ -186,8 +186,8 @@
                                             data-paciente-id="${profesional.id}">Calificar</button>
                                 </td>
                                 <td>
-                                    <button class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
-                                        Turno</button>
+                                    <a class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
+                                        Turno</a>
                                 </td>
                             </tr>
                             <!------------- Formulario Clificar -------------->
