@@ -31,7 +31,7 @@
                                               <svg class="bi f-icon">
                                               <use xlink:href="#plus" />
                                               </svg>
-                                              <input type="file" name="archivo">
+                                              <input hidden type="file" id="editarFoto" name="archivo">
                                               </div>
                                               </div>
                                               <table class="table table-hover custom-table">
@@ -124,7 +124,8 @@
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div> 
+        <div class="main">
                 <!------------- Tabla Consultas ------------->
                 <div class="main">
                 <div class="container mt-5">
@@ -238,7 +239,9 @@
                         </tbody>
                     </table>
                 </div>
-                </div>
+            </div>
+
+
                 <!------------- Footer -------------->
                 <footer th:replace="/fragments/footer  :: footer"></footer> 
                 </body>
