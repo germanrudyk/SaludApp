@@ -3,6 +3,7 @@ package com.demo.saludApp.controladores;
 import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Usuario;
+import com.demo.saludApp.enumeraciones.Estado;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
 import com.demo.saludApp.servicios.ConsultaServicio;
@@ -41,7 +42,7 @@ public class PacienteControlador {
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(ModelMap modelo) {
         
-        List<Consulta> consultas = consultaS.listarTodas();   
+        List<Consulta> consultas = consultaS.buscarPorEstado(Estado.DISPONIBLE);   
         modelo.put("consultas", consultas); 
         return "paciente.html";
     }

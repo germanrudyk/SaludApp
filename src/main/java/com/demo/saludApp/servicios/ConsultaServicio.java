@@ -186,6 +186,12 @@ public class ConsultaServicio {
         }
 
     }
+    
+    public Consulta getOne(String id){
+        
+        return consultaRepositorio.getOne(id);
+        
+    }
 
     public void cargarDatosConsulta(String idConsulta, List<Imagen> estudios, String detalleConsulta) {
 

@@ -84,7 +84,7 @@ public class PortalControlador {
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
 
         if (logueado.isActivo() == false) {
-            modelo.put("suspendido", "Cuenta suspendida!");
+            modelo.put("error", "Cuenta suspendida!");
             return "redirect:/logout";
         }
         modelo.put("exito", "Bienvenido");
