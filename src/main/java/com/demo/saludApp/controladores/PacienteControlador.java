@@ -2,6 +2,7 @@ package com.demo.saludApp.controladores;
 
 import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Paciente;
+import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Estado;
 import com.demo.saludApp.enumeraciones.Genero;
@@ -40,12 +41,23 @@ public class PacienteControlador {
     //------------- Vista General -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("") //asigna solicitudes HTTP GET
-    public String vistaPaciente(ModelMap modelo) {
+    public String vistaPaciente(HttpSession session, ModelMap modelo) {
         
         List<Consulta> consultas = consultaS.buscarPorEstado(Estado.DISPONIBLE);   
-        modelo.put("consultas", consultas); 
-        return "paciente.html";
+        modelo.addAttribute("consultas", consultas); 
+       
+        Usuario logueado = (Paciente) session.getAttribute("usuariosession");
+          
+        try {
+            List<Consulta> misconsultas = consultaS.buscarPorPaciente(logueado.getId());
+            modelo.addAttribute("mis consultas", misconsultas);
+            return "paciente.html";
+        } catch (Exception e) {
+            return "paciente.html";
+        }
+                
     }
+
         
     //------------- Modificar Paciente -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")

@@ -7,7 +7,7 @@
   <!------------- Navbar ------------->
   <nav th:replace="/fragments/navbar  :: nav"></nav>
 
-  <!------------- Formulario en el modal ------------->
+  <!------------- Perfil desplegable ------------->
   <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -18,95 +18,92 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <!------------- Perfil desplegable ------------->
             <div class="m-5 usuario">
-              <div class="parte1">
-                <div>
-                  <img class="imagenPerfil" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+              <form th:action="@{/profesional/modificar}" method="POST" enctype="multipart/form-data"></form>
+                <div class="parte1">
+                  <div>
+                    <img class="imagenPerfil" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                  </div>  
+                  <div>
+                    <label class="btn btn-dark" for="archivo">
+                      <svg class="bi f-icon">
+                        <use xlink:href="#plus" />
+                      </svg>
+                      <input hidden type="file" id="archivo" name="archivo">
+                  </div>
                 </div>
-               <form th:action="@{/profesional/modificar}" method="POST" enctype="multipart/form-data">    
-                <div>
-                  <label class="btn btn-dark" for="archivo">
-                    <svg class="bi f-icon">
-                      <use xlink:href="#plus" />
-                    </svg>
-                    <input hidden type="file" id="archivo" name="archivo">
+                <table class="table table-hover custom-table"> 
+                    <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
+                    <input hidden th:value="${session.usuariosession.imagen}" name="archivo">
+                    <tr scope="row">
+                      <td>Nombre:</td>
+                      <td>
+                        <input type="text" th:value="${session.usuariosession.nombre}" class="form-control" name="nombre">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Apellido:</td>
+                      <td>
+                        <input type="text" th:value="${session.usuariosession.apellido}" class="form-control"
+                          name="apellido">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Teléfono:</td>
+                      <td>
+                        <input type="text" th:value="${session.usuariosession.telefono}" class="form-control"
+                          name="telefono">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Correo electrónico:</td>
+                      <td>
+                        <input type="email" th:value="${session.usuariosession.email}" class="form-control" name="email">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Matricula:</td>
+                      <td>
+                        <input type="text" th:value="${session.usuariosession.matricula}" class="form-control"
+                          name="matricula">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Locacion:</td>
+                      <td>
+                        <input type="date" th:value="${session.usuariosession.locacion}" class="form-control"
+                          name="locacion">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Especialidad:</td>
+                      <td>
+                        <select name="especialidad" class="form-select especialidad">
+                          <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                            th:value="${especialidad}" th:text="${especialidad}"
+                            th:unless="${session.usuariosession.especialidad == especialidad}">
+                          </option>
+                          <option th:text="${session.usuariosession.especialidad}" selected></option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Darse de baja:</td>
+                      <td>NO
+                        <input th:if="${session.usuariosession.activo == true}" checked value="true" type="radio"
+                          name="activo">
+                        <input th:if="${session.usuariosession.activo != true}" value="true" type="radio" name="activo">
+                        SI
+                        <input th:if="${session.usuariosession.activo != true}" checked value="false" type="radio"
+                          name="activo">
+                        <input th:if="${session.usuariosession.activo == true}" value="false" type="radio" name="activo">
+                      </td>
+                    </tr>
+                </table>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-custom">Modificar</button>
                 </div>
-              </div>
-              <table class="table table-hover custom-table">
-               
-                  <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
-                  <input hidden th:value="${session.usuariosession.imagen}" name="archivo">
-                  <tr scope="row">
-                    <td>Nombre:</td>
-                    <td>
-                      <input type="text" th:value="${session.usuariosession.nombre}" class="form-control" name="nombre">
-                    </td>
-                  </tr>
-                  <tr scope="row">
-                    <td>Apellido:</td>
-                    <td>
-                      <input type="text" th:value="${session.usuariosession.apellido}" class="form-control"
-                        name="apellido">
-                    </td>
-                  </tr>
-                  <tr scope="row">
-                    <td>Teléfono:</td>
-                    <td>
-                      <input type="text" th:value="${session.usuariosession.telefono}" class="form-control"
-                        name="telefono">
-                    </td>
-                  </tr>
-                  <tr scope="row">
-                    <td>Correo electrónico:</td>
-                    <td>
-                      <input type="email" th:value="${session.usuariosession.email}" class="form-control" name="email">
-                    </td>
-                  </tr>
-                  <tr scope="row">
-                    <td>Matricula:</td>
-                    <td>
-                      <input type="text" th:value="${session.usuariosession.matricula}" class="form-control"
-                        name="matricula">
-                    </td>
-                  </tr>
-                  <tr scope="row">
-                    <td>Locacion:</td>
-                    <td>
-                      <input type="date" th:value="${session.usuariosession.locacion}" class="form-control"
-                        name="locacion">
-                    </td>
-                  </tr>
-                  <tr scope="row">
-                    <td>Especialidad:</td>
-                    <td>
-                      <select name="especialidad" class="form-select especialidad">
-                        <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
-                          th:value="${especialidad}" th:text="${especialidad}"
-                          th:unless="${session.usuariosession.especialidad == especialidad}">
-                        </option>
-                        <option th:text="${session.usuariosession.especialidad}" selected></option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr scope="row">
-                    <td>Darse de baja:</td>
-                    <td>NO
-                      <input th:if="${session.usuariosession.activo == true}" checked value="true" type="radio"
-                        name="activo">
-                      <input th:if="${session.usuariosession.activo != true}" value="true" type="radio" name="activo">
-                      SI
-                      <input th:if="${session.usuariosession.activo != true}" checked value="false" type="radio"
-                        name="activo">
-                      <input th:if="${session.usuariosession.activo == true}" value="false" type="radio" name="activo">
-                    </td>
-                  </tr>
-              </table>
-              </table>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-custom">Modificar</button>
-              </div>
               </form>
             </div>
           </div>

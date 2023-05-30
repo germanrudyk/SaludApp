@@ -71,6 +71,9 @@ public class PortalControlador {
         if (error != null) {
             modelo.put("error", "Usuario o contraseña inválidos!");
         }
+        List<Profesional> profesionales = profesionalS.listar();
+        modelo.addAttribute("profesionales", profesionales);
+
         return "index.html";
     }
 

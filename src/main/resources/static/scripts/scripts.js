@@ -132,7 +132,6 @@ filterContainer.addEventListener("click", (event) => {
 })
 
 /*------------- Filtrar tabla de turnos -------------*/
-
 function filtrarTabla(filtro) {
     var filtroElegido = document.querySelector(`.filtro-${filtro}`).value;
     var tabla = document.querySelector(".tablaFiltro"); 
@@ -150,10 +149,10 @@ function filtrarTabla(filtro) {
   }
 
 /* ------- Profesional horizontalScroll -------- */
-
 function horizontalScroll(event) {
         if (event.deltaY !== 0) {
             event.preventDefault();
             document.querySelector('.overflow-container').scrollLeft += event.deltaY;
         }
     }
+
