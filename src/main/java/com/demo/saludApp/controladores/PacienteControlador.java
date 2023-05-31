@@ -50,7 +50,7 @@ public class PacienteControlador {
           
         try {
             List<Consulta> misconsultas = consultaS.buscarPorPaciente(logueado.getId());
-            modelo.addAttribute("mis consultas", misconsultas);
+            modelo.addAttribute("misconsultas", misconsultas);
             return "paciente.html";
         } catch (Exception e) {
             return "paciente.html";
