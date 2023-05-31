@@ -364,3 +364,11 @@
   transition: transform 0.2s ease;
   transform: scale(1.2);
 }
+
+/*------------- Historia Clinica -------------*/
+.card {
+    width: 300px;
+    height: 350px;
+    display: block;
+    position: relative;
+}
