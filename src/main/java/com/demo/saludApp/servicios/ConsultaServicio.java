@@ -19,26 +19,19 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 
 @Service
 public class ConsultaServicio {
 
     @Autowired
     private ConsultaRepositorio consultaRepositorio;
-
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
-
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
 
-    @Autowired
-    private PacienteServicio pacienteS;
-
-    @Autowired
-    private ImagenServicio imagenS;
-
+    //------------- Crear Consulta -------------
     public void crearConsulta(String fecha, Horario horario, Profesional profesional, Modalidad modalidad, Double precio) throws MiException, ParseException {
 
         validar(fecha, horario, profesional, modalidad, precio);
@@ -60,6 +53,7 @@ public class ConsultaServicio {
 
     }
 
+    //------------- Reservar Consulta -------------
     public void reservarConsulta(String idConsulta, Paciente paciente) {
 
         Optional<Consulta> respuesta = consultaRepositorio.findById(idConsulta);
@@ -76,6 +70,7 @@ public class ConsultaServicio {
 
     }
 
+    //------------- Realizar Consulta -------------
     public void realizarConsulta(String idConsulta, String detalleConsulta, Imagen estudio) {
 
         Optional<Consulta> respuesta = consultaRepositorio.findById(idConsulta);
@@ -97,10 +92,12 @@ public class ConsultaServicio {
 
     }
 
+    //------------- Buscar Por Fecha -------------
     public List<Consulta> buscarPorFecha(Date fecha) {
         return consultaRepositorio.buscarPorFecha(fecha);
     }
 
+    //------------- Buscar Por Profesional -------------
     public List<Consulta> buscarPorProfesional(String idProfesional) {
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
@@ -111,6 +108,7 @@ public class ConsultaServicio {
         return null;        // ver opciones
     }
 
+    //------------- Buscar Por Paciente -------------
     public List<Consulta> buscarPorPaciente(String idPaciente) {
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
 
@@ -120,24 +118,8 @@ public class ConsultaServicio {
         }
         return null;        // ver opciones
     }
-    public List<Consulta> buscarPorPacientePorEstado(String idPaciente, Estado estado) {
-        Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
 
-        if (respuesta.isPresent()) {
-            Paciente paciente = respuesta.get();
-            return consultaRepositorio.buscarPorPacientePorEstado(paciente, estado);
-        }
-        return null;        // ver opciones
-    }
-//    public List<Consulta> buscarPorPacientePorFecha(String idPaciente, Date fecha) {
-//        Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
-//
-//        if (respuesta.isPresent() && fecha != null) {
-//            Paciente paciente = respuesta.get();
-//            return consultaRepositorio.buscarPorPacientePorFecha(paciente, fecha);
-//        }
-//        return null;        // ver opciones
-//    }
+    //------------- Buscar Por Estado -------------
     public List<Consulta> buscarPorEstado(Estado estado) {
         return consultaRepositorio.buscarPorEstado(estado);
     }
@@ -209,13 +191,10 @@ public class ConsultaServicio {
         if (respuestaConsulta.isPresent()) {
 
             Consulta consulta = respuestaConsulta.get();
-
             consulta.setDetalleConsulta(detalleConsulta);
-
             consulta.setEstudios(estudios);
 
             consultaRepositorio.save(consulta);
-
             // Agregar consulta a la historia clinica del paciente
             Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(consulta.getPaciente().getId());
 
@@ -224,29 +203,17 @@ public class ConsultaServicio {
                 Paciente paciente = respuestaPaciente.get();
 
                 if (paciente.getIdHistoria() == null) {
-
                     List<Consulta> primeraConsulta = new ArrayList();
-
-                    primeraConsulta.add(consulta);
-                    
+                    primeraConsulta.add(consulta); 
                     paciente.setIdHistoria(primeraConsulta);
-
                 } else {
-
                     List<Consulta> consultas = paciente.getIdHistoria();
-
-                    consultas.add(consulta);
-                    
+                    consultas.add(consulta);      
                     paciente.setIdHistoria(consultas);
-
                 }
-
                 pacienteRepositorio.save(paciente);
-
             }
-
         }
-
     }
 
     private void validar(String fecha, Horario horario, Profesional profesional, Modalidad modalidad, Double precio) throws MiException {
