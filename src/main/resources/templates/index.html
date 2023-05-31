@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="./img/carousel-2.jpg" alt="" class="d-block w-100">
+                    <img src="./img/carousel-2.png" alt="" class="d-block w-100">
                     <div class="container">
                         <div class="carousel-caption text-end">
                             <h2>Entendemos que cada paciente es único</h2>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="./img/carousel-3.jpg" alt="" class="d-block w-100">
+                    <img src="./img/carousel-3.png" alt="" class="d-block w-100">
                     <div class="container">
                         <div class="carousel-caption">
                             <h2>En SaludApp, es eficiencia y comodidad</h2>
@@ -171,7 +171,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="dni" class="form-label">DNI</label>
-                                    <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI" required>
+                                    <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
@@ -211,7 +212,7 @@
             </div>
         </div>
         <!------------- Nuestros Profesionales ------------->
-        <section id="portfolio" class="up-section pb-5 pt-5">
+        <section id="Profesionales" class="up-section pb-5 pt-5">
             <div class="text-center">
                 <h2>Nuestros Profesionales</h2>
                 <p>Contamos con un equipo de profesionales altamente capacitados en diversas especialidades médicas,
@@ -231,16 +232,22 @@
                         <li class="filter-item " data-filter="CARDIOLOGIA">Cardiología</li>
                     </ul>
                 </div>
-                <div class="container">
-                    <div class="row " th:each="profesional : ${profesionales}">
-                        <div class="col-lg-4 card" th:classappend="${profesional.especialidad}">
-                           <!-- <img class="bd-placeholder-img rounded-circle ">-->
-                            <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img  rounded-circle"
-                  th:src="@{/imagen/perfil/__${profesional.id}__}" height="40" >
-                            <h2 class="fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h2>
-                            <p th:text="${profesional.detalleEspecialidad}"></p>
-                            <p><a class="btn btn-custom" href="#about">Ver Turnos &raquo;</a></p>
-                        </div>
+                <div class="container"  onwheel="horizontalScroll(event)">
+                    <div class="overflow-container">
+                        <div class="card-deck text-center">
+                            <div class="card card1 text-center mb-3  flex-column " th:each="profesional : ${profesionales}" th:classappend="${profesional.especialidad}" style="width:  250px; height: auto;">
+                                <div class="card-body m-2">
+                                    <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img rounded-circle"
+                                         th:src="@{/imagen/perfil/__${profesional.id}__}" style="width: 120px; height: 120px;">
+                                    <img th:if="${profesional.imagen == null}" class="bd-placeholder-img  rounded-circle" 
+                                         src="./img/indefinido.png" style="width: 120px; height: 120px;"> 
+                                    <h4 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h4>
+                                    <p th:text="${profesional.detalleEspecialidad}" class="card-text"></p>
+                                    <a class="btn btn-custom m-2" href="#about">Ver Turnos &raquo;</a>
+                                </div> 
+                            </div> 
+                            </div>
+                        </div>      
                     </div>
                 </div>
         </section>
@@ -284,6 +291,7 @@
                     </div>
                 </form>
             </div>
+      </div>
     </section>
     <!------------- Footer ------------->
     <footer th:replace="/fragments/footer  :: footer"></footer>

@@ -2,12 +2,14 @@ package com.demo.saludApp.controladores;
 
 import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Paciente;
+import com.demo.saludApp.entidades.Profesional;
 import com.demo.saludApp.entidades.Usuario;
+import com.demo.saludApp.enumeraciones.Estado;
 import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
-import com.demo.saludApp.repositorios.UsuarioRepositorio;
 import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.PacienteServicio;
+import com.demo.saludApp.servicios.ProfesionalServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,24 +29,69 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller //Declara un controlador para la gestion de la comunicación usuario/aplicación
 @RequestMapping("/paciente") //Mapea la ruta de la petición y el método del controlador
-public class PacienteControlador {    
+public class PacienteControlador {  
     
     @Autowired
     private PacienteServicio pacienteS;
     @Autowired
-    private UsuarioRepositorio usuarioS;
+    private ProfesionalServicio profesionalS;
     @Autowired
     private ConsultaServicio consultaS;     
     
+    //------------- Vista General -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("") //asigna solicitudes HTTP GET
-    public String vistaPaciente(ModelMap modelo) {
+    public String vistaPaciente(HttpSession session, ModelMap modelo) {
         
-        List<Consulta> consultas = consultaS.listarTodas();   
-        modelo.put("consultas", consultas); 
-        return "paciente.html";
+        List<Consulta> consultas = consultaS.buscarPorEstado(Estado.DISPONIBLE);   
+        modelo.addAttribute("consultas", consultas); 
+       
+        Usuario logueado = (Paciente) session.getAttribute("usuariosession");
+          
+        try {
+            List<Consulta> misconsultas = consultaS.buscarPorPaciente(logueado.getId());
+            modelo.addAttribute("misconsultas", misconsultas);
+            return "paciente.html";
+        } catch (Exception e) {
+            return "paciente.html";
+        }
+                
+    }
+
+        
+    //------------- Modificar Paciente -------------
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
+    @PostMapping("/modificar")
+    public String modificarPaciente(MultipartFile archivo,@RequestParam String idUsuario,@RequestParam  String nombre,@RequestParam String apellido,@RequestParam Integer telefono,@RequestParam String email,@RequestParam String dni,@RequestParam String fechaNacimiento,@RequestParam Genero genero,@RequestParam ObraSocial obrasocial,@RequestParam Boolean activo, ModelMap modelo) {
+
+        try {
+            pacienteS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, dni, fechaNacimiento, genero, obrasocial, activo);
+            modelo.put("exito", "Modificación exitosa");
+        } catch (Exception ex) {
+
+            modelo.put("error", ex.getMessage());
+            return "redirect:/paciente"; 
+        }
+        return "redirect:/paciente"; 
+    }   
+    
+    //------------- Calificar -------------
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
+    @PostMapping("/calificar")
+    public String calificar(@RequestParam String idUsuario,@RequestParam Double calificacion, ModelMap modelo) {
+
+        try {
+            profesionalS.calificar(idUsuario, calificacion);
+            modelo.put("exito", "Modificación exitosa");
+        } catch (Exception ex) {
+
+            modelo.put("error", ex.getMessage());
+            return "redirect:/paciente"; 
+        }
+        return "redirect:/paciente"; 
     }
     
+    //------------- Login -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/reservar/{id}")
     public String reservar(HttpSession session, @PathVariable String id){
@@ -54,28 +101,4 @@ public class PacienteControlador {
         consultaS.reservarConsulta(id, paciente);
         return "redirect:/paciente";  
     }
-    
-    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-    @GetMapping("/modificar/{email}")
-    public String modificar(@PathVariable String email, ModelMap modelo) {
-        
-        modelo.put("modificar", usuarioS.buscarPorEmail(email));
-        return "paciente_modificar.html";
-    }
-    
-    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-    @PostMapping("/modificacion")
-    public String modificacion(@RequestParam String idUsuario, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Integer telefono, @RequestParam String email, @RequestParam String password, @RequestParam String dni, @RequestParam Genero genero, @RequestParam String fechaNacimiento, @RequestParam ObraSocial obraSocial,@RequestParam List<Consulta> idHistoria,@RequestParam Boolean activo, ModelMap modelo, MultipartFile archivo) {
-        
-        try {           
-            pacienteS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, password, dni, fechaNacimiento, genero, obraSocial, idHistoria, activo);
-            modelo.put("exito", "Modificación exitosa");
-            modelo.put("modificar", pacienteS.getOne(idUsuario)); 
-        } catch (Exception ex) { 
-            modelo.put("error", ex.getMessage());
-            modelo.put("modificar", pacienteS.getOne(idUsuario));
-            return "paciente_modificar";
-        }
-        return "paciente_modificar";
-    }    
 }

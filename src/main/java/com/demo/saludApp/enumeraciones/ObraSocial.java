@@ -12,7 +12,6 @@ public enum ObraSocial {
     MEDIFRE,
     OMINT,
     IOMA,
-    OBSBA;
-    
-    
+    OBSBA,
+    TODOS;
 }
