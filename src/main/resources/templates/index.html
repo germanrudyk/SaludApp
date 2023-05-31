@@ -125,7 +125,7 @@
         </div>
     </section>
     <div class="container">
-        <!-------------Modal del botón "Registrarse"------------->
+        <!-------------Modal "Registrarse"------------->
         <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -134,7 +134,6 @@
                         <h5 class="modal-title" id="registroModalLabel">Registro de Usuario</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <!------------- Formulario en el modal ------------->
                     <div class="modal-body">
                         <div class="container">
                             <form class="custom-form" th:action="@{/registro}" method="POST"
@@ -243,7 +242,7 @@
                                          src="./img/indefinido.png" style="width: 120px; height: 120px;"> 
                                     <h4 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h4>
                                     <p th:text="${profesional.detalleEspecialidad}" class="card-text"></p>
-                                    <a class="btn btn-custom m-2" href="#about" onclick="resaltarRegistro()">Ver Turnos &raquo;</a>
+                                    <a class="btn btn-custom m-2"  th:href="@{/paciente}">Ver Turnos</a>
                                 </div> 
                             </div> 
                             </div>
