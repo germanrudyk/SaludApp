@@ -39,7 +39,6 @@ public class PacienteControlador {
     private ConsultaServicio consultaS;     
     
     //------------- Vista General -------------
-    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(HttpSession session, ModelMap modelo) {
         

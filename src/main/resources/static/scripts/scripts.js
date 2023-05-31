@@ -156,3 +156,12 @@ function horizontalScroll(event) {
         }
     }
 
+function resaltarRegistro() {
+
+  var registrarseButton = document.getElementById("registrarse");
+  registrarseButton.classList.toggle("resaltarRegistro");
+    setTimeout(function() {
+    registrarseButton.classList.remove("resaltarRegistro");
+  }, 1000);
+
+}

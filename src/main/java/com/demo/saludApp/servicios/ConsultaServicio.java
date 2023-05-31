@@ -120,7 +120,15 @@ public class ConsultaServicio {
         }
         return null;        // ver opciones
     }
+    public List<Consulta> buscarPorPacientePorEstado(String idPaciente, Estado estado) {
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
 
+        if (respuesta.isPresent()) {
+            Paciente paciente = respuesta.get();
+            return consultaRepositorio.buscarPorPacientePorEstado(paciente, estado);
+        }
+        return null;        // ver opciones
+    }
 //    public List<Consulta> buscarPorPacientePorFecha(String idPaciente, Date fecha) {
 //        Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
 //
