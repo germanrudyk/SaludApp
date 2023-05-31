@@ -5,11 +5,11 @@
 
 <body>
   <!------------- Navbar ------------->
-  <nav th:replace="/fragments/navbar  :: nav"></nav>
+  <nav th:replace="/fragments/navbar  :: nav" sec:authorize="hasAnyRole('PACIENTE')"></nav>
 
   <!------------- Perfil desplegable ------------->
   <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
-    aria-hidden="true">
+    aria-hidden="true" sec:authorize="hasAnyRole('PACIENTE')">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -123,8 +123,14 @@
       </div>
     </div>
   </div>
+
+    <!------------- Historia Clinica ------------->
+    <div class="container">
+        <a class="btn btn-custom" th:href="@{historia/__${session.usuariosession.id}__}" method="GET" sec:authorize="hasAnyRole('PACIENTE')">Ver</a>
+    </div>
+
     <!------------- Mis Consultas ------------->
-    <div class="main">
+    <div class="main" sec:authorize="hasAnyRole('PACIENTE')">
       <div class="container mt-5">
         <h1>Mis Consultas</h1>
         <table class="table tablaFiltro table-hover custom-table">
@@ -237,6 +243,7 @@
         </table>
       </div>
     </div>
+
   <!------------- Consultas Disponibles ------------->
   <div class="main">
     <div class="container mt-5">
@@ -278,7 +285,7 @@
                 </option>
               </select>
             </th>
-            <th scope="col" class="text-center">Acciones</th>
+            <th scope="col" class="text-center" sec:authorize="hasAnyRole('PACIENTE')">Acciones</th>
           </tr>
         </thead>  
         <tbody th:each="consulta : ${consultas}">
@@ -296,7 +303,7 @@
             <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
             <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
             <td>
-              <a class="btn btn-custom" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
+              <a class="btn btn-custom" sec:authorize="hasAnyRole('PACIENTE')" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
                 Turno</a>
             </td>
           </tr>
