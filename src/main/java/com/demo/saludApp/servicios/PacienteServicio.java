@@ -102,6 +102,37 @@ public class PacienteServicio {
             pacienteRepositorio.save(paciente);
         }
     }
+    
+    //------------- Eliminar paciente ------------
+    public void eliminar(String id){
+        
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
+        
+        if (respuesta.isPresent()){
+            
+            Paciente paciente = respuesta.get();
+            
+            pacienteRepositorio.delete(paciente);
+            
+        }
+        
+    }
+    
+    public void darDeBaja(String id){
+        
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
+        
+        if(respuesta.isPresent()){
+            
+            Paciente paciente = respuesta.get();
+            
+            paciente.setActivo(false);
+            
+            pacienteRepositorio.save(paciente);
+            
+        }
+        
+    }
 
     //------------- Validar Paciente -------------
     private void validar(String nombre, String password, String password2) throws MiException{
