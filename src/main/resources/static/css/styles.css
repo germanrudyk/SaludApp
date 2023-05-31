@@ -356,4 +356,11 @@
 
 .main{
     min-height: 84vh;
-]
+}
+
+/*------------- Index escalar boton registro -------------*/
+
+.resaltarRegistro {
+  transition: transform 0.2s ease;
+  transform: scale(1.2);
+}
