@@ -156,13 +156,13 @@
                   <button type="submit" class="btn btn-custom">Modificar</button>
                 </a></td>
             </form>
-            <td class="text-center"><a class="btn" data-bs-toggle="modal" data-bs-target="#eliminar">
+            <td class="text-center"><a class="btn" data-bs-toggle="modal" th:data-bs-target="'#eliminar'+${profesional.id}">
                 <svg class="bi trash">
                   <use xlink:href="#trash" />
                 </svg>
               </a></td>
             <!------------- Formulario Eliminar ------------->
-            <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
+            <div class="modal fade" th:id="'eliminar'+${profesional.id}" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
               aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -171,7 +171,7 @@
                   </div>
                   <div class="modal-body">
                     <div class="container">
-                      <form id="eliminar-form" class="formulario" th:action="@{/admin/eliminar}" method="POST"
+                      <form id="eliminar-form" class="formulario" th:action="@{/admin/eliminar/profesional/__${profesional.id}__}" method="POST"
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" th:value="${profesional.id}">
                         <div class="form-group my-3 text-center">
@@ -279,14 +279,14 @@
                 </a></td>
             </form>
             <td class="text-center">
-              <a class="btn" data-bs-toggle="modal" data-bs-target="#eliminar" data-paciente-id="${paciente.id}">
+              <a class="btn" data-bs-toggle="modal" th:data-bs-target="'#eliminar'+${paciente.id}" data-paciente-id="${paciente.id}">
                 <svg class="bi trash">
                   <use xlink:href="#trash" />
                 </svg>
               </a>
             </td>
             <!------------- Formulario Eliminar ------------->
-            <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
+            <div class="modal fade" th:id="'eliminar'+${paciente.id}" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
               aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -295,7 +295,7 @@
                   </div>
                   <div class="modal-body">
                     <div class="container">
-                      <form id="eliminar-form" class="formulario" th:action="@{/admin/eliminar}" method="POST"
+                      <form id="eliminar-form" class="formulario" th:action="@{/admin/eliminar/paciente/__${paciente.id}__}" method="POST"
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" th:value="${paciente.id}">
                         <div class="form-group my-3 text-center">
