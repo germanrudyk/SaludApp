@@ -39,7 +39,6 @@ public class PacienteControlador {
     private ConsultaServicio consultaS;     
     
     //------------- Vista General -------------
-    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(HttpSession session, ModelMap modelo) {
         
@@ -50,7 +49,7 @@ public class PacienteControlador {
           
         try {
             List<Consulta> misconsultas = consultaS.buscarPorPaciente(logueado.getId());
-            modelo.addAttribute("mis consultas", misconsultas);
+            modelo.addAttribute("misconsultas", misconsultas);
             return "paciente.html";
         } catch (Exception e) {
             return "paciente.html";
