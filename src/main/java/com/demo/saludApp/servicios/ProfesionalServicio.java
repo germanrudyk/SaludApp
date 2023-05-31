@@ -24,25 +24,29 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfesionalServicio {
 
     @Autowired
-    private ProfesionalRepositorio pr;  
-    
+    private ProfesionalRepositorio pr;
+
     @Autowired
     private ImagenServicio imagenServicio;
-    
+
+    public Profesional getOne(String id) {
+        return pr.getOne(id);
+    }
+
     //------------- Listar Profesional -------------
     public List<Profesional> listar() {
         List<Profesional> profesionales = new ArrayList();
         profesionales = pr.findAll();
-    return profesionales;
+        return profesionales;
     }
-        
+
     //------------- Filtrar Profesional -------------
     public List<Profesional> filtrar(String especialidad) {
         List<Profesional> profesionales = new ArrayList();
         profesionales = pr.buscarEspecialidad(especialidad);
-    return profesionales;
+        return profesionales;
     }
-    
+
     //------------- Crear Profesional -------------
     @Transactional
     public void crear(String nombre, String apellido, Integer telefono, String email, String password, String password2, Integer matricula, String locacion, Especialidad especialidad, MultipartFile archivo) throws MiException, ParseException {
@@ -60,8 +64,8 @@ public class ProfesionalServicio {
         profesional.setEspecialidad(especialidad);
         profesional.setRol(Rol.PROFESIONAL);
         profesional.setActivo(true);
-        
-        if (!(archivo.isEmpty())){
+
+        if (!(archivo.isEmpty())) {
             Imagen imagen = imagenServicio.guardar(archivo);
             profesional.setImagen(imagen); //Se agrega la imagen 
         }
@@ -69,15 +73,15 @@ public class ProfesionalServicio {
     }
 
     //------------- Modificar Profesional -------------
-   @org.springframework.transaction.annotation.Transactional
+    @org.springframework.transaction.annotation.Transactional
     public void modificar(MultipartFile archivo, String idUsuario, String nombre, String apellido, Integer telefono, String email, Integer matricula, String locacion, Especialidad especialidad, Boolean activo) throws MiException, ParseException {
-        
+
         Optional<Profesional> respuesta = pr.findById(idUsuario);
 
         if (respuesta.isPresent()) {
 
             Profesional profesional = respuesta.get();
-            
+
             profesional.setActivo(activo);
             profesional.setRol(Rol.PROFESIONAL);
             profesional.setNombre(nombre);
@@ -101,10 +105,41 @@ public class ProfesionalServicio {
         }
     }
 
+    //------------- Eliminar Profesional ------------
+    public void eliminar(String id) {
+
+        Optional<Profesional> respuesta = pr.findById(id);
+
+        if (respuesta.isPresent()) {
+
+            Profesional profesional = respuesta.get();
+
+            pr.delete(profesional);
+
+        }
+
+    }
+    
+    public void darDeBaja(String id){
+        
+        Optional<Profesional> respuesta = pr.findById(id);
+        
+        if(respuesta.isPresent()){
+            
+            Profesional profesional = respuesta.get();
+            
+            profesional.setActivo(false);        
+            
+            pr.save(profesional);
+            
+        }
+        
+    }
+
     //------------- Descripcion -------------
     @org.springframework.transaction.annotation.Transactional
     public void descripcion(String idUsuario, String detalleEspecialidad) throws MiException, ParseException {
-        
+
         Optional<Profesional> respuesta = pr.findById(idUsuario);
 
         if (respuesta.isPresent()) {
@@ -113,29 +148,29 @@ public class ProfesionalServicio {
             pr.save(profesional);
         }
     }
-    
+
     //------------- Calificar -------------
     @org.springframework.transaction.annotation.Transactional
     public void calificar(String idUsuario, Double calificacion) {
-        
+
         Optional<Profesional> respuesta = pr.findById(idUsuario);
 
         if (respuesta.isPresent()) {
             Profesional profesional = respuesta.get();
-            calificacion = (profesional.getCalificacion() + calificacion)/(profesional.getCalificaciones()+1);
-            profesional.setCalificaciones(profesional.getCalificaciones()+1); 
+            calificacion = (profesional.getCalificacion() + calificacion) / (profesional.getCalificaciones() + 1);
+            profesional.setCalificaciones(profesional.getCalificaciones() + 1);
             profesional.setCalificacion(calificacion);
             pr.save(profesional);
         }
     }
-    
+
     //------------- Validar Profesional -------------
-    private void validar(String nombre, String password, String password2) throws MiException{
-        
+    private void validar(String nombre, String password, String password2) throws MiException {
+
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
-        if (password.isEmpty() || password == null || password.length()<6) {
+        if (password.isEmpty() || password == null || password.length() < 6) {
             throw new MiException("El email no puede ser nulo y debe tener mas de 5 digitos");
         }
         if (!password.equals(password2)) {
@@ -143,6 +178,3 @@ public class ProfesionalServicio {
         }
     }
 }
-     
-
-
