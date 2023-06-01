@@ -92,6 +92,17 @@
     color: var(--bg-color);
 }
 
+.btn-custom2 {
+    background-color: var(--primary-bg-color);
+    color: var(--bg-color);
+    border: solid 2px var(--primary-bg-color);
+}
+
+.btn-custom2:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
 .btn-custom-reverse {
     border: solid 2px var(--bg-color);
     color: var(--bg-color);
@@ -363,12 +374,4 @@
 .resaltarRegistro {
   transition: transform 0.2s ease;
   transform: scale(1.2);
-}
-
-/*------------- Historia Clinica -------------*/
-.card {
-    width: 300px;
-    height: 350px;
-    display: block;
-    position: relative;
 }
