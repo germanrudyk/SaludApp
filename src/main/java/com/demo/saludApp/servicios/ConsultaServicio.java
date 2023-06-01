@@ -215,6 +215,10 @@ public class ConsultaServicio {
             }
         }
     }
+    
+    public Integer contarConsultas (){
+        return consultaRepositorio.contarConsultas();
+    }
 
     private void validar(String fecha, Horario horario, Profesional profesional, Modalidad modalidad, Double precio) throws MiException {
 

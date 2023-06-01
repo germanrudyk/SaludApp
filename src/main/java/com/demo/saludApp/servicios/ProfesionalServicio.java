@@ -175,6 +175,14 @@ public class ProfesionalServicio {
             }
         }
     }
+    
+    public Integer contarProfesionales() {
+        return pr.contarProfesionales();
+    }
+    
+    public Integer contarCalificacionesProfesionales() {
+        return pr.contarCalificacionesProfesionales();
+    }
 
     //------------- Validar Profesional -------------
     private void validar(String nombre, String password, String password2) throws MiException {

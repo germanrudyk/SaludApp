@@ -13,7 +13,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProfesionalRepositorio extends JpaRepository <Profesional, String>{
  //realiza una búsqueda a través de la especialidad del Profesional
+ 
  @Query("SELECT p FROM Profesional p WHERE p.especialidad = :especialidad")
  public List<Profesional> buscarEspecialidad(@Param("especialidad") String especialidad);
+
+ @Query(value = "SELECT COUNT(id) FROM Profesional;", nativeQuery = true)
+ public Integer contarProfesionales();
+
+ @Query(value = "SELECT COUNT(calificaciones) FROM Profesional;", nativeQuery = true)
+ public Integer contarCalificacionesProfesionales();
  
 }
