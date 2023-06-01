@@ -136,13 +136,13 @@ public class ConsultaServicio {
         return consultaRepositorio.findAll();
 
     }
-
+    
     public void darBajaConsulta(String idConsulta) {
         Optional<Consulta> respuesta = consultaRepositorio.findById(idConsulta);
 
         if (respuesta.isPresent()) {
             Consulta consulta = respuesta.get();
-
+            if (consulta.getEstado().equals(Estado.RESERVADA))
             consulta.setEstado(Estado.DISPONIBLE);
 
             consulta.setPaciente(null);
@@ -214,6 +214,10 @@ public class ConsultaServicio {
                 pacienteRepositorio.save(paciente);
             }
         }
+    }
+    
+    public Integer contarConsultas (){
+        return consultaRepositorio.contarConsultas();
     }
 
     private void validar(String fecha, Horario horario, Profesional profesional, Modalidad modalidad, Double precio) throws MiException {
