@@ -40,4 +40,7 @@ public interface ConsultaRepositorio extends JpaRepository<Consulta, String> {
 
     @Query(value = "SELECT c FROM Consulta c WHERE c.precio = :precio", nativeQuery = true)
     public List<Consulta> buscarPorPrecio(@Param("precio") Double precio);
+    
+    @Query(value = "SELECT COUNT(id) FROM Consulta;", nativeQuery = true)
+    public Integer contarConsultas();
 }

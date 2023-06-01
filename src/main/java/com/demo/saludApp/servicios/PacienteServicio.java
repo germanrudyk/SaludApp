@@ -27,11 +27,11 @@ public class PacienteServicio {
 
     @Autowired
     private ImagenServicio imagenServicio;
-    
+
     public Paciente getOne(String id) {
         return pacienteRepositorio.getOne(id);
     }
-    
+
     //------------- Listar Pacientes -------------
     public List<Paciente> listar() {
 
@@ -39,14 +39,14 @@ public class PacienteServicio {
         pacientes = pacienteRepositorio.findAll();
         return pacientes;
     }
-    
+
     //------------- Crear Paciente -------------
     @Transactional
     public void crear(String nombre, String apellido, Integer telefono, String email, String password, String password2, String dni, Genero genero, String fechaNacimiento, ObraSocial obraSocial, MultipartFile archivo) throws MiException, ParseException {
 
         validar(nombre, password, password2);
         Paciente paciente = new Paciente();
-        
+
         paciente.setActivo(true);
         paciente.setRol(Rol.PACIENTE);
         paciente.setNombre(nombre);
@@ -60,8 +60,8 @@ public class PacienteServicio {
         Date fecha = format.parse(fechaNacimiento);
         paciente.setFechaNacimiento(fecha);
         paciente.setObraSocial(obraSocial);
-        
-        if (!(archivo.isEmpty())){
+
+        if (!(archivo.isEmpty())) {
             Imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen); //Se agrega la imagen 
         }
@@ -71,8 +71,8 @@ public class PacienteServicio {
 
     //------------- Modificar Paciente -------------
     @org.springframework.transaction.annotation.Transactional
-    public void modificar(MultipartFile archivo, String idUsuario,  String nombre, String apellido, Integer telefono, String email, String dni, String fechaNacimiento, Genero genero, ObraSocial obrasocial, Boolean activo) throws MiException, ParseException {
-        
+    public void modificar(MultipartFile archivo, String idUsuario, String nombre, String apellido, Integer telefono, String email, String dni, String fechaNacimiento, Genero genero, ObraSocial obrasocial, Boolean activo) throws MiException, ParseException {
+
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idUsuario);
 
         if (respuesta.isPresent()) {
@@ -103,17 +103,52 @@ public class PacienteServicio {
         }
     }
 
+    //------------- Eliminar paciente ------------
+    public void eliminar(String id) {
+
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+
+            Paciente paciente = respuesta.get();
+
+            pacienteRepositorio.delete(paciente);
+
+        }
+
+    }
+
+    public void darDeBaja(String id) {
+
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+
+            Paciente paciente = respuesta.get();
+
+            paciente.setActivo(false);
+
+            pacienteRepositorio.save(paciente);
+
+        }
+
+    }
+
+    public Integer contarPacientes() {
+        return pacienteRepositorio.contarPacientes();
+    }
+
     //------------- Validar Paciente -------------
-    private void validar(String nombre, String password, String password2) throws MiException{
-        
+    private void validar(String nombre, String password, String password2) throws MiException {
+
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
-       
-        if (password.isEmpty() || password == null || password.length()<6) {
+
+        if (password.isEmpty() || password == null || password.length() < 6) {
             throw new MiException("El email no puede ser nulo y debe tener mas de 5 digitos");
         }
-        
+
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresasdas deben ser iguales");
         }
