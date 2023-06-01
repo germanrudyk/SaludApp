@@ -156,12 +156,12 @@ function horizontalScroll(event) {
         }
     }
 
-function resaltarRegistro() {
+function enviarMensaje() {
 
-  var registrarseButton = document.getElementById("registrarse");
-  registrarseButton.classList.toggle("resaltarRegistro");
+  var mensaje = document.getElementById("cartel");
+  mensaje.classList.remove("d-none");
     setTimeout(function() {
-    registrarseButton.classList.remove("resaltarRegistro");
-  }, 1000);
+    mensaje.classList.add("d-none");
+  }, 3000);
 
 }

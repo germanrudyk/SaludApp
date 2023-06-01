@@ -253,32 +253,48 @@
     </div>
     <section id="contacto" class="contacto px-5">
         <div class="row">
-           
+            <div class="alert alert-success d-none"  id="cartel" role="alert" >
+                <h4 class="alert-heading">¡Mensaje enviado!</h4>
+                <p>Muchas gracias por su mensaje, nos comunicaremos a la brevedad.</p>
+            </div>
             <div class="col-12 col-lg-6 pt-4 mb-5 up-section">
-                   <h2 class="my-2">Contactanos</h2>
-                <form class="custom-form" method="POST" enctype="multipart/form-data">
+                <h2 class="my-2">Contactanos</h2>
+                <form class="custom-form needs-validation" novalidate action="" method="POST" enctype="multipart/form-data" >
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre">
+                        <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre" required>
+                        <div class="invalid-feedback">
+                            Ingrese un nombre válido
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido">
+                        <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido" required>
+                   <div class="invalid-feedback">
+                            Ingrese un apellido válido
+                        </div>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
-                        <input type="email" class="form-control" name="email" placeholder="Ingrese su e-mail">
+                        <input type="email" class="form-control" name="email" placeholder="Ingrese su e-mail" required>
+                        <div class="invalid-feedback">
+                            Ingrese una dirección de correo válida
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="mensaje" class="form-label">Mensaje</label>
-                        <textarea type="text"  class="form-control" name="mensaje" placeholder="Escriba su mensaje"></textarea>
+                        <textarea type="text"  class="form-control" name="mensaje" placeholder="Escriba su mensaje" required></textarea>
+                        <div class="invalid-feedback">
+                            El mensaje no puede ir vacío
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-custom">Enviar</button>
+                        <button type="button" class="btn btn-custom" onclick="enviarMensaje()">Enviar</button>
                     </div>
                 </form>
             </div>
+           
              <div class="col-12 col-lg-6">
                 <ul class="nav flex-column mt-5 pt-5">
                     <li class="nav-item my-3"><svg class="bi" width="20" height="20">
@@ -292,6 +308,10 @@
                         </svg>calle falsa 123</li>
                 </ul>
             </div>
+            
+            
+            
+            
       </div>
     </section>
     <!------------- Footer ------------->
