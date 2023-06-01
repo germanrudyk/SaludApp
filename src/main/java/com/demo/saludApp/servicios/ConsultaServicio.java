@@ -136,13 +136,13 @@ public class ConsultaServicio {
         return consultaRepositorio.findAll();
 
     }
-
+    
     public void darBajaConsulta(String idConsulta) {
         Optional<Consulta> respuesta = consultaRepositorio.findById(idConsulta);
 
         if (respuesta.isPresent()) {
             Consulta consulta = respuesta.get();
-
+            if (consulta.getEstado().equals(Estado.RESERVADA))
             consulta.setEstado(Estado.DISPONIBLE);
 
             consulta.setPaciente(null);
