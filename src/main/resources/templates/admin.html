@@ -81,10 +81,10 @@
       </div>
     </div>
     <!------------- Tabla Profesionales ------------->
-    <div class="container mt-5">
+    <div class="container mt-5 ">
       <h1>Profesionales</h1>
       <table class="table table-hover tablaFiltro custom-table">
-        <thead>
+        <thead class="text-center">
           <tr>
             <th scope="col">Foto</th>
             <th scope="col">Nombre</th>
@@ -101,9 +101,9 @@
                 </option>
               </select>
             </th>
-            <th class="text-center" scope="col">Activo</th>
-            <th class="text-center" scope="col">Inactivo</th>
-            <th class="text-center" scope="col" colspan="2">Acciones</th>
+            <th  scope="col">Activo</th>
+            <th  scope="col">Inactivo</th>
+            <th  scope="col" colspan="2">Acciones</th>
           </tr>
         </thead>
         <tbody th:each="profesional : ${profesionales}">
@@ -118,7 +118,7 @@
               <input hidden th:value="${profesional.id}" name="idUsuario">
               <input hidden th:value="${profesional.imagen}" name="archivo">
               <td scope="row">
-                <input type="text" th:value="${profesional.nombre}" class="form-control" name="nombre" size="30">
+                <input type="text" th:value="${profesional.nombre}" class="form-control" name="nombre" size="60">
               </td>
               <td scope="row">
                 <input type="text" th:value="${profesional.apellido}" class="form-control" name="apellido" size="50">
@@ -127,10 +127,10 @@
                 <input type="text" th:value="${profesional.telefono}" class="form-control" name="telefono" size="50">
               </td>
               <td scope="row">
-                <input type="email" th:value="${profesional.email}" class="form-control" name="email" size="180">
+                <input type="email" th:value="${profesional.email}" class="form-control" name="email" size="300">
               </td>
               <td scope="row">
-                <input type="text" th:value="${profesional.matricula}" class="form-control" name="matricula" size="40">
+                <input type="text" th:value="${profesional.matricula}" class="form-control" name="matricula" size="20">
               </td>
               <td scope="row">
                 <input type="text" th:value="${profesional.locacion}" class="form-control" name="locacion" size="60">
@@ -138,8 +138,9 @@
               <td scope="row" class="filtro-especialidad">
                 <select name="especialidad" class="form-select especialidad" onchange="filtrarTabla()">
                   <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
-                    th:value="${especialidad}" th:text="${especialidad}"
-                    th:unless="${profesional.especialidad == especialidad}">
+                          th:if="${especialidad.toString() != 'TODOS'}"
+                          th:value="${especialidad}" th:text="${especialidad}"
+                          th:unless="${profesional.especialidad == especialidad}">
                   </option>
                   <option th:text="${profesional.especialidad}" selected></option>
                 </select>
@@ -199,7 +200,7 @@
     <div class="container">
       <h1>Pacientes</h1>
       <table class="table table-hover  custom-table">
-        <thead>
+        <thead class="align-items-center text-center"> 
           <tr>
             <th scope="col">Foto</th>
             <th scope="col">Nombre</th>
@@ -252,8 +253,10 @@
               </td>
               <td scope="row" class="filtro-genero">
                 <select name="genero" class="form-select genero" onchange="filtrarTabla()">
-                  <option th:each="Genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}" th:value="${Genero}"
-                    th:text="${Genero}" th:unless="${paciente.Genero == Genero}">
+                  <option th:each="Genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}" 
+                          th:if="${Genero.toString() != 'TODOS'}"
+                          th:value="${Genero}"
+                          th:text="${Genero}" th:unless="${paciente.Genero == Genero}">
                   </option>
                   <option th:text="${paciente.Genero}" selected></option>
                 </select>
@@ -261,6 +264,7 @@
               <td scope="row">
                 <select name="obrasocial" class="form-select obraSocial" onchange="filtrarTabla()">
                   <option th:each="ObraSocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
+                          th:if="${ObraSocial.toString() != 'TODOS'}"
                     th:value="${ObraSocial}" th:text="${ObraSocial}" th:unless="${paciente.ObraSocial == ObraSocial}">
                   </option>
                   <option th:text="${paciente.ObraSocial}" selected></option>
