@@ -1,72 +1,214 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light px-5">
+<nav id="navbar" class="navbar navbar-expand-md navbar-light bg-light d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4" >
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
+    <a class="navbar-brand" th:href="@{/}">
+        <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
     </a>
-    <!------------- Logout ------------->
-    <div class="navbar-profile ms-auto dropdown text-end" th:if="${session.usuariosession != null}">
-      <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-        data-bs-toggle="dropdown" aria-expanded="false">
-        <img th:if="${session.usuariosession.imagen != null}" id="profile-image"
-          th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="imagen de perfil" height="30" width="30"
-          class="rounded-circle m-2" />
-        <p th:text="${session.usuariosession.nombre}" class="mb-0"></p>
-      </a>
-      <ul id="profile-menu" class="profile-menu dropdown-menu dropdown-menu-end text-small">
-        <li>
-          <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#perfilModal">Perfil</a>
-        </li>
-        <li>
-          <hr class="dropdown-divider" />
-        </li>
-        <li>
-          <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar
-            Contraseña</a>
-        </li>
-        <li>
-          <hr class="dropdown-divider" />
-        </li>
-        <li><a class="dropdown-item" href="/logout">Cerrar Sesión</a></li>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ms-md-auto">
+        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 link-secondary">Inicio</a></li>
+        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2">Nosotros</a></li>
+        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2">Profesionales</a></li>
+        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2">Clientes</a></li>
+        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2">Contacto</a></li>
       </ul>
+      <div class="col-md-3 text-end" th:if="${session.usuariosession == null}">
+        <button type="button" class="btn btn-custom"id="login" data-bs-toggle="modal"
+        data-bs-target="#loginModal">Iniciar sesión</button>
+        <button type="button" class="btn btn-custom2"id="registrarse" data-bs-toggle="modal"
+        data-bs-target="#registroModal">Registrarse</button>
+      </div>
+      <!------------- Menu Desplegable ------------->
+      <div class="navbar-profile ms-auto dropdown text-end" th:if="${session.usuariosession != null}">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <img th:if="${session.usuariosession.imagen != null}" id="profile-image"
+            th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="imagen de perfil" height="30" width="30"
+            class="rounded-circle m-2" />
+          <p th:text="${session.usuariosession.nombre}" class="mb-0"></p>
+        </a>
+        <ul id="profile-menu" class="profile-menu dropdown-menu dropdown-menu-end text-small">
+          <li>
+            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#perfilModal">Perfil</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider"/>
+          </li>
+          <li>
+            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar
+              Contraseña</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider"/>
+          </li>
+          <li><a class="dropdown-item" href="/logout">Cerrar Sesión</a></li>
+        </ul>
+      </div>
+    </div>  
+  </div>  
+  <!------------- Modal Login ------------->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+  aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form class="custom-form" th:action="@{/logincheck}" method="POST" enctype="multipart/form-data">
+              <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
+              <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInput" name="email" required>
+                <label for="floatingInput">Usuario</label>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" name="password" required>
+                <label for="floatingPassword">Contraseña</label>
+              </div>
+              <div class="form-check text-start my-3">
+                <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Remember me
+                </label>
+              </div>
+              <div class="d-flex justify-content-center flex-column align-items-center">
+                <button class="btn btn-custom py-2 mb-3" type="submit">Iniciar sesión</button>
+                <a href="#" id="forgotPassword">¿Olvidaste tu contraseña?</a>
+              </div>              
+            </form>
+          </div>
+        </div>  
+      </div>  
+    </div>
+  </div>
+  <!-------------Modal Registrarse ------------->
+  <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form class="custom-form" th:action="@{/registro}" method="POST"
+                enctype="multipart/form-data">
+                <h1 class="h3 mb-3 fw-normal">Registro de Usuario</h1>  
+              <div class="mb-3">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" name="nombre"
+                      placeholder="Ingrese su nombre" required>
+              </div>
+              <div class="mb-3">
+                  <label for="apellido" class="form-label">Apellido</label>
+                  <input type="text" class="form-control" name="apellido"
+                      placeholder="Ingrese su apellido" required>
+              </div>
+              <div class="mb-3">
+                  <label for="telefono" class="form-label">Teléfono</label>
+                  <input type="text" class="form-control" name="telefono"
+                      placeholder="Ingrese su Teléfono" required>
+              </div>
+              <div class="mb-3">
+                  <label for="email" class="form-label">E-mail</label>
+                  <input type="email" class="form-control" name="email"
+                      placeholder="Ingrese su e-mail" required>
+              </div>
+              <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" name="password"
+                      placeholder="Ingrese su contraseña" required>
+              </div>
+              <div class="mb-3">
+                  <label for="password2" class="form-label">Repita la Contraseña</label>
+                  <input type="password" class="form-control" name="password2"
+                      placeholder="Vuelva a ingresar su contraseña" required>
+              </div>
+              <div class="mb-3">
+                  <label for="dni" class="form-label">DNI</label>
+                  <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI"
+                      required>
+              </div>
+              <div class="mb-3">
+                  <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                  <input type="date" class="form-control" name="fechaNacimiento" required>
+              </div>
+              <div class="mb-3">
+                  <label for="genero" class="form-label">Género</label>
+                  <select class="form-control" name="genero" required>
+                      <option th:each="genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
+                          th:value="${genero}" th:text="${genero}">
+                      </option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label for="obrasocial" class="form-label">Obra Social</label>
+                  <select class="form-control" name="obraSocial" required>
+                      <option
+                          th:each="obrasocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
+                          th:value="${obrasocial}" th:text="${obrasocial}">
+                      </option>
+                  </select>
+              </div>
+              <!------------- carga de imagen ------------->
+              <div class="form-group">
+                  <label for="archivo">Foto de Perfil</label>
+                  <input type="file" class="form-control" name="archivo">
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary"
+                      data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-custom">Registrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
     </div>
   </div>
   <!------------- Cambiar Contraseña ------------->
   <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="passwordModalLabel">Cabiar Contraseña</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-          <div class="m-5 usuario">
-            <table class="table table-hover custom-table">
+  aria-hidden="true" th:if="${session.usuariosession != null}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="passwordModalLabel">Cabiar Contraseña</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="m-5 usuario">
               <form  th:action="@{/password}" method="POST" enctype="multipart/form-data">
-                <input hidden th:value="${session.usuariosession.id}" name="id">
-                <tr scope="row">
-                  <td>Nueva Contraseña:</td>
-                  <td>
-                    <input type="password" class="form-control" name="passwordNuevo" required>
-                  </td>
-                </tr>
-                <tr scope="row">
-                  <td>Repita la Contraseña:</td>
-                  <td>
-                    <input type="password" class="form-control" name="password2" required>
-                  </td>
-                </tr>
-            </table>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-custom">Modificar</button>
+                <table class="table table-hover custom-table">
+                  <input hidden th:value="${session.usuariosession.id}" name="id">
+                  <tr scope="row">
+                    <td>Nueva Contraseña:</td>
+                    <td>
+                      <input type="password" class="form-control" name="passwordNuevo" required>
+                    </td>
+                  </tr>
+                  <tr scope="row">
+                    <td>Repita la Contraseña:</td>
+                    <td>
+                      <input type="password" class="form-control" name="password2" required>
+                    </td>
+                  </tr>
+                </table>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-custom">Modificar</button>
+                </div>
+              </form>
             </div>
-          </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <!------------- Alerta de exito o error ------------->
+  <div th:replace="/fragments/alerta  :: div"></div>
 </nav>
