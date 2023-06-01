@@ -8,12 +8,12 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav ms-md-auto">
-        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 link-secondary">Inicio</a></li>
-        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2">Nosotros</a></li>
-        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2">Profesionales</a></li>
-        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2">Clientes</a></li>
-        <li class="nav-item"><a th:href="@{/}" class="nav-link px-2">Contacto</a></li>
+      <ul class="navbar-nav ms-md-auto" th:if="${session.usuariosession == null}">
+        <li class="nav-item"><a href="" class="nav-link px-2 link-secondary">Inicio</a></li>
+        <li class="nav-item"><a href="#about" class="nav-link px-2">Nosotros</a></li>
+        <li class="nav-item"><a href="#Profesionales" class="nav-link px-2">Profesionales</a></li>
+        <li class="nav-item"><a href="#Clientes" class="nav-link px-2">Clientes</a></li>
+        <li class="nav-item"><a href="#Contacto" class="nav-link px-2">Contacto</a></li>
       </ul>
       <div class="col-md-3 text-end" th:if="${session.usuariosession == null}">
         <button type="button" class="btn btn-custom"id="login" data-bs-toggle="modal"
@@ -31,19 +31,6 @@
           <p th:text="${session.usuariosession.nombre}" class="mb-0"></p>
         </a>
         <ul id="profile-menu" class="profile-menu dropdown-menu dropdown-menu-end text-small">
-          <li>
-            <a class="dropdown-item" data-bs-toggle="collapse" href="#perfilContent" role="button" aria-expanded="false" aria-controls="perfilContent">Perfil</a>
-          </li>
-          <li>
-            <hr class="dropdown-divider"/>
-          </li>
-          <li>
-            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar
-              Contraseña</a>
-          </li>
-          <li>
-            <hr class="dropdown-divider"/>
-          </li>
           <li><a class="dropdown-item" href="/logout">Cerrar Sesión</a></li>
         </ul>
       </div>

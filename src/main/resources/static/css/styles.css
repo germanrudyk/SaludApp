@@ -118,6 +118,8 @@ body {
 
 /*------------- Navbar -------------*/
 .navbar {
+    font-size: large;
+    font-weight: bolder;
     width: 100%;
     border-bottom: 2px solid var(--primary-bg-color);
     z-index: 9999;
@@ -143,6 +145,10 @@ body {
 }
 
 /*------------- Form -------------*/
+.modal {
+    margin-top: 80px;
+}
+
 .custom-form {
     padding: 20px;
     border: 2px solid var(--primary-bg-color);
