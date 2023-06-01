@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head th:replace="/fragments/head  :: head"></head>
 
 <body>
@@ -188,15 +185,17 @@
             <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
             <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
             <td>
-              <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#calificar"
+              <div th:if="${consulta.estado.toString == 'UTILIZADA'}">
+                <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#calificar"
                 data-paciente-id="${profesional.id}">Calificar</button>
-            </td>
-            <td>
-              <a class="btn btn-custom" th:href="@{/paciente/cancelar/__${consulta.id}__}">Cancelar</a>
+              </div>
+              <div th:if="${consulta.estado.toString == 'RESERVADA'}">
+                <a class="btn btn-custom" th:href="@{/paciente/cancelar/__${consulta.id}__}">Cancelar turno</a>
+              </div>             
             </td>
           </tr>
 
-          <!------------- Formulario Clificar -------------->
+          <!------------- Formulario Calificar -------------->
           <div class="modal fade" id="calificar" tabindex="-1" role="dialog" aria-labelledby="calificarLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -206,24 +205,24 @@
                 </div>
                 <div class="modal-body">
                   <div class="container">
-                    <form id="calificar-form" class="formulario" th:action="@{/paciente/calificar}" method="POST"
+                    <form id="calificar-form" class="formulario" th:action="@{/paciente/calificar/__${consulta.profesional.id}__}" method="POST"
                       enctype="multipart/form-data">
-                      <input type="hidden" name="idUsuario" th:if="${consulta.profesional != null}"
-                        th:value="${consulta.profesional.nombre}">
+                      <input type="hidden" name="id" th:if="${consulta.profesional != null}"
+                        th:value="${consulta.profesional.id}">
                       <div class="form-group my-3 text-center">
                         <h4 class="mb-5">¿Con cuantas estrellas calificaría esta consulta?</h4>
                       </div>
                       <div class="stars">
                         <input class="star star-5" id="star-5" type="radio" name="calificacion" value="5">
-                        <label class="star star-5" for="star-5"></label>
+                        <label class="star star-5" for="star-5">5</label>
                         <input class="star star-4" id="star-4" type="radio" name="calificacion" value="4">
-                        <label class="star star-4" for="star-4"></label>
+                        <label class="star star-4" for="star-4">4</label>
                         <input class="star star-3" id="star-3" type="radio" name="calificacion" value="3">
-                        <label class="star star-3" for="star-3"></label>
+                        <label class="star star-3" for="star-3">3</label>
                         <input class="star star-2" id="star-2" type="radio" name="calificacion" value="2">
-                        <label class="star star-2" for="star-2"></label>
+                        <label class="star star-2" for="star-2">2</label>
                         <input class="star star-1" id="star-1" type="radio" name="calificacion" value="1">
-                        <label class="star star-1" for="star-1"></label>
+                        <label class="star star-1" for="star-1">1</label>
                       </div>
                       <div class="text-center">
                         <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">

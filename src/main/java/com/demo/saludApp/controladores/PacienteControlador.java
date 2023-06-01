@@ -76,11 +76,12 @@ public class PacienteControlador {
     
     //------------- Calificar -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-    @PostMapping("/calificar")
-    public String calificar(@RequestParam String idUsuario,@RequestParam Double calificacion, ModelMap modelo) {
+    @PostMapping("/calificar/{id}")
+    public String calificar(@PathVariable String id, @RequestParam String calificacion, ModelMap modelo) {
 
         try {
-            profesionalS.calificar(idUsuario, calificacion);
+             System.out.println("entra al controlador");
+            profesionalS.calificar(id, Double.parseDouble(calificacion));
             modelo.put("exito", "Modificación exitosa");
         } catch (Exception ex) {
 
@@ -99,5 +100,19 @@ public class PacienteControlador {
         Paciente paciente = (Paciente) logueado;
         consultaS.reservarConsulta(id, paciente);
         return "redirect:/paciente";  
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
+    @GetMapping("/cancelar/{id}")
+    public String cancelar(HttpSession session, @PathVariable String id, ModelMap modelo) {
+
+        try {
+            consultaS.darBajaConsulta(id);
+            return "redirect:/paciente";
+        } catch (Exception e) {
+            modelo.put("error", "No se pudo cancelar la consulta");
+            return "redirect:/paciente";
+        }
+
     }
 }

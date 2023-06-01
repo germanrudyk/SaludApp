@@ -1,41 +1,8 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head th:replace="/fragments/head  :: head"></head>
 
 <body>
-    <!------------- Navbar------------->
-    <nav id="navbar" class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav ms-md-auto">
-                    <li class="nav-item">
-                        <form class="form-inline d-flex align-items-center" th:action="@{/logincheck}" method="POST">
-                            <div class="form-group me-1">
-                                <label for="email" class="visually-hidden">Usuario</label>
-                                <input type="email" class="form-control" name="email" placeholder="email">
-                            </div>
-                            <div class="form-group me-1">
-                                <label for="password" class="visually-hidden">Contraseña</label>
-                                <input type="password" class="form-control" name="password" placeholder="Contraseña">
-                            </div>
-                            <button type="submit" class="btn btn-custom">Iniciar Sesión</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!------------- Alerta de exito o error ------------->
-    <div th:replace="/fragments/alerta  :: div"></div>
-
+    <!------------- Navbar ------------->
+    <nav th:replace="/fragments/navbar  :: nav"></nav>
     <!------------- Flecha ------------->
     <div id="myBtn">
         <a href="#navbar">
@@ -43,7 +10,6 @@
                 <use xlink:href="#arrow" />
             </svg>
         </a>
-
     </div>
     <!------------- Carousel ------------->
     <section id="carousel">
@@ -120,137 +86,53 @@
                 nuestros conocimientos y pasión por la atención médica. Estamos comprometidos con el cuidado integral de
                 nuestros pacientes y nos esforzamos por ofrecer un entorno de trabajo colaborativo y
                 enriquecedor.Registrate</p>
-            <button class="btn btn-lg btn-custom-reverse" id="registrarse" data-bs-toggle="modal"
+            <button class="btn btn-lg btn-custom-reverse" data-bs-toggle="modal"
                 data-bs-target="#registroModal">Registrarse</button>
         </div>
     </section>
     <div class="container">
-        <!-------------Modal "Registrarse"------------->
-        <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="registroModalLabel">Registro de Usuario</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <form class="custom-form" th:action="@{/registro}" method="POST"
-                                enctype="multipart/form-data">
-                                <div class="mb-3">
-                                    <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre"
-                                        placeholder="Ingrese su nombre" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="apellido" class="form-label">Apellido</label>
-                                    <input type="text" class="form-control" name="apellido"
-                                        placeholder="Ingrese su apellido" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="telefono" class="form-label">Teléfono</label>
-                                    <input type="text" class="form-control" name="telefono"
-                                        placeholder="Ingrese su Teléfono" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">E-mail</label>
-                                    <input type="email" class="form-control" name="email"
-                                        placeholder="Ingrese su e-mail" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" name="password"
-                                        placeholder="Ingrese su contraseña" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password2" class="form-label">Repita la Contraseña</label>
-                                    <input type="password" class="form-control" name="password2"
-                                        placeholder="Vuelva a ingresar su contraseña" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="dni" class="form-label">DNI</label>
-                                    <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI"
-                                        required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-                                    <input type="date" class="form-control" name="fechaNacimiento" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="genero" class="form-label">Género</label>
-                                    <select class="form-control" name="genero" required>
-                                        <option th:each="genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
-                                            th:value="${genero}" th:text="${genero}">
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="obrasocial" class="form-label">Obra Social</label>
-                                    <select class="form-control" name="obraSocial" required>
-                                        <option
-                                            th:each="obrasocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
-                                            th:value="${obrasocial}" th:text="${obrasocial}">
-                                        </option>
-                                    </select>
-                                </div>
-                                <!------------- carga de imagen ------------->
-                                <div class="form-group">
-                                    <label for="archivo">Foto de Perfil</label>
-                                    <input type="file" class="form-control" name="archivo">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-custom">Registrar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!------------- Nuestros Profesionales ------------->
+    <section id="Profesionales" class="up-section pb-5 pt-5">
+        <div class="text-center">
+            <h2>Nuestros Profesionales</h2>
+            <p>Contamos con un equipo de profesionales altamente capacitados en diversas especialidades médicas,
+                desde médicos generales hasta especialistas en áreas como cardiología, pediatría, ginecología,
+                dermatología y muchas más. Independientemente de tus necesidades médicas, estamos aquí para
+                escucharte, evaluar tus síntomas y proporcionarte un plan de tratamiento adecuado.
+            </p>
         </div>
-        <!------------- Nuestros Profesionales ------------->
-        <section id="Profesionales" class="up-section pb-5 pt-5">
-            <div class="text-center">
-                <h2>Nuestros Profesionales</h2>
-                <p>Contamos con un equipo de profesionales altamente capacitados en diversas especialidades médicas,
-                    desde médicos generales hasta especialistas en áreas como cardiología, pediatría, ginecología,
-                    dermatología y muchas más. Independientemente de tus necesidades médicas, estamos aquí para
-                    escucharte, evaluar tus síntomas y proporcionarte un plan de tratamiento adecuado.
-                </p>
+        <div>
+            <div class="categories mb-5 mt-4">
+                <ul class="d-flex list-unstyled flex-wrap justify-content-center gap-3">
+                    <li class="filter-item active" data-filter="all">All</li>
+                    <li class="filter-item " data-filter="CLINICA">Clínica</li>
+                    <li class="filter-item " data-filter="PEDIATRIA">Pediatría</li>
+                    <li class="filter-item " data-filter="GINECOLOGIA">Ginecología</li>
+                    <li class="filter-item " data-filter="ODONTOLOGIA">Odontología</li>
+                    <li class="filter-item " data-filter="CARDIOLOGIA">Cardiología</li>
+                </ul>
             </div>
-            <div>
-                <div class="categories mb-5 mt-4">
-                    <ul class="d-flex list-unstyled flex-wrap justify-content-center gap-3">
-                        <li class="filter-item active" data-filter="all">All</li>
-                        <li class="filter-item " data-filter="CLINICA">Clínica</li>
-                        <li class="filter-item " data-filter="PEDIATRIA">Pediatría</li>
-                        <li class="filter-item " data-filter="GINECOLOGIA">Ginecología</li>
-                        <li class="filter-item " data-filter="ODONTOLOGIA">Odontología</li>
-                        <li class="filter-item " data-filter="CARDIOLOGIA">Cardiología</li>
-                    </ul>
-                </div>
-                <div class="container"  onwheel="horizontalScroll(event)">
-                    <div class="overflow-container">
-                        <div class="card-deck text-center">
-                            <div class="card card1 text-center mb-3  flex-column " th:each="profesional : ${profesionales}" th:classappend="${profesional.especialidad}" style="width:  250px; height: auto;">
-                                <div class="card-body m-2">
-                                    <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img rounded-circle"
-                                         th:src="@{/imagen/perfil/__${profesional.id}__}" style="width: 120px; height: 120px;">
-                                    <img th:if="${profesional.imagen == null}" class="bd-placeholder-img  rounded-circle" 
-                                         src="./img/indefinido.png" style="width: 120px; height: 120px;"> 
-                                    <h4 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h4>
-                                    <p th:text="${profesional.detalleEspecialidad}" class="card-text"></p>
-                                    <a class="btn btn-custom m-2"  th:href="@{/paciente}">Ver Turnos</a>
-                                </div> 
+            <div class="container"  onwheel="horizontalScroll(event)">
+                <div class="overflow-container">
+                    <div class="card-deck text-center">
+                        <div class="card card1 text-center mb-3  flex-column " th:each="profesional : ${profesionales}" th:classappend="${profesional.especialidad}" style="width:  250px; height: auto;">
+                            <div class="card-body m-2">
+                                <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img rounded-circle"
+                                        th:src="@{/imagen/perfil/__${profesional.id}__}" style="width: 120px; height: 120px;">
+                                <img th:if="${profesional.imagen == null}" class="bd-placeholder-img  rounded-circle" 
+                                        src="./img/indefinido.png" style="width: 120px; height: 120px;"> 
+                                <h4 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h4>
+                                <p th:text="${profesional.detalleEspecialidad}" class="card-text"></p>
+                                <a class="btn btn-custom m-2"  th:href="@{/paciente}">Ver Turnos</a>
                             </div> 
-                            </div>
-                        </div>      
-                    </div>
+                        </div> 
+                        </div>
+                    </div>      
                 </div>
-        </section>
+            </div>
+    </section>
     </div>
+    <!------------- Contacto ------------->
     <section id="contacto" class="contacto px-5">
         <div class="row">
             <div class="alert alert-success d-none"  id="cartel" role="alert" >
