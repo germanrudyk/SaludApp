@@ -146,16 +146,17 @@ function filtrarTabla(filtro) {
         filas[i].style.display = "none";
       }
     }
-  }
+}
 
-/* ------- Profesional horizontalScroll -------- */
+/*------------- Profesional horizontalScroll -------------*/
 function horizontalScroll(event) {
-        if (event.deltaY !== 0) {
-            event.preventDefault();
-            document.querySelector('.overflow-container').scrollLeft += event.deltaY;
-        }
+    if (event.deltaY !== 0) {
+        event.preventDefault();
+        document.querySelector('.overflow-container').scrollLeft += event.deltaY;
     }
+}
 
+/*------------- Enviar Mensaje -------------*/
 function enviarMensaje() {
 
   var mensaje = document.getElementById("cartel");
@@ -165,3 +166,22 @@ function enviarMensaje() {
   }, 3000);
 
 }
+
+/*------------- Navbar -------------*/
+const navbar = document.getElementById("navbar");
+let prevScrollPos = window.pageYOffset;
+
+window.addEventListener('scroll', () => {
+  const currentScrollPos = window.pageYOffset;
+
+  if (prevScrollPos < currentScrollPos) {
+    navbar.classList.add('fixed');
+    navbar.classList.remove('transparent');
+  } else {
+    navbar.classList.add('transparent');
+  }
+
+  prevScrollPos = currentScrollPos;
+});
+
+

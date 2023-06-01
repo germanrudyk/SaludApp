@@ -83,6 +83,9 @@
     --font: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+body {
+    background-color: var(--bg-color);
+}
 .btn-custom {
     border: solid 2px var(--primary-bg-color);
 }
@@ -114,13 +117,33 @@
 }
 
 /*------------- Navbar -------------*/
+.navbar {
+    width: 100%;
+    border-bottom: 2px solid var(--primary-bg-color);
+    z-index: 9999;
+    background-color: var(--bg-color);
+    transition: all 0.7s ease-in-out;
+}
+
+.navbar.transparent {
+    background-color: transparent;
+}
+
+.navbar.fixed {
+    position: fixed;
+}
+
 .navbar-logo {
     max-height: 30px;
 }
 
+/*------------- SideBar -------------*/
+.sidebar {
+    background-color: var(--primary-bg-color);
+}
+
 /*------------- Form -------------*/
 .custom-form {
-
     padding: 20px;
     border: 2px solid var(--primary-bg-color);
     border-radius: 5px;
@@ -149,11 +172,8 @@
 }
 
 /*------------- Perfil desplegable -------------*/
-.usuario {
-    max-width: 600px;
-}
 .imagenPerfil {
-    border: 2px solid #03989E;
+    border: 2px solid var(--primary-bg-color);
     border-radius: 50%;
     width: 150px;
     height: 150px;
@@ -279,8 +299,6 @@
     margin-right: 10px;
 }
 
-
-
 .overflow-container {
     overflow-x: auto;
     white-space: nowrap;
@@ -332,22 +350,6 @@
     background-color: var(--primary-bg-color);
 }
 
-
-/*------------- Perfil desplegable -------------*/
-.usuario {
-    max-width: 600px;
-}
-.imagenPerfil {
-    border: 2px solid #03989E;
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-}
-
-.editarFoto {
-    display: none;
-}
-
 /*------------- Boton cancelar -------------*/
 
 .btn-cancelar{
@@ -364,14 +366,11 @@
 }
 
 /*------------- Main de vistas de tablas -------------*/
-
 .main{
     min-height: 84vh;
 }
 
 /*------------- Index escalar boton registro -------------*/
-
-
 .anchoColumna{
     width: 10%;
 }

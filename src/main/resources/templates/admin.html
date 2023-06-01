@@ -3,326 +3,396 @@
 <body>
   <!------------- Navbar ------------->
   <nav th:replace="/fragments/navbar  :: nav"></nav>
-  
-  <!------------- Alerta de exito o error ------------->
-  <div th:replace="/fragments/alerta  :: div"></div>
-  <div class="container">
-    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#registroModal">Registrar Profesional</button>
-
-    <!-------------Modal del boton "Registrarse"------------->
-    <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
-      aria-hidden="true">
+  <main class="d-flex flex-nowrap">
+    <!------------- SideBar ------------->
+    <div class="d-flex flex-column flex-shrink-0 sidebar" style="width: 200px;">
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link btn-custom2" data-bs-toggle="modal" data-bs-target="#registroModal">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+            Registrar Profesional
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-custom2" data-bs-toggle="collapse" href="#pacientesContent" role="button" aria-expanded="false" aria-controls="pacientesContent">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            Pacientes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-custom2" data-bs-toggle="collapse" href="#profesionalesContent" role="button" aria-expanded="false" aria-controls="profesionalesContent">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            Profesionales
+          </a>
+        </li>
+      </ul>
+      <hr>
+    </div>
+    <!------------- Cuerpo ------------->
+    <div class="main mx-5">
+      <!------------- Perfil desplegable ------------->
+      <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
+      aria-hidden="true" sec:authorize="hasAnyRole('PACIENTE')">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="registroModalLabel">Registro de Profesional</h5>
+            <h5 class="modal-title" id="perfilModalLabel">Perfil de Usuario</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
-          <!------------- Formulario de Registro ------------->
           <div class="modal-body">
-            <form class="custom-form" th:action="@{admin/registro}" method="POST" enctype="multipart/form-data">
-              <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" required>
+            <div class="container">
+              <div class="m-5 usuario">
+                <form th:action="@{/paciente/modificar}" method="POST" enctype="multipart/form-data"></form>
+                  <div class="parte1">
+                    <div>
+                      <img th:if="${session.usuariosession.imagen != null}" class="imagenPerfil"
+                        th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                      <img th:if="${session.usuariosession.imagen == null}" class="imagenPerfil" src="./img/indefinido.png">
+                    </div>
+                    <div>
+                      <label class="btn btn-dark" for="editarFoto">
+                        <svg class="bi f-icon">
+                          <use xlink:href="#plus" />
+                        </svg>
+                        <input hidden type="file" id="editarFoto" name="archivo">
+                    </div>
+                  </div>
+                  <table class="table table-hover custom-table">
+                    <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
+                    <input hidden th:value="${session.usuariosession.imagen}" name="archivo">
+                    <tr scope="row">
+                      <td>Nombre:</td>
+                      <td>
+                        <input type="text" th:value="${session.usuariosession.nombre}" class="form-control" name="nombre">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Apellido:</td>
+                      <td>
+                        <input type="text" th:value="${session.usuariosession.apellido}" class="form-control"
+                          name="apellido">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Teléfono:</td>
+                      <td>
+                        <input type="text" th:value="${session.usuariosession.telefono}" class="form-control"
+                          name="telefono">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Correo electrónico:</td>
+                      <td>
+                        <input type="email" th:value="${session.usuariosession.email}" class="form-control" name="email">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>DNI:</td>
+                      <td>
+                        <input type="text" th:value="${session.usuariosession.dni}" class="form-control" name="dni">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Fecha de nacimiento:</td>
+                      <td>
+                        <input type="date" th:value="${session.usuariosession.fechaNacimiento}" class="form-control fecha"
+                          name="fechaNacimiento">
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Género:</td>
+                      <td>
+                        <select name="genero" class="form-select genero">
+                          <option th:each="Genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
+                            th:value="${Genero}" th:text="${Genero}" th:unless="${session.usuariosession.Genero == Genero}">
+                          </option>
+                          <option th:text="${session.usuariosession.Genero}" selected></option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Obra Social:</td>
+                      <td>
+                        <select name="obrasocial" class="form-select obraSocial">
+                          <option th:each="ObraSocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
+                            th:value="${ObraSocial}" th:text="${ObraSocial}"
+                            th:unless="${session.usuariosession.ObraSocial == ObraSocial}">
+                          </option>
+                          <option th:text="${session.usuariosession.ObraSocial}" selected></option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <td>Darse de baja:</td>
+                      <td>NO
+                        <input th:if="${session.usuariosession.activo == true}" checked value="true" type="radio"
+                          name="activo">
+                        <input th:if="${session.usuariosession.activo != true}" value="true" type="radio" name="activo">
+                        SI
+                        <input th:if="${session.usuariosession.activo != true}" checked value="false" type="radio"
+                          name="activo">
+                        <input th:if="${session.usuariosession.activo == true}" value="false" type="radio" name="activo">
+                      </td>
+                    </tr>
+                  </table>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-custom">Modificar</button>
+                  </div>
+                </form>
               </div>
-              <div class="mb-3">
-                <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido" required>
-              </div>
-              <div class="mb-3">
-                <label for="telefono" class="form-label">Teléfono</label>
-                <input type="text" class="form-control" name="telefono" placeholder="Ingrese su Teléfono" required>
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" name="email" placeholder="Ingrese su e-mail" required>
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" name="password" placeholder="Ingrese su contraseña"
-                  required>
-              </div>
-              <div class="mb-3">
-                <label for="password2" class="form-label">Repita la Contraseña</label>
-                <input type="password" class="form-control" name="password2"
-                  placeholder="Vuelva a ingresar su contraseña" required>
-              </div>
-              <div class="mb-3">
-                <label for="matricula" class="form-label">Matrícula:</label>
-                <input type="text" id="matricula" name="matricula" class="form-control" required>
-              </div>
-              <div class="mb-3">
-                <label for="locacion" class="form-label">Locación:</label>
-                <input type="text" id="locacion" name="locacion" class="form-control" required>
-              </div>
-              <div class="mb-3">
-                <label for="especialidad" class="form-label">Especialidad</label>
-                <select class="form-select" name="especialidad" required>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <!------------- Tabla Profesionales ------------->
+      <div class="container mt-5 collapse" id="pacientesContent">
+        <h1>Profesionales</h1>
+        <table class="table table-hover tablaFiltro custom-table">
+          <thead class="text-center">
+            <tr>
+              <th scope="col">Foto</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Email</th>
+              <th scope="col">Matricula</th>
+              <th scope="col">Locación</th>
+              <th scope="col">
+                <select name="especialidad" class="form-select especialidad filtro-especialidad" onchange="filtrarTabla('especialidad')">
+                  <option selected>Especialidad</option>
                   <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
                     th:value="${especialidad}" th:text="${especialidad}">
                   </option>
                 </select>
+              </th>
+              <th  scope="col">Activo</th>
+              <th  scope="col">Inactivo</th>
+              <th  scope="col" colspan="2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody th:each="profesional : ${profesionales}">
+            <tr>
+              <td scope="row">
+                <img th:if="${profesional.imagen != null}" class="rounded-circle"
+                  th:src="@{/imagen/perfil/__${profesional.id}__}" width="30" height="30">
+                <img th:if="${profesional.imagen == null}" class="rounded-circle" src="./img/indefinido.png" width="30"
+                  height="30">
+              </td>
+              <form th:action="@{/admin/modificarProfesional}" method="POST" enctype="multipart/form-data">
+                <input hidden th:value="${profesional.id}" name="idUsuario">
+                <input hidden th:value="${profesional.imagen}" name="archivo">
+                <td scope="row">
+                  <input type="text" th:value="${profesional.nombre}" class="form-control" name="nombre" size="60">
+                </td>
+                <td scope="row">
+                  <input type="text" th:value="${profesional.apellido}" class="form-control" name="apellido" size="50">
+                </td>
+                <td scope="row">
+                  <input type="text" th:value="${profesional.telefono}" class="form-control" name="telefono" size="50">
+                </td>
+                <td scope="row">
+                  <input type="email" th:value="${profesional.email}" class="form-control" name="email" size="300">
+                </td>
+                <td scope="row">
+                  <input type="text" th:value="${profesional.matricula}" class="form-control" name="matricula" size="20">
+                </td>
+                <td scope="row">
+                  <input type="text" th:value="${profesional.locacion}" class="form-control" name="locacion" size="60">
+                </td>
+                <td scope="row" class="filtro-especialidad">
+                  <select name="especialidad" class="form-select especialidad" onchange="filtrarTabla()">
+                    <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                            th:if="${especialidad.toString() != 'TODOS'}"
+                            th:value="${especialidad}" th:text="${especialidad}"
+                            th:unless="${profesional.especialidad == especialidad}">
+                    </option>
+                    <option th:text="${profesional.especialidad}" selected></option>
+                  </select>
+                </td>
+                <td class="text-center" scope="row">
+                  <input th:if="${profesional.activo == true}" checked value="true" type="radio" name="activo">
+                  <input th:if="${profesional.activo != true}" value="true" type="radio" name="activo">
+                </td>
+                <td class="text-center" scope="row">
+                  <input th:if="${profesional.activo != true}" checked value="false" type="radio" name="activo">
+                  <input th:if="${profesional.activo == true}" value="false" type="radio" name="activo">
+                </td>
+                <td class="text-center"><a class="btn">
+                    <button type="submit" class="btn btn-custom">Modificar</button>
+                  </a></td>
+              </form>
+              <td class="text-center"><a class="btn" data-bs-toggle="modal" th:data-bs-target="'#eliminar'+${profesional.id}">
+                  <svg class="bi trash">
+                    <use xlink:href="#trash" />
+                  </svg>
+                </a></td>
+              <!------------- Formulario Eliminar ------------->
+              <div class="modal fade" th:id="'eliminar'+${profesional.id}" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <form id="eliminar-form" class="formulario" th:action="@{/admin/eliminar/profesional/__${profesional.id}__}" method="POST"
+                          enctype="multipart/form-data">
+                          <input type="hidden" name="id" th:value="${profesional.id}">
+                          <div class="form-group my-3 text-center">
+                            <h4 class="mb-5">¿Desea eliminar este profesional?</h4>
+                          </div>
+                          <div class="text-center">
+                            <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">
+                              Aceptar
+                            </button>
+                            <button type="button" class="btn btn-primary mt-3 w-25 cancelar m-3" data-bs-dismiss="modal">
+                              Cancelar
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="profile-image" class="form-label">Foto de Perfil</label>
-                <input type="file" class="form-control" name="archivo">
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!------------- Tabla Pacientes ------------->
+      <div class="container mt-5 collapse" id="profesionalesContent">
+        <h1>Pacientes</h1>
+        <table class="table table-hover  custom-table">
+          <thead class="align-items-center text-center"> 
+            <tr>
+              <th scope="col">Foto</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Email</th>
+              <th scope="col">DNI</th>
+              <th scope="col">Fecha de Nacimiento</th>
+              <th scope="col" class="text-center">Genero
+              </th>
+              <th scope="col">Obra Social</th>
+              <th scope="col">Activo</th>
+              <th scope="col">Inactivo</th>
+              <th scope="col" colspan="2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody th:each="paciente : ${pacientes}">
+            <tr>
+              <td scope="col">
+                <img th:if="${paciente.imagen != null}" class="rounded-circle"
+                  th:src="@{/imagen/perfil/__${paciente.id}__}" width="30" height="30">
+                <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'MASCULINO'}"
+                  class="rounded-circle" src="./img/masculino.png" width="30" height="30">
+                <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'FEMENINO'}" class="rounded-circle"
+                  src="./img/femenino.png" width="30" height="30">
+                <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'INDEFINIDO'}"
+                  class="rounded-circle" src="./img/indefinido.png" width="30" height="30">
+              </td>
+              <form th:action="@{/admin/modificarPaciente}" method="POST" enctype="multipart/form-data">
+                <input hidden th:value="${paciente.id}" name="idUsuario">
+                <input hidden th:value="${paciente.imagen}" name="archivo">
+                <td scope="row">
+                  <input type="text" th:value="${paciente.nombre}" class="form-control" name="nombre" size="30">
+                </td>
+                <td scope="row">
+                  <input type="text" th:value="${paciente.apellido}" class="form-control" name="apellido" size="50">
+                </td>
+                <td scope="row">
+                  <input type="text" th:value="${paciente.telefono}" class="form-control" name="telefono" size="50">
+                </td>
+                <td scope="row">
+                  <input type="email" th:value="${paciente.email}" class="form-control" name="email" size="180">
+                </td>
+                <td scope="row">
+                  <input type="text" th:value="${paciente.dni}" class="form-control" name="dni" size="100">
+                </td>
+                <td scope="row">
+                  <input type="date" th:value="${paciente.fechaNacimiento}" class="form-control fecha"
+                    name="fechaNacimiento">
+                </td>
+                <td scope="row" class="filtro-genero">
+                  <select name="genero" class="form-select genero" onchange="filtrarTabla()">
+                    <option th:each="Genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}" 
+                            th:if="${Genero.toString() != 'TODOS'}"
+                            th:value="${Genero}"
+                            th:text="${Genero}" th:unless="${paciente.Genero == Genero}">
+                    </option>
+                    <option th:text="${paciente.Genero}" selected></option>
+                  </select>
+                </td>
+                <td scope="row">
+                  <select name="obrasocial" class="form-select obraSocial" onchange="filtrarTabla()">
+                    <option th:each="ObraSocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
+                            th:if="${ObraSocial.toString() != 'TODOS'}"
+                      th:value="${ObraSocial}" th:text="${ObraSocial}" th:unless="${paciente.ObraSocial == ObraSocial}">
+                    </option>
+                    <option th:text="${paciente.ObraSocial}" selected></option>
+                  </select>
+                </td>
+                <td class="text-center" scope="row">
+                  <input th:if="${paciente.activo == true}" checked value="true" type="radio" name="activo">
+                  <input th:if="${paciente.activo != true}" value="true" type="radio" name="activo">
+                </td>
+                <td class="text-center" scope="row">
+                  <input th:if="${paciente.activo != true}" checked value="false" type="radio" name="activo">
+                  <input th:if="${paciente.activo == true}" value="false" type="radio" name="activo">
+                </td>
+                <td class="text-center"><a class="btn">
+                    <button type="submit" class="btn btn-custom">Modificar</button>
+                  </a></td>
+              </form>
+              <td class="text-center">
+                <a class="btn" data-bs-toggle="modal" th:data-bs-target="'#eliminar'+${paciente.id}" data-paciente-id="${paciente.id}">
+                  <svg class="bi trash">
+                    <use xlink:href="#trash" />
+                  </svg>
+                </a>
+              </td>
+              <!------------- Formulario Eliminar ------------->
+              <div class="modal fade" th:id="'eliminar'+${paciente.id}" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <form id="eliminar-form" class="formulario" th:action="@{/admin/eliminar/paciente/__${paciente.id}__}" method="POST"
+                          enctype="multipart/form-data">
+                          <input type="hidden" name="id" th:value="${paciente.id}">
+                          <div class="form-group my-3 text-center">
+                            <h4 class="mb-5">¿Desea eliminar este paciente?</h4>
+                          </div>
+                          <div class="text-center">
+                            <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">
+                              Aceptar
+                            </button>
+                            <button type="button" class="btn btn-primary mt-3 w-25 cancelar m-3" data-bs-dismiss="modal">
+                              Cancelar
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-custom">Registrar</button>
-              </div>
-            </form>
-          </div>
-        </div>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <!------------- Tabla Profesionales ------------->
-    <div class="container mt-5 ">
-      <h1>Profesionales</h1>
-      <table class="table table-hover tablaFiltro custom-table">
-        <thead class="text-center">
-          <tr>
-            <th scope="col">Foto</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Teléfono</th>
-            <th scope="col">Email</th>
-            <th scope="col">Matricula</th>
-            <th scope="col">Locación</th>
-            <th scope="col">
-              <select name="especialidad" class="form-select especialidad filtro-especialidad" onchange="filtrarTabla('especialidad')">
-                <option selected>Especialidad</option>
-                <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
-                  th:value="${especialidad}" th:text="${especialidad}">
-                </option>
-              </select>
-            </th>
-            <th  scope="col">Activo</th>
-            <th  scope="col">Inactivo</th>
-            <th  scope="col" colspan="2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody th:each="profesional : ${profesionales}">
-          <tr>
-            <td scope="row">
-              <img th:if="${profesional.imagen != null}" class="rounded-circle"
-                th:src="@{/imagen/perfil/__${profesional.id}__}" width="30" height="30">
-              <img th:if="${profesional.imagen == null}" class="rounded-circle" src="./img/indefinido.png" width="30"
-                height="30">
-            </td>
-            <form th:action="@{/admin/modificarProfesional}" method="POST" enctype="multipart/form-data">
-              <input hidden th:value="${profesional.id}" name="idUsuario">
-              <input hidden th:value="${profesional.imagen}" name="archivo">
-              <td scope="row">
-                <input type="text" th:value="${profesional.nombre}" class="form-control" name="nombre" size="60">
-              </td>
-              <td scope="row">
-                <input type="text" th:value="${profesional.apellido}" class="form-control" name="apellido" size="50">
-              </td>
-              <td scope="row">
-                <input type="text" th:value="${profesional.telefono}" class="form-control" name="telefono" size="50">
-              </td>
-              <td scope="row">
-                <input type="email" th:value="${profesional.email}" class="form-control" name="email" size="300">
-              </td>
-              <td scope="row">
-                <input type="text" th:value="${profesional.matricula}" class="form-control" name="matricula" size="20">
-              </td>
-              <td scope="row">
-                <input type="text" th:value="${profesional.locacion}" class="form-control" name="locacion" size="60">
-              </td>
-              <td scope="row" class="filtro-especialidad">
-                <select name="especialidad" class="form-select especialidad" onchange="filtrarTabla()">
-                  <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
-                          th:if="${especialidad.toString() != 'TODOS'}"
-                          th:value="${especialidad}" th:text="${especialidad}"
-                          th:unless="${profesional.especialidad == especialidad}">
-                  </option>
-                  <option th:text="${profesional.especialidad}" selected></option>
-                </select>
-              </td>
-              <td class="text-center" scope="row">
-                <input th:if="${profesional.activo == true}" checked value="true" type="radio" name="activo">
-                <input th:if="${profesional.activo != true}" value="true" type="radio" name="activo">
-              </td>
-              <td class="text-center" scope="row">
-                <input th:if="${profesional.activo != true}" checked value="false" type="radio" name="activo">
-                <input th:if="${profesional.activo == true}" value="false" type="radio" name="activo">
-              </td>
-              <td class="text-center"><a class="btn">
-                  <button type="submit" class="btn btn-custom">Modificar</button>
-                </a></td>
-            </form>
-            <td class="text-center"><a class="btn" data-bs-toggle="modal" th:data-bs-target="'#eliminar'+${profesional.id}">
-                <svg class="bi trash">
-                  <use xlink:href="#trash" />
-                </svg>
-              </a></td>
-            <!------------- Formulario Eliminar ------------->
-            <div class="modal fade" th:id="'eliminar'+${profesional.id}" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
-              aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="container">
-                      <form id="eliminar-form" class="formulario" th:action="@{/admin/eliminar/profesional/__${profesional.id}__}" method="POST"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="id" th:value="${profesional.id}">
-                        <div class="form-group my-3 text-center">
-                          <h4 class="mb-5">¿Desea eliminar este profesional?</h4>
-                        </div>
-                        <div class="text-center">
-                          <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">
-                            Aceptar
-                          </button>
-                          <button type="button" class="btn btn-primary mt-3 w-25 cancelar m-3" data-bs-dismiss="modal">
-                            Cancelar
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!------------- Tabla Pacientes ------------->
-    <div class="container">
-      <h1>Pacientes</h1>
-      <table class="table table-hover  custom-table">
-        <thead class="align-items-center text-center"> 
-          <tr>
-            <th scope="col">Foto</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Teléfono</th>
-            <th scope="col">Email</th>
-            <th scope="col">DNI</th>
-            <th scope="col">Fecha de Nacimiento</th>
-            <th scope="col" class="text-center">Genero
-            </th>
-            <th scope="col">Obra Social</th>
-            <th scope="col">Activo</th>
-            <th scope="col">Inactivo</th>
-            <th scope="col" colspan="2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody th:each="paciente : ${pacientes}">
-          <tr>
-            <td scope="col">
-              <img th:if="${paciente.imagen != null}" class="rounded-circle"
-                th:src="@{/imagen/perfil/__${paciente.id}__}" width="30" height="30">
-              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'MASCULINO'}"
-                class="rounded-circle" src="./img/masculino.png" width="30" height="30">
-              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'FEMENINO'}" class="rounded-circle"
-                src="./img/femenino.png" width="30" height="30">
-              <img th:if="${paciente.imagen == null && paciente.Genero.toString() == 'INDEFINIDO'}"
-                class="rounded-circle" src="./img/indefinido.png" width="30" height="30">
-            </td>
-            <form th:action="@{/admin/modificarPaciente}" method="POST" enctype="multipart/form-data">
-              <input hidden th:value="${paciente.id}" name="idUsuario">
-              <input hidden th:value="${paciente.imagen}" name="archivo">
-              <td scope="row">
-                <input type="text" th:value="${paciente.nombre}" class="form-control" name="nombre" size="30">
-              </td>
-              <td scope="row">
-                <input type="text" th:value="${paciente.apellido}" class="form-control" name="apellido" size="50">
-              </td>
-              <td scope="row">
-                <input type="text" th:value="${paciente.telefono}" class="form-control" name="telefono" size="50">
-              </td>
-              <td scope="row">
-                <input type="email" th:value="${paciente.email}" class="form-control" name="email" size="180">
-              </td>
-              <td scope="row">
-                <input type="text" th:value="${paciente.dni}" class="form-control" name="dni" size="100">
-              </td>
-              <td scope="row">
-                <input type="date" th:value="${paciente.fechaNacimiento}" class="form-control fecha"
-                  name="fechaNacimiento">
-              </td>
-              <td scope="row" class="filtro-genero">
-                <select name="genero" class="form-select genero" onchange="filtrarTabla()">
-                  <option th:each="Genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}" 
-                          th:if="${Genero.toString() != 'TODOS'}"
-                          th:value="${Genero}"
-                          th:text="${Genero}" th:unless="${paciente.Genero == Genero}">
-                  </option>
-                  <option th:text="${paciente.Genero}" selected></option>
-                </select>
-              </td>
-              <td scope="row">
-                <select name="obrasocial" class="form-select obraSocial" onchange="filtrarTabla()">
-                  <option th:each="ObraSocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
-                          th:if="${ObraSocial.toString() != 'TODOS'}"
-                    th:value="${ObraSocial}" th:text="${ObraSocial}" th:unless="${paciente.ObraSocial == ObraSocial}">
-                  </option>
-                  <option th:text="${paciente.ObraSocial}" selected></option>
-                </select>
-              </td>
-              <td class="text-center" scope="row">
-                <input th:if="${paciente.activo == true}" checked value="true" type="radio" name="activo">
-                <input th:if="${paciente.activo != true}" value="true" type="radio" name="activo">
-              </td>
-              <td class="text-center" scope="row">
-                <input th:if="${paciente.activo != true}" checked value="false" type="radio" name="activo">
-                <input th:if="${paciente.activo == true}" value="false" type="radio" name="activo">
-              </td>
-              <td class="text-center"><a class="btn">
-                  <button type="submit" class="btn btn-custom">Modificar</button>
-                </a></td>
-            </form>
-            <td class="text-center">
-              <a class="btn" data-bs-toggle="modal" th:data-bs-target="'#eliminar'+${paciente.id}" data-paciente-id="${paciente.id}">
-                <svg class="bi trash">
-                  <use xlink:href="#trash" />
-                </svg>
-              </a>
-            </td>
-            <!------------- Formulario Eliminar ------------->
-            <div class="modal fade" th:id="'eliminar'+${paciente.id}" tabindex="-1" role="dialog" aria-labelledby="eliminarLabel"
-              aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="container">
-                      <form id="eliminar-form" class="formulario" th:action="@{/admin/eliminar/paciente/__${paciente.id}__}" method="POST"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="id" th:value="${paciente.id}">
-                        <div class="form-group my-3 text-center">
-                          <h4 class="mb-5">¿Desea eliminar este paciente?</h4>
-                        </div>
-                        <div class="text-center">
-                          <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">
-                            Aceptar
-                          </button>
-                          <button type="button" class="btn btn-primary mt-3 w-25 cancelar m-3" data-bs-dismiss="modal">
-                            Cancelar
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <!------------- Footer ------------->
-  <footer th:replace="/fragments/footer  :: footer"></footer>.
+  </main>
+<!------------- Footer ------------->
+  <footer th:replace="/fragments/footer  :: footer"></footer>
 </body>
 
 </html>
