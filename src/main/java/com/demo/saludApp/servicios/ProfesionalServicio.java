@@ -119,21 +119,21 @@ public class ProfesionalServicio {
         }
 
     }
-    
-    public void darDeBaja(String id){
-        
+
+    public void darDeBaja(String id) {
+
         Optional<Profesional> respuesta = pr.findById(id);
-        
-        if(respuesta.isPresent()){
-            
+
+        if (respuesta.isPresent()) {
+
             Profesional profesional = respuesta.get();
-            
-            profesional.setActivo(false);        
-            
+
+            profesional.setActivo(false);
+
             pr.save(profesional);
-            
+
         }
-        
+
     }
 
     //------------- Descripcion -------------
@@ -156,12 +156,32 @@ public class ProfesionalServicio {
         Optional<Profesional> respuesta = pr.findById(idUsuario);
 
         if (respuesta.isPresent()) {
+
             Profesional profesional = respuesta.get();
-            calificacion = (profesional.getCalificacion() + calificacion) / (profesional.getCalificaciones() + 1);
-            profesional.setCalificaciones(profesional.getCalificaciones() + 1);
-            profesional.setCalificacion(calificacion);
-            pr.save(profesional);
+            
+            if (profesional.getCalificacion() != null) {
+
+                calificacion = (profesional.getCalificacion() + calificacion) / (profesional.getCalificaciones() + 1);
+                profesional.setCalificaciones(profesional.getCalificaciones() + 1);
+                profesional.setCalificacion(calificacion);
+                pr.save(profesional);
+
+            } else {
+
+                profesional.setCalificacion(calificacion);
+                profesional.setCalificaciones(1);
+                pr.save(profesional);
+
+            }
         }
+    }
+    
+    public Integer contarProfesionales() {
+        return pr.contarProfesionales();
+    }
+    
+    public Integer contarCalificacionesProfesionales() {
+        return pr.contarCalificacionesProfesionales();
     }
 
     //------------- Validar Profesional -------------

@@ -133,6 +133,10 @@ public class PacienteServicio {
         }
         
     }
+    
+    public Integer contarPacientes() {
+        return pacienteRepositorio.contarPacientes();
+    }
 
     //------------- Validar Paciente -------------
     private void validar(String nombre, String password, String password2) throws MiException{
