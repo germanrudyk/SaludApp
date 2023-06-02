@@ -33,47 +33,61 @@
     margin-top: 2px;
 }
 
-/*------------- Estrella -------------*/
+/*------------- Calificación -------------*/
 .stars-outer {
-    display: inline-block;
-    position: relative;
-    font-family: FontAwesome;
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
 }
 
 .stars-outer::before {
-    content: "\f006 \f006 \f006 \f006 \f006";
+  content: "\f006 \f006 \f006 \f006 \f006";
 }
 
 .stars-inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
 }
 
 .stars-inner::before {
-    content: "\f005 \f005 \f005 \f005 \f005";
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+/*------------- Modal Calificar -------------*/
+.stars-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stars-container label {
+    display: inline-block;
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    margin: 0;
+}
+
+.stars-container label::before {
+    content: "\f005";
+    font-family: FontAwesome;
+    font-weight: 900;
+    margin: 25px;
+}
+
+.stars-container input[type="radio"] {
+    display: none;
+}
+
+.stars-container .filled:before {
     color: #f8ce0b;
 }
-
-.attribution {
-    font-size: 12px;
-    color: #444;
-    text-decoration: none;
-    text-align: center;
-    position: fixed;
-    right: 10px;
-    bottom: 10px;
-    z-index: -1;
-}
-
-.attribution:hover {
-    color: #1fa67a;
-}
-
-
+  
 /*------------- GENERAL STYLES -------------*/
 :root {
     --bg-color: hsl(0, 0%, 93%);
@@ -83,6 +97,9 @@
     --font: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+body {
+    background-color: var(--bg-color);
+}
 .btn-custom {
     border: solid 2px var(--primary-bg-color);
 }
@@ -114,13 +131,39 @@
 }
 
 /*------------- Navbar -------------*/
+.navbar {
+    font-size: large;
+    font-weight: bolder;
+    width: 100%;
+    border-bottom: 2px solid var(--primary-bg-color);
+    z-index: 9999;
+    background-color: var(--bg-color);
+    transition: all 0.7s ease-in-out;
+}
+
+.navbar.transparent {
+    background-color: transparent;
+}
+
+.navbar.fixed {
+    position: fixed;
+}
+
 .navbar-logo {
     max-height: 30px;
 }
 
-/*------------- Form -------------*/
-.custom-form {
+/*------------- SideBar -------------*/
+.sidebar {
+    background-color: var(--primary-bg-color);
+}
 
+/*------------- Form -------------*/
+.modal {
+    margin-top: 80px;
+}
+
+.custom-form {
     padding: 20px;
     border: 2px solid var(--primary-bg-color);
     border-radius: 5px;
@@ -149,11 +192,8 @@
 }
 
 /*------------- Perfil desplegable -------------*/
-.usuario {
-    max-width: 600px;
-}
 .imagenPerfil {
-    border: 2px solid #03989E;
+    border: 2px solid var(--primary-bg-color);
     border-radius: 50%;
     width: 150px;
     height: 150px;
@@ -279,8 +319,6 @@
     margin-right: 10px;
 }
 
-
-
 .overflow-container {
     overflow-x: auto;
     white-space: nowrap;
@@ -332,22 +370,6 @@
     background-color: var(--primary-bg-color);
 }
 
-
-/*------------- Perfil desplegable -------------*/
-.usuario {
-    max-width: 600px;
-}
-.imagenPerfil {
-    border: 2px solid #03989E;
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-}
-
-.editarFoto {
-    display: none;
-}
-
 /*------------- Boton cancelar -------------*/
 
 .btn-cancelar{
@@ -364,14 +386,11 @@
 }
 
 /*------------- Main de vistas de tablas -------------*/
-
 .main{
     min-height: 84vh;
 }
 
 /*------------- Index escalar boton registro -------------*/
-
-
 .anchoColumna{
     width: 10%;
 }
