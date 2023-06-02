@@ -1,3 +1,6 @@
+
+
+
 <nav id="navbar" class="navbar transparent navbar-expand-md d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3" >
   <div class="container-fluid">
     <a class="navbar-brand" th:href="@{/}">
@@ -105,11 +108,14 @@
                   <input type="email" class="form-control" name="email"
                       placeholder="Ingrese su e-mail" required>
               </div>
-              <div class="mb-3">
-                  <label for="password" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" name="password"
-                      placeholder="Ingrese su contraseña" required>
-              </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" id="password" class="form-control" name="password"
+                           placeholder="Ingrese su contraseña" oninput="verificarFortaleza()" required>
+                    <span class="verificarPass">
+                        <p id="mensajePass"></p>
+                    </span>
+                </div>
               <div class="mb-3">
                   <label for="password2" class="form-label">Repita la Contraseña</label>
                   <input type="password" class="form-control" name="password2"
@@ -221,7 +227,7 @@
         <div class="modal-body">
           <div class="container">
               <form class="custom-form" th:action="@{/password}" method="POST" enctype="multipart/form-data">
-                <h1 class="h3 mb-3 fw-normal">Cabiar Contraseña</h1>
+                <h1 class="h3 mb-3 fw-normal">Cambiar Contraseña</h1>
                 <input hidden th:value="${session.usuariosession.id}" name="id">
                 <div class="form-floating">
                   <input type="email" class="form-control" name="passwordNuevo" required>
@@ -244,3 +250,4 @@
   <!------------- Alerta de exito o error ------------->
   <div th:replace="/fragments/alerta  :: div"></div>
 </nav>
+

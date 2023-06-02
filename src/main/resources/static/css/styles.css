@@ -362,3 +362,9 @@ body {
 .anchoColumna{
     width: 10%;
 }
+
+/*------------- Index verificar pass registro -------------*/
+.verificarPass{
+    height: 10px;
+    font-size: 14px;
+}
