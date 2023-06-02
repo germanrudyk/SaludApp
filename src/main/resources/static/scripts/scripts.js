@@ -72,17 +72,37 @@ headers.forEach(function (header) {
     });
 });
 
-/*------------- Estrellas -------------*/ 
+/*------------- Calificación -------------*/ 
+const calificacionElements = document.getElementsByClassName('calificacion');
 const starTotal = 5;
 
-rows.forEach(function (row) {
-    const rating = document.getElementById('calification').value;
-    const starTotal = 5; // Agregar esta línea para definir la variable starTotal
-    const starPercentage = (rating / starTotal) * 100;
-    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-    row.querySelector('.stars-inner').style.width = starPercentageRounded;
-});
+for (let i = 0; i < calificacionElements.length; i++) {
+  const calificacionValue = parseFloat(calificacionElements[i].innerText);
+  const starPercentage = (calificacionValue / starTotal) * 100;
+  const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
 
+  const starsInnerElement = calificacionElements[i].nextElementSibling.querySelector('.stars-inner');
+  starsInnerElement.style.width = starPercentageRounded;
+}
+
+/*------------- Modal Calificar -------------*/ 
+var starsContainer = document.querySelector('.stars-container');
+var starInputs = starsContainer.querySelectorAll('input[type="radio"]');
+var starLabels = starsContainer.querySelectorAll('label');
+
+starLabels.forEach(function(label) {
+  label.addEventListener('click', function() {
+    var clickedRating = parseInt(this.getAttribute('for').split('-')[1]);
+
+    starLabels.forEach(function(label, index) {
+      if (index < clickedRating) {
+        label.classList.add('filled');
+      } else {
+        label.classList.remove('filled');
+      }
+    });
+  });
+});
 
 /*------------- UP Button -------------*/
 window.onscroll = function () { scrollFunction() };

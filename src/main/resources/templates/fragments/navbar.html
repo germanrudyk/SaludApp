@@ -50,11 +50,11 @@
             <form class="custom-form" th:action="@{/logincheck}" method="POST" enctype="multipart/form-data">
               <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
               <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" name="email" required>
+                <input type="email" class="form-control" name="email" required>
                 <label for="floatingInput">Usuario</label>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" name="password" required>
+                <input type="password" class="form-control" name="password" required>
                 <label for="floatingPassword">Contraseña</label>
               </div>
               <div class="form-check text-start my-3">
@@ -224,11 +224,11 @@
                 <h1 class="h3 mb-3 fw-normal">Cabiar Contraseña</h1>
                 <input hidden th:value="${session.usuariosession.id}" name="id">
                 <div class="form-floating">
-                  <input type="email" class="form-control" id="floatingInput" name="passwordNuevo" required>
+                  <input type="email" class="form-control" name="passwordNuevo" required>
                   <label for="floatingInput">Nueva Contraseña</label>
                 </div>
                 <div class="form-floating">
-                  <input type="password" class="form-control" id="floatingPassword" name="password2" required>
+                  <input type="password" class="form-control" name="password2" required>
                   <label for="floatingPassword">Repita la Contraseña</label>
                 </div>
                 <div class="modal-footer">

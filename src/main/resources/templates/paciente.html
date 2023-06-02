@@ -195,10 +195,11 @@
                     <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
                     <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
                     <td scope="row" th:text="${consulta.precioConsulta}"></td>
-                    <td scope="row" th:text="${consulta.profesional.calificacion}">
-                        <div class="stars-outer">
-                          <div class="stars-inner"></div>
-                        </div>
+                    <td scope="row">
+                      <div class="calificacion" th:text="${consulta.profesional.calificacion}" hidden></div>
+                      <div class="stars-outer">
+                        <div class="stars-inner"></div>
+                      </div>
                     </td>
                     <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
                     <td>
@@ -209,7 +210,7 @@
                       <a class="btn btn-custom" th:href="@{/paciente/cancelar/__${consulta.id}__}">Cancelar</a>
                     </td>
                   </tr>
-                  <!------------- Formulario Clificar -------------->
+                  <!------------- Formulario Calificar -------------->
                   <div class="modal fade" id="calificar" tabindex="-1" role="dialog" aria-labelledby="calificarLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -219,16 +220,25 @@
                         </div>
                         <div class="modal-body">
                           <div class="container">
-                            <form id="calificar-form" class="formulario" th:action="@{/paciente/calificar}" method="POST"
+                            <form class="formulario" th:action="@{/paciente/calificar}" method="POST"
                               enctype="multipart/form-data">
                               <input type="hidden" name="idUsuario" th:if="${consulta.profesional != null}"
                                 th:value="${consulta.profesional.nombre}">
                               <div class="form-group my-3 text-center">
                                 <h4 class="mb-5">¿Con cuantas estrellas calificaría esta consulta?</h4>
                               </div>
-                              <div class="stars">
-   
-                              </div>
+                              <div class="stars-container mb-4">
+                                <input id="star-1" type="radio" name="calificacion" value="1" hidden>
+                                <label for="star-1"></label>
+                                <input id="star-2" type="radio" name="calificacion" value="2" hidden>
+                                <label for="star-2"></label>
+                                <input id="star-3" type="radio" name="calificacion" value="3" hidden>
+                                <label for="star-3"></label>
+                                <input id="star-4" type="radio" name="calificacion" value="4" hidden>
+                                <label for="star-4"></label>
+                                <input id="star-5" type="radio" name="calificacion" value="5" hidden>
+                                <label for="star-5"></label>
+                              </div>                
                               <div class="text-center">
                                 <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">
                                   Aceptar
@@ -301,7 +311,12 @@
                     <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
                     <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
                     <td scope="row" th:text="${consulta.precioConsulta}"></td>
-                    <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
+                    <td scope="row">
+                      <div class="calificacion" th:text="${consulta.profesional.calificacion}" hidden></div>
+                      <div class="stars-outer">
+                        <div class="stars-inner"></div>
+                      </div>
+                    </td>
                     <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
                     <td>
                       <a class="btn btn-custom" sec:authorize="hasAnyRole('PACIENTE')" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
