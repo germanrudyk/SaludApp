@@ -58,22 +58,6 @@
     color: #f8ce0b;
 }
 
-.attribution {
-    font-size: 12px;
-    color: #444;
-    text-decoration: none;
-    text-align: center;
-    position: fixed;
-    right: 10px;
-    bottom: 10px;
-    z-index: -1;
-}
-
-.attribution:hover {
-    color: #1fa67a;
-}
-
-
 /*------------- GENERAL STYLES -------------*/
 :root {
     --bg-color: hsl(0, 0%, 93%);

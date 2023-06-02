@@ -8,18 +8,26 @@
     <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
       <div class="card" style="width: 18rem;" th:each="consulta : ${consultas}">
         <div class="card-body">
-          <li th:text="${consulta.fechaConsulta}" class="list-group-item"></li>
-          <li th:text="${consulta.horario}" class="list-group-item"></li>
+          <li th:text="${consulta.fechaConsulta} + ' ' + ${consulta.horario}" class="list-group-item"></li>
         </div>
         <div class="card-body">
           <h5 class="card-title" th:text="${consulta.paciente.nombre + ' ' +consulta.paciente.apellido}"></h5>
           <p th:text="${consulta.detalleConsulta}" class="card-text"></p>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item" th:text="${consulta.modalidad}"></li>
-          <li class="list-group-item" th:text="${consulta.obrasocial}"></li>
-          <li class="list-group-item" th:text="${consulta.precioConsulta}"></li>
-        </ul>
+        <table class="list-group list-group-flush">
+          <tr scope="row" class="list-group-item">
+            <td>Modalidad:</td>
+            <td th:text="${consulta.modalidad}"></td>
+          </tr>
+          <tr scope="row" class="list-group-item">
+            <td>Obra Social:</td>
+            <td th:text="${consulta.obrasocial}"></td>
+          </tr>
+          <tr scope="row" class="list-group-item">
+            <td>Precio:</td>
+            <td th:text="${consulta.precioConsulta}"></td>
+          </tr>
+        </table>
         <div class="card-body">
           <a href="#" class="btn btn-custom m-2">Ver estudios médicos</a>
           <a href="#" class="btn btn-custom m-2">Descargar estudios médicos</a>

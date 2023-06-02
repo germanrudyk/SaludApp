@@ -72,7 +72,7 @@ headers.forEach(function (header) {
     });
 });
 
-//------------- Estrella------------- 
+/*------------- Estrellas -------------*/ 
 const starTotal = 5;
 
 rows.forEach(function (row) {
