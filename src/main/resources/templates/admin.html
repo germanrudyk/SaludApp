@@ -153,9 +153,9 @@
                     <th scope="col">Email</th>
                     <th scope="col">Matricula</th>
                     <th scope="col">Locación</th>
-                    <th scope="col">
-                      <select name="especialidad" class="form-select especialidad filtro-especialidad" onchange="filtrarTabla('especialidad')">
-                        <option selected>Especialidad</option>
+                    <th scope="col">Especialidad
+                      <select name="especialidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-especialidad"
+                        onchange="filtrarTabla('especialidad')">
                         <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
                           th:value="${especialidad}" th:text="${especialidad}">
                         </option>

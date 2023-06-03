@@ -1,93 +1,3 @@
-/*------------- Ordenar -------------*/
-.sortable-header {
-    position: relative;
-    cursor: pointer;
-}
-
-.sort-indicator {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    top: 50%;
-    right: -10px;
-    transform: translateY(-50%);
-}
-
-.sort-indicator .arrow-up,
-.sort-indicator .arrow-down {
-    display: block;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-}
-
-.sort-indicator .arrow-up {
-    border-bottom: 5px solid rgb(60, 60, 60);
-    margin-bottom: 2px;
-}
-
-.sort-indicator .arrow-down {
-    border-top: 5px solid rgb(60, 60, 60);
-    margin-top: 2px;
-}
-
-/*------------- Calificación -------------*/
-.stars-outer {
-  display: inline-block;
-  position: relative;
-  font-family: FontAwesome;
-}
-
-.stars-outer::before {
-  content: "\f006 \f006 \f006 \f006 \f006";
-}
-
-.stars-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 0;
-}
-
-.stars-inner::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
-  color: #f8ce0b;
-}
-
-/*------------- Modal Calificar -------------*/
-.stars-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.stars-container label {
-    display: inline-block;
-    font-size: 24px;
-    color: #ddd;
-    cursor: pointer;
-    margin: 0;
-}
-
-.stars-container label::before {
-    content: "\f005";
-    font-family: FontAwesome;
-    font-weight: 900;
-    margin: 25px;
-}
-
-.stars-container input[type="radio"] {
-    display: none;
-}
-
-.stars-container .filled:before {
-    color: #f8ce0b;
-}
-  
 /*------------- GENERAL STYLES -------------*/
 :root {
     --bg-color: hsl(0, 0%, 93%);
@@ -95,6 +5,12 @@
     --primary-bg-color: hsl(175, 100%, 33%);
     --secondary-bg-color: hsl(175, 56%, 44%);
     --font: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+.alert {
+    z-index: 9999;
+    position: fixed;
 }
 
 body {
@@ -191,6 +107,67 @@ body {
     width: 100px;
 }
 
+.filtro {
+    width: 3px;
+    height: 3px;
+    border: none;
+}
+
+/*------------- Calificación -------------*/
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+  }
+  
+  .stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+  }
+  
+  .stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+  }
+  
+  .stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: #f8ce0b;
+  }
+  
+  /*------------- Modal Calificar -------------*/
+  .stars-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .stars-container label {
+      display: inline-block;
+      font-size: 24px;
+      color: #ddd;
+      cursor: pointer;
+      margin: 0;
+  }
+  
+  .stars-container label::before {
+      content: "\f005";
+      font-family: FontAwesome;
+      font-weight: 900;
+      margin: 25px;
+  }
+  
+  .stars-container input[type="radio"] {
+      display: none;
+  }
+  
+  .stars-container .filled:before {
+      color: #f8ce0b;
+  }
+    
 /*------------- Perfil desplegable -------------*/
 .imagenPerfil {
     border: 2px solid var(--primary-bg-color);
@@ -206,17 +183,11 @@ body {
 /*------------- Arrow -------------*/
 #myBtn {
     display: none;
-    /* Ocultamos el botón por defecto */
     position: fixed;
-    /* Posicionamos el botón fijo en la página */
     bottom: 5vh;
-    /* Colocamos el botón a 20px desde el borde inferior de la página */
     right: 5vh;
-    /* Colocamos el botón a 20px desde el borde derecho de la página */
     z-index: 1;
-    /* Establecemos una posición z superior para el botón */
     cursor: pointer;
-    /* Cambiamos el cursor del mouse */
     border-radius: 50%;
     opacity: 0.5;
 }
@@ -228,11 +199,8 @@ body {
 /*------------- Section -------------*/
 .up-section {
     opacity: 0;
-    /* Establecemos la opacidad inicial en 0 para la sección */
     transform: translateY(50px);
-    /* Establecemos una transformación de 50px hacia abajo */
     transition: all 1s ease;
-    /* Agregamos una transición suave para la transformación */
 }
 
 /*------------- Carousel -------------*/
@@ -252,15 +220,15 @@ body {
 }
 
 /*------------- About -------------*/
-#about {
+.largeBackground {
     background-color: var(--primary-bg-color);
     min-height: 350px;
     display: flex;
     align-items: center;
 }
 
-#about h2,
-#about p {
+.largeBackground h2,
+.largeBackground p {
     color: var(--bg-color);
     padding: 0 3% 0 3%;
 }
@@ -348,7 +316,7 @@ body {
 /*------------- Contacto -------------*/
 .contacto {
     padding-top: 20px;
-    border-top: 2px solid var(--text-color);
+
 }
 
 /*------------- Footer -------------*/
