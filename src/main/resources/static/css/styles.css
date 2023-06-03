@@ -7,10 +7,15 @@
     --font: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-
 .alert {
     z-index: 9999;
     position: fixed;
+}
+
+.cliente-icon {
+    color: var(--text-color);
+    width: 48px;
+    height: 48px;
 }
 
 body {
@@ -320,7 +325,7 @@ body {
 }
 
 /*------------- Footer -------------*/
-.f-icon {
+.footer-icon {
     fill: var(--bg-color);
     width: 24px;
     height: 24px;

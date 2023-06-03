@@ -137,27 +137,51 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-6 pt-4 mb-5 up-section">
-                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 flex-column">
-                        <div class="flex border rounded shadow p-4 mb-4">
-                            <h3>Pacientes Registrados</h3>
-                            <svg class="bi f-icon">
-                                <use xlink:href="#cliente" />
-                            </svg>
-                            <h3>50</h3>
+                    <div class="d-flex align-items-center flex-wrap gap-3 flex-column">
+                        <div class="row border rounded shadow p-4 mb-4 w-100">
+                            <div class="col-6">
+                                <h1>Pacientes Registrados</h1>
+                            </div>
+                            <div class="col-6 d-flex align-items-center justify-content-end">
+                                <div class="d-flex flex-column align-items-center">
+                                    <svg class="bi f-icon cliente-icon">
+                                        <use xlink:href="#cliente" />
+                                    </svg>
+                                    <div class="row">
+                                        <h1 th:text="${nPacientes}"></h1>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex border rounded shadow p-4 mb-4">
-                            <h3>Profesionales Registrados</h3>
-                            <svg class="bi f-icon">
-                                <use xlink:href="#profesional" />
-                            </svg>
-                            <h3>50</h3>
+                        <div class="row border rounded shadow p-4 mb-4 w-100">
+                            <div class="col-6">
+                                <h1>Profesionales Registrados</h1>
+                            </div>
+                            <div class="col-6 d-flex align-items-center justify-content-end">
+                                <div class="d-flex flex-column align-items-center">
+                                    <svg class="bi f-icon cliente-icon">
+                                        <use xlink:href="#profesional" />
+                                    </svg>
+                                    <div class="row">
+                                        <h1 th:text="${nProfesionales}"></h1>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex border rounded shadow p-4 mb-4">
-                            <h3>Calificaciones Positivas</h3>
-                            <svg class="bi f-icon">
-                                <use xlink:href="#star" />
-                            </svg>
-                            <h3>50</h3>
+                        <div class="row border rounded shadow p-4 mb-4 w-100">
+                            <div class="col-6">
+                                <h1>Calificaciones Positivas</h1>
+                            </div>
+                            <div class="col-6 d-flex align-items-center justify-content-end">
+                                <div class="d-flex flex-column align-items-center">
+                                    <svg class="bi f-icon cliente-icon">
+                                        <use xlink:href="#star" />
+                                    </svg>
+                                    <div class="row">
+                                        <h1 th:text="${calificaciones}"></h1>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>               
                 </div>                
