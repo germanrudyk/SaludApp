@@ -148,6 +148,7 @@
                     <th class="anchoColumna" scope="col">Detalles</th>
                     <th class="anchoColumna" scope="col">Estudios</th>
                     <th class="anchoColumna" scope="col">Estado</th>
+                    <th class="anchoColumna" scope="col">Historia Clínica</th>
                     <th class="anchoColumna" scope="col">Acciones</th>
                   </tr>
                 </thead>
@@ -172,6 +173,9 @@
                       </div>
                     </td>
                     <td scope="row" th:text="${consulta.estado}"></td>
+                    <td>
+                      <a class="btn btn-custom" th:href="@{/__${consulta.paciente.id}__}">Ver</a>
+                    </td>
                     <td scope="row">
                       <div class="d-flex justify-content-around w-100">
                         <div th:if="${consulta.estado.toString == 'DISPONIBLE'}">
