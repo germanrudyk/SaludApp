@@ -110,3 +110,28 @@ function enviarMensaje() {
         document.getElementById("mensajePass").innerHTML = mensaje;
       
     }
+
+/*------------- Efecto Contar -------------*/
+const Pacientes = document.getElementById('nPacientes');
+const Profesionales = document.getElementById('nProfesionales');
+const Calificaciones = document.getElementById('calificaciones');
+const PacientesValue = parseFloat(Pacientes.innerText);
+const ProfesionalesValue = parseFloat(Profesionales.innerText);
+const CalificacionesValue = parseFloat(Calificaciones.innerText);
+
+window.addEventListener('scroll', function () {
+  function animarNumeros(elemento, valorFinal) {
+    let numeroActual = 0;
+    const intervalo = setInterval(() => {
+      elemento.innerText = numeroActual;
+      numeroActual++;
+      if (numeroActual > valorFinal) {
+        clearInterval(intervalo);
+      }
+    }, 50);
+  }
+
+  animarNumeros(Pacientes, PacientesValue);
+  animarNumeros(Profesionales, ProfesionalesValue);
+  animarNumeros(Calificaciones, CalificacionesValue);
+});
