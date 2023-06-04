@@ -148,7 +148,7 @@
                                         <use xlink:href="#cliente" />
                                     </svg>
                                     <div class="row">
-                                        <h1 th:text="${nPacientes}"></h1>
+                                        <h1 id="nPacientes" th:text="${nPacientes}"></h1>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +163,7 @@
                                         <use xlink:href="#profesional" />
                                     </svg>
                                     <div class="row">
-                                        <h1 th:text="${nProfesionales}"></h1>
+                                        <h1 id="nProfesionales" th:text="${nProfesionales}"></h1>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                                         <use xlink:href="#star" />
                                     </svg>
                                     <div class="row">
-                                        <h1 th:text="${calificaciones}"></h1>
+                                        <h1 id="calificaciones" th:text="${calificaciones}"></h1>
                                     </div>
                                 </div>
                             </div>
@@ -234,27 +234,37 @@
                     </div>
                 </form>
            </div>      
-             <div class="col-12 col-lg-6">
-                <ul class="nav flex-column mt-5 pt-5">
-                    <li class="nav-item my-3">
+             <div class="col-12 col-lg-6 d-flex align-items-center flex-wrap up-section p-5 my-5">
+                <div class="row d-flex align-items-center w-100">
+                    <div class="col-1">
                         <svg class="bi" width="20" height="20">
-                        <use xlink:href="#phone" />
+                            <use xlink:href="#phone" />
                         </svg>
-                        <span class="ml-3">911 0911-0911</span>
-                    </li>
-                    <li class="nav-item my-3">
+                    </div>
+                    <div class="col-11">    
+                        <h3>911 0911-0911</h3>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-center w-100">
+                    <div class="col-1">
                         <svg class="bi" width="20" height="20">
-                        <use xlink:href="#mail" />
+                            <use xlink:href="#mail" />
                         </svg>
-                        <span class="ml-3">saludApp@saludApp.com</span>
-                    </li>
-                    <li class="nav-item my-3">
-                        <svg class="bi text-success" width="20" height="20">
-                        <use xlink:href="#location" />
+                    </div>
+                    <div class="col-11">   
+                        <h3>saludApp@saludApp.com</h3>
+                    </div>    
+                </div>
+                <div class="row d-flex align-items-center w-100">
+                    <div class="col-1">
+                        <svg class="bi" width="20" height="20">
+                            <use xlink:href="#location" />
                         </svg>
-                        <span class="ml-3">calle falsa 123</span>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="col-11">   
+                        <h3>calle falsa 123</h3>
+                    </div>
+                </div>
             </div> 
       </div>
     </section>

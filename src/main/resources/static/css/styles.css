@@ -7,6 +7,11 @@
     --font: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.f-icon {
+    fill: var(--bg-color);
+    width: 24px;
+    height: 24px;
+}
 .alert {
     z-index: 9999;
     position: fixed;
