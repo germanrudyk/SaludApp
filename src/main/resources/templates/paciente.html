@@ -288,7 +288,15 @@
                         </option>
                       </select>
                     </th>
-                    <th scope="col">Precio</th>
+                    <th scope="col" class="sortable">
+                      <div class="sortable-header" data-column-index="7">
+                        <div>Precio</div>
+                        <div class="sort-indicator">
+                          <span class="arrow-up"></span>
+                          <span class="arrow-down"></span>
+                        </div>
+                      </div>
+                    </th>
                     <th scope="col">Calificación</th>
                     <th scope="col" class="text-center">Estado
                       <select name="estado" class="filtro btn btn-outline-secondary dropdown-toggle filtro-estado" onchange="filtrarTabla('estado')">
@@ -311,7 +319,7 @@
                     <td scope="row" th:text="${consulta.fechaConsulta}"></td>
                     <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
                     <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
-                    <td scope="row" th:text="${consulta.precioConsulta}"></td>
+                    <td scope="row" class="precios" th:text="${consulta.precioConsulta}"></td>
                     <td scope="row">
                       <div class="calificacion" th:text="${consulta.profesional.calificacion}" hidden></div>
                       <div class="stars-outer">
