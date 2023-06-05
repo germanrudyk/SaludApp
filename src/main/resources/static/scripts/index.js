@@ -1,4 +1,4 @@
-/*------------- Navbar -------------*/
+/*------------- Navbar 
 const navbar = document.getElementById("navbar");
 let prevScrollPos = window.pageYOffset;
 
@@ -13,7 +13,7 @@ window.addEventListener('scroll', () => {
   }
 
   prevScrollPos = currentScrollPos;
-});
+});-------------*/
 
 /*------------- UP Button -------------*/
 window.onscroll = function () { scrollFunction() };

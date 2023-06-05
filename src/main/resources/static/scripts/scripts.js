@@ -1,4 +1,4 @@
-/*------------- Ordenar-------------*/
+/*------------- Ordenar
 document.addEventListener('DOMContentLoaded', function() {
   var table = document.querySelector('.table');
   var headers = table.querySelectorAll('.sortable-header');
@@ -52,7 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
   });
-});
+});-------------*/
+
 /*------------- Filtrar tabla de turnos -------------*/
 function filtrarTabla(filtro) {
   var filtroElegido = document.querySelector(`.filtro-${filtro}`).value;
