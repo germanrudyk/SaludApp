@@ -119,19 +119,34 @@ const PacientesValue = parseFloat(Pacientes.innerText);
 const ProfesionalesValue = parseFloat(Profesionales.innerText);
 const CalificacionesValue = parseFloat(Calificaciones.innerText);
 
-window.addEventListener('scroll', function () {
-  function animarNumeros(elemento, valorFinal) {
-    let numeroActual = 0;
-    const intervalo = setInterval(() => {
-      elemento.innerText = numeroActual;
-      numeroActual++;
-      if (numeroActual > valorFinal) {
-        clearInterval(intervalo);
-      }
-    }, 50);
-  }
+function animarNumeros(elemento, valorFinal) {
+  elemento.dataset.animado = 'true'; // Establece la bandera para indicar que la animación está en curso
+  let numeroActual = 0;
+  const intervalo = setInterval(() => {
+    elemento.innerText = numeroActual;
+    numeroActual++;
+    if (numeroActual > valorFinal) {
+      clearInterval(intervalo);
+      elemento.dataset.animado = 'false'; // Restablece la bandera para permitir que la animación se reinicie
+    }
+  }, 50);
+}
+const opciones = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.5
+};
+const observer = new IntersectionObserver(function (entradas) {
+  entradas.forEach(function (entrada) {
+    if (entrada.isIntersecting && entrada.target.dataset.animado !== 'true') {
+      animarNumeros(entrada.target, parseFloat(entrada.target.innerText));
+    }
+  });
+}, opciones);
 
-  animarNumeros(Pacientes, PacientesValue);
-  animarNumeros(Profesionales, ProfesionalesValue);
-  animarNumeros(Calificaciones, CalificacionesValue);
-});
+observer.observe(Pacientes);
+observer.observe(Profesionales);
+observer.observe(Calificaciones);
+
+
+
