@@ -5,7 +5,7 @@
   <nav th:replace="/fragments/navbar  :: nav"></nav>
   <main class="d-flex flex-nowrap">
     <!------------- SideBar ------------->
-    <div class="d-flex flex-column flex-shrink-0 sidebar" style="width: 200px;">
+    <div class="d-flex flex-column flex-shrink-0 sidebar" style="width: 200px;" sec:authorize="hasAnyRole('PACIENTE')">
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
           <a class="nav-link btn-custom2" data-bs-toggle="collapse" href="#perfilContent" role="button" aria-expanded="false" aria-controls="perfilContent">      
@@ -26,7 +26,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn-custom2" data-bs-toggle="collapse" href="#calendarioContent" role="button" aria-expanded="false" aria-controls="calendarioContent">
+          <a class="nav-link btn-custom2" data-bs-toggle="collapse" href="#calendarioContent" role="button" aria-expanded="true" aria-controls="calendarioContent">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
             Calendario
           </a>
@@ -39,7 +39,7 @@
       <div class="row">
         <div class="col">
           <!------------- Perfil desplegable ------------->
-          <div class="container mt-5 collapse" id="perfilContent">
+          <div class="container mt-5 collapse" id="perfilContent" sec:authorize="hasAnyRole('PACIENTE')">
             <form th:action="@{/paciente/modificar}" method="POST" enctype="multipart/form-data">
               <div class="d-flex">
                 <div class="position-relative mx-5">
@@ -204,15 +204,15 @@
                     </td>
                     <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
                     <td>
-                      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#calificar"
-                        data-paciente-id="${profesional.id}">Calificar</button>
+                      <button class="btn btn-custom" data-bs-toggle="modal" th:if="${consulta.estado.toString() == 'UTILIZADA'} " th:data-bs-target="'#calificar'+${consulta.profesional.id}"
+                      data-paciente-id="${profesional.id}">Calificar</button>
                     </td>
                     <td>
                       <a class="btn btn-custom" th:href="@{/paciente/cancelar/__${consulta.id}__}">Cancelar</a>
                     </td>
                   </tr>
                   <!------------- Formulario Calificar -------------->
-                  <div class="modal fade" id="calificar" tabindex="-1" role="dialog" aria-labelledby="calificarLabel"
+                  <div class="modal fade" th:id="'calificar'+${consulta.profesional.id}" tabindex="-1" role="dialog" aria-labelledby="calificarLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -221,8 +221,7 @@
                         </div>
                         <div class="modal-body">
                           <div class="container">
-                            <form class="formulario" th:action="@{/paciente/calificar}" method="POST"
-                              enctype="multipart/form-data">
+                            <form class="formulario" th:action="@{/paciente/calificar/__${consulta.profesional.id}__}" method="POST" enctype="multipart/form-data">
                               <input type="hidden" name="idUsuario" th:if="${consulta.profesional != null}"
                                 th:value="${consulta.profesional.nombre}">
                               <div class="form-group my-3 text-center">
@@ -258,7 +257,7 @@
               </table>
             </div>
             <!------------- Consultas Disponibles ------------->
-            <div class="container mt-5 collapse" id="calendarioContent">
+            <div class="container mt-5 " id="calendarioContent">
               <h1>Consultas Disponibles</h1>
               <table class="table consultaTablaFiltro table-hover custom-table">
                 <thead>
@@ -288,7 +287,15 @@
                         </option>
                       </select>
                     </th>
-                    <th scope="col">Precio</th>
+                    <th scope="col" class="sortable">
+                      <div class="sortable-header" data-column-index="7">
+                        <div>Precio</div>
+                        <div class="sort-indicator">
+                          <span class="arrow-up"></span>
+                          <span class="arrow-down"></span>
+                        </div>
+                      </div>
+                    </th>
                     <th scope="col">Calificación</th>
                     <th scope="col" class="text-center">Estado
                       <select name="estado" class="filtro btn btn-outline-secondary dropdown-toggle filtro-estado" onchange="filtrarTablaConsultas('estado')">
@@ -311,7 +318,7 @@
                     <td scope="row" th:text="${consulta.fechaConsulta}"></td>
                     <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
                     <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
-                    <td scope="row" th:text="${consulta.precioConsulta}"></td>
+                    <td scope="row" class="precios" th:text="${consulta.precioConsulta}"></td>
                     <td scope="row">
                       <div class="calificacion" th:text="${consulta.profesional.calificacion}" hidden></div>
                       <div class="stars-outer">

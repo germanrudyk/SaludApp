@@ -1,3 +1,38 @@
+/*------------- Ordenar -------------*/
+.sortable-header {
+    position: relative;
+    cursor: pointer;
+}
+
+.sort-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+}
+
+.sort-indicator .arrow-up,
+.sort-indicator .arrow-down {
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+
+.sort-indicator .arrow-up {
+    border-bottom: 5px solid rgb(60, 60, 60);
+    margin-bottom: 2px;
+}
+
+.sort-indicator .arrow-down {
+    border-top: 5px solid rgb(60, 60, 60);
+    margin-top: 2px;
+}
+
 /*------------- GENERAL STYLES -------------*/
 :root {
     --bg-color: hsl(0, 0%, 93%);

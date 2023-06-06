@@ -135,7 +135,7 @@
         <div class="col">
           <div class="main mx-5">  
             <!------------- Tabla Consultas ------------->
-            <div class="container mt-5 collapse" id="calendarioContent">
+            <div class="container mt-5" id="calendarioContent">
               <h1>Consultas</h1>
               <table class="table table-hover text-center custom-table">
                 <thead>
@@ -174,7 +174,7 @@
                     </td>
                     <td scope="row" th:text="${consulta.estado}"></td>
                     <td>
-                      <a class="btn btn-custom" th:href="@{/__${consulta.paciente.id}__}">Ver</a>
+                      <a class="btn btn-custom" th:if="${consulta.paciente != null}" th:href="@{/__${consulta.paciente.id}__}">Ver</a>
                     </td>
                     <td scope="row">
                       <div class="d-flex justify-content-around w-100">
