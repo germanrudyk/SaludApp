@@ -4,7 +4,6 @@ import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.enumeraciones.Estado;
 import com.demo.saludApp.servicios.ConsultaServicio;
 import java.util.List;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
