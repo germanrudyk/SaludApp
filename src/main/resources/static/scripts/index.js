@@ -1,3 +1,4 @@
+
 /*------------- Navbar 
 const navbar = document.getElementById("navbar");
 let prevScrollPos = window.pageYOffset;
@@ -14,6 +15,9 @@ window.addEventListener('scroll', () => {
 
   prevScrollPos = currentScrollPos;
 });-------------*/
+
+
+
 
 /*------------- UP Button -------------*/
 window.onscroll = function () { scrollFunction() };
@@ -72,7 +76,7 @@ function horizontalScroll(event) {
 
 /*------------- Enviar Mensaje -------------*/
 function enviarMensaje() {
-
+    console.log("envia mensaje")
   var mensaje = document.getElementById("cartel");
   mensaje.classList.remove("d-none");
     setTimeout(function() {

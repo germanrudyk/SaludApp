@@ -143,14 +143,14 @@
             <!------------- Mis Consultas ------------->
             <div class="container mt-5 collapse" id="consultasContent" sec:authorize="hasAnyRole('PACIENTE')">
               <h1>Mis Consultas</h1>
-              <table class="table tablaFiltro table-hover custom-table">
+              <table class="table miTablaFiltro table-hover custom-table">
                 <thead>
                   <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Especialidad
                       <select name="especialidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-especialidad"
-                        onchange="filtrarTabla('especialidad')">
+                        onchange="filtrarTablaMisConsultas('especialidad')">
                         <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
                           th:value="${especialidad}" th:text="${especialidad}">
                         </option>
@@ -158,14 +158,14 @@
                     </th>
                     <th scope="col">Fecha</th>
                     <th scope="col" class="text-center">Horario
-                      <select name="horario" class="filtro btn btn-outline-secondary dropdown-toggle filtro-horario" onchange="filtrarTabla('horario')">
+                      <select name="horario" class="filtro btn btn-outline-secondary dropdown-toggle filtro-horario" onchange="filtrarTablaMisConsultas('horario')">
                         <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}"
                           th:value="${horario.texto}" th:text="${horario.texto}">
                         </option>
                       </select>
                     </th>
                     <th scope="col" class="text-center">Modalidad
-                      <select name="modalidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-modalidad" onchange="filtrarTabla('modalidad')">
+                      <select name="modalidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-modalidad" onchange="filtrarTablaMisConsultas('modalidad')">
                         <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
                           th:value="${modalidad}" th:text="${modalidad}">
                         </option>
@@ -174,7 +174,7 @@
                     <th scope="col">Precio</th>
                     <th scope="col">Calificación</th>
                     <th scope="col" class="text-center">Estado
-                      <select name="estado" class="filtro btn btn-outline-secondary dropdown-toggle filtro-estado" onchange="filtrarTabla('estado')">
+                      <select name="estado" class="filtro btn btn-outline-secondary dropdown-toggle filtro-estado" onchange="filtrarTablaMisConsultas('estado')">
                         <option selected></option>
                         <option th:each="estado : ${T(com.demo.saludApp.enumeraciones.Estado).values()}" th:value="${estado}"
                           th:text="${estado}">
@@ -259,14 +259,14 @@
             <!------------- Consultas Disponibles ------------->
             <div class="container mt-5 " id="calendarioContent">
               <h1>Consultas Disponibles</h1>
-              <table class="table tablaFiltro table-hover custom-table">
+              <table class="table consultaTablaFiltro table-hover custom-table">
                 <thead>
                   <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Especialidad
                       <select name="especialidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-especialidad"
-                        onchange="filtrarTabla('especialidad')">
+                        onchange="filtrarTablaConsultas('especialidad')">
                         <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
                           th:value="${especialidad}" th:text="${especialidad}">
                         </option>
@@ -274,14 +274,14 @@
                     </th>
                     <th scope="col">Fecha</th>
                     <th scope="col" class="text-center">Horario
-                      <select name="horario" class="filtro btn btn-outline-secondary dropdown-toggle filtro-horario" onchange="filtrarTabla('horario')">
+                      <select name="horario" class="filtro btn btn-outline-secondary dropdown-toggle filtro-horario" onchange="filtrarTablaConsultas('horario')">
                         <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}"
                           th:value="${horario.texto}" th:text="${horario.texto}">
                         </option>
                       </select>
                     </th>
                     <th scope="col" class="text-center">Modalidad
-                      <select name="modalidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-modalidad" onchange="filtrarTabla('modalidad')">
+                      <select name="modalidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-modalidad" onchange="filtrarTablaConsultas('modalidad')">
                         <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
                           th:value="${modalidad}" th:text="${modalidad}">
                         </option>
@@ -298,7 +298,7 @@
                     </th>
                     <th scope="col">Calificación</th>
                     <th scope="col" class="text-center">Estado
-                      <select name="estado" class="filtro btn btn-outline-secondary dropdown-toggle filtro-estado" onchange="filtrarTabla('estado')">
+                      <select name="estado" class="filtro btn btn-outline-secondary dropdown-toggle filtro-estado" onchange="filtrarTablaConsultas('estado')">
                         <option th:each="estado : ${T(com.demo.saludApp.enumeraciones.Estado).values()}" th:value="${estado}"
                           th:text="${estado}">
                         </option>
@@ -339,6 +339,7 @@
       </div>
     </div>
   </main>
+   <script src="./scripts/paciente.js" defer></script>
 <!------------- Footer ------------->
   <footer th:replace="/fragments/footer  :: footer"></footer>
 </body>
