@@ -37,6 +37,8 @@
     <!------------- Cuerpo ------------->
     <div class="container">
       <div class="row">
+          <br>
+            <h2 th:text="'Bienvenido/a '+ ${session.usuariosession.nombre}" class="text-center"></h2>
         <div class="col">
           <!------------- Perfil desplegable ------------->
           <div class="container mt-5 collapse" id="perfilContent" sec:authorize="hasAnyRole('PACIENTE')">
@@ -334,6 +336,20 @@
                 </tbody>
               </table>
             </div>
+            
+                     <!------------- About ------------->
+    <div th:if="${session.usuariosession == null}"  class="largeBackground  pb-5 pt-5 fixed-bottom" >
+        <div class="text-center">
+            <h2>¡Registrate en SaludApp!</h2>
+            <p> En nuestro centro de salud, valoramos y reconocemos la importancia de tu experiencia, compartimos
+                nuestros conocimientos y pasión por la atención médica. Estamos comprometidos con el cuidado integral de
+                nuestros pacientes y nos esforzamos por ofrecer un entorno de trabajo colaborativo y
+                enriquecedor.</p>
+            <button class="btn btn-lg btn-custom-reverse" data-bs-toggle="modal"
+                data-bs-target="#registroModal">Registrarse</button>
+        </div>
+    </div>
+            
           </div>
         </div>
       </div>

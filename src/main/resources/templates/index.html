@@ -121,7 +121,7 @@
                                         th:src="@{/imagen/perfil/__${profesional.id}__}" style="width: 120px; height: 120px;">
                                 <img th:if="${profesional.imagen == null}" class="bd-placeholder-img  rounded-circle" 
                                         src="./img/indefinido.png" style="width: 120px; height: 120px;"> 
-                                <h4 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h4>
+                                <h5 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h5>
                                 <p th:text="${profesional.detalleEspecialidad}" class="card-text"></p>
                                 <a class="btn btn-custom m-2"  th:href="@{/paciente}">Ver Turnos</a>
                             </div> 
