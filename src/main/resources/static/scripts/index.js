@@ -1,19 +1,4 @@
-/*------------- Navbar -------------*/
-const navbar = document.getElementById("navbar");
-let prevScrollPos = window.pageYOffset;
 
-window.addEventListener('scroll', () => {
-  const currentScrollPos = window.pageYOffset;
-
-  if (prevScrollPos < currentScrollPos) {
-    navbar.classList.add('fixed');
-    navbar.classList.remove('transparent');
-  } else {
-    navbar.classList.add('transparent');
-  }
-
-  prevScrollPos = currentScrollPos;
-});
 
 /*------------- UP Button -------------*/
 window.onscroll = function () { scrollFunction() };
@@ -72,7 +57,7 @@ function horizontalScroll(event) {
 
 /*------------- Enviar Mensaje -------------*/
 function enviarMensaje() {
-
+    console.log("envia mensaje")
   var mensaje = document.getElementById("cartel");
   mensaje.classList.remove("d-none");
     setTimeout(function() {

@@ -73,7 +73,7 @@ headers.forEach(function (header) {
 });
 
 /*------------- Filtrar tabla de turnos -------------*/
-function filtrarTabla(filtro) {
+function filtrarTabla3(filtro) {
   var filtroElegido = document.querySelector(`.filtro-${filtro}`).value;
   var tabla = document.querySelector(".tablaFiltro"); 
   var filas = tabla.getElementsByTagName("tr");
