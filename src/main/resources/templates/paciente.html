@@ -1,41 +1,60 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head th:replace="/fragments/head  :: head"></head>
 
 <body>
   <!------------- Navbar ------------->
-  <nav th:replace="/fragments/navbar  :: nav" sec:authorize="hasAnyRole('PACIENTE')"></nav>
-
-  <div class="main">
-    <!------------- Perfil desplegable ------------->
-    <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
-    aria-hidden="true" sec:authorize="hasAnyRole('PACIENTE')">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="perfilModalLabel">Perfil de Usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="container">
-            <div class="m-5 usuario">
-              <form th:action="@{/paciente/modificar}" method="POST" enctype="multipart/form-data"></form>
-                <div class="parte1">
-                  <div>
-                    <img th:if="${session.usuariosession.imagen != null}" class="imagenPerfil"
-                      th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
-                    <img th:if="${session.usuariosession.imagen == null}" class="imagenPerfil" src="./img/indefinido.png">
-                  </div>
-                  <div>
+  <nav th:replace="/fragments/navbar  :: nav"></nav>
+  <main class="d-flex flex-nowrap">
+    <!------------- SideBar ------------->
+    <div class="d-flex flex-column flex-shrink-0 sidebar" style="width: 200px;">
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link btn-custom2" data-bs-toggle="collapse" href="#perfilContent" role="button" aria-expanded="false" aria-controls="perfilContent">      
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+            Perfil 
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-custom2" th:href="@{/__${session.usuariosession.id}__}">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            Mi Historia Clínica
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-custom2" data-bs-toggle="collapse" href="#consultasContent" role="button" aria-expanded="false" aria-controls="consultasContent">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            Mis Consultas
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-custom2" data-bs-toggle="collapse" href="#calendarioContent" role="button" aria-expanded="false" aria-controls="calendarioContent">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+            Calendario
+          </a>
+        </li>
+      </ul>
+      <hr>
+    </div>
+    <!------------- Cuerpo ------------->
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <!------------- Perfil desplegable ------------->
+          <div class="container mt-5 collapse" id="perfilContent">
+            <form th:action="@{/paciente/modificar}" method="POST" enctype="multipart/form-data">
+              <div class="d-flex">
+                <div class="position-relative mx-5">
+                  <img th:if="${session.usuariosession.imagen != null}" class="imagenPerfil" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                  <img th:if="${session.usuariosession.imagen == null}" class="imagenPerfil" src="./img/indefinido.png">
+                  <div class="position-absolute top-1 end-0">
                     <label class="btn btn-dark" for="editarFoto">
                       <svg class="bi f-icon">
                         <use xlink:href="#plus" />
                       </svg>
                       <input hidden type="file" id="editarFoto" name="archivo">
+                    </label>
                   </div>
                 </div>
-                <table class="table table-hover custom-table">
+                <table class="table table-hover custom-table mb-0 w-100">
                   <input hidden th:value="${session.usuariosession.id}" name="idUsuario">
                   <input hidden th:value="${session.usuariosession.imagen}" name="archivo">
                   <tr scope="row">
@@ -47,15 +66,13 @@
                   <tr scope="row">
                     <td>Apellido:</td>
                     <td>
-                      <input type="text" th:value="${session.usuariosession.apellido}" class="form-control"
-                        name="apellido">
+                      <input type="text" th:value="${session.usuariosession.apellido}" class="form-control" name="apellido">
                     </td>
                   </tr>
                   <tr scope="row">
                     <td>Teléfono:</td>
                     <td>
-                      <input type="text" th:value="${session.usuariosession.telefono}" class="form-control"
-                        name="telefono">
+                      <input type="text" th:value="${session.usuariosession.telefono}" class="form-control" name="telefono">
                     </td>
                   </tr>
                   <tr scope="row">
@@ -73,8 +90,7 @@
                   <tr scope="row">
                     <td>Fecha de nacimiento:</td>
                     <td>
-                      <input type="date" th:value="${session.usuariosession.fechaNacimiento}" class="form-control fecha"
-                        name="fechaNacimiento">
+                      <input type="date" th:value="${session.usuariosession.fechaNacimiento}" class="form-control fecha" name="fechaNacimiento">
                     </td>
                   </tr>
                   <tr scope="row">
@@ -93,8 +109,7 @@
                     <td>
                       <select name="obrasocial" class="form-select obraSocial">
                         <option th:each="ObraSocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
-                          th:value="${ObraSocial}" th:text="${ObraSocial}"
-                          th:unless="${session.usuariosession.ObraSocial == ObraSocial}">
+                        th:value="${ObraSocial}" th:text="${ObraSocial}" th:unless="${session.usuariosession.ObraSocial == ObraSocial}">
                         </option>
                         <option th:text="${session.usuariosession.ObraSocial}" selected></option>
                       </select>
@@ -113,205 +128,211 @@
                     </td>
                   </tr>
                 </table>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-custom">Modificar</button>
-                </div>
-              </form>
+              </div>
+              <div class="text-end mt-3">
+                <a class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar Contraseña</a>
+                <button type="submit" class="btn btn-custom">Modificar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="main mx-5">  
+            <!------------- Mis Consultas ------------->
+            <div class="container mt-5 collapse" id="consultasContent" sec:authorize="hasAnyRole('PACIENTE')">
+              <h1>Mis Consultas</h1>
+              <table class="table tablaFiltro table-hover custom-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Especialidad
+                      <select name="especialidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-especialidad"
+                        onchange="filtrarTabla('especialidad')">
+                        <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                          th:value="${especialidad}" th:text="${especialidad}">
+                        </option>
+                      </select>
+                    </th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col" class="text-center">Horario
+                      <select name="horario" class="filtro btn btn-outline-secondary dropdown-toggle filtro-horario" onchange="filtrarTabla('horario')">
+                        <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}"
+                          th:value="${horario.texto}" th:text="${horario.texto}">
+                        </option>
+                      </select>
+                    </th>
+                    <th scope="col" class="text-center">Modalidad
+                      <select name="modalidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-modalidad" onchange="filtrarTabla('modalidad')">
+                        <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
+                          th:value="${modalidad}" th:text="${modalidad}">
+                        </option>
+                      </select>
+                    </th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Calificación</th>
+                    <th scope="col" class="text-center">Estado
+                      <select name="estado" class="filtro btn btn-outline-secondary dropdown-toggle filtro-estado" onchange="filtrarTabla('estado')">
+                        <option selected></option>
+                        <option th:each="estado : ${T(com.demo.saludApp.enumeraciones.Estado).values()}" th:value="${estado}"
+                          th:text="${estado}">
+                        </option>
+                      </select>
+                    </th>
+                    <th scope="col" class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody th:each="consulta : ${misconsultas}">
+                  <tr>
+                    <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.nombre}">
+                    </td>
+                    <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.apellido}">
+                    </td>
+                    <td class="filtro-especialidad" scope="row" th:if="${consulta.profesional != null}"
+                      th:text="${consulta.profesional.especialidad}"></td>
+                    <td scope="row" th:text="${consulta.fechaConsulta}"></td>
+                    <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
+                    <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
+                    <td scope="row" th:text="${consulta.precioConsulta}"></td>
+                    <td scope="row">
+                      <div class="calificacion" th:text="${consulta.profesional.calificacion}" hidden></div>
+                      <div class="stars-outer">
+                        <div class="stars-inner"></div>
+                      </div>
+                    </td>
+                    <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
+                    <td>
+                      <button class="btn btn-custom" data-bs-toggle="modal" th:if="${consulta.estado.toString() == 'UTILIZADA'} " th:data-bs-target="'#calificar'+${consulta.profesional.id}"
+                        data-paciente-id="${profesional.id}">Calificar</button>
+                    </td>
+                    <td>
+                      <a class="btn btn-custom" th:href="@{/paciente/cancelar/__${consulta.id}__}">Cancelar</a>
+                    </td>
+                  </tr>
+                  <!------------- Formulario Calificar -------------->
+                  <div class="modal fade" th:id="'calificar'+${consulta.profesional.id}" tabindex="-1" role="dialog" aria-labelledby="calificarLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="container">
+                            <form class="formulario" th:action="@{/paciente/calificar/__${consulta.profesional.id}__}" method="POST"
+                            enctype="multipart/form-data">
+                              <input type="hidden" name="id" th:if="${consulta.profesional != null}"
+                                th:value="${consulta.profesional.nombre}">
+                              <div class="form-group my-3 text-center">
+                                <h4 class="mb-5">¿Con cuantas estrellas calificaría esta consulta?</h4>
+                              </div>
+                              <div class="stars-container mb-4">
+                                <input id="star-1" type="radio" name="calificacion" value="1" hidden>
+                                <label for="star-1"></label>
+                                <input id="star-2" type="radio" name="calificacion" value="2" hidden>
+                                <label for="star-2"></label>
+                                <input id="star-3" type="radio" name="calificacion" value="3" hidden>
+                                <label for="star-3"></label>
+                                <input id="star-4" type="radio" name="calificacion" value="4" hidden>
+                                <label for="star-4"></label>
+                                <input id="star-5" type="radio" name="calificacion" value="5" hidden>
+                                <label for="star-5"></label>
+                              </div>                
+                              <div class="text-center">
+                                <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">
+                                  Aceptar
+                                </button>
+                                <button type="button" class="btn btn-primary mt-3 w-25 cancelar m-3" data-bs-dismiss="modal">
+                                  Cancelar
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tbody>
+              </table>
+            </div>
+            <!------------- Consultas Disponibles ------------->
+            <div class="container mt-5 collapse" id="calendarioContent">
+              <h1>Consultas Disponibles</h1>
+              <table class="table tablaFiltro table-hover custom-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Especialidad
+                      <select name="especialidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-especialidad"
+                        onchange="filtrarTabla('especialidad')">
+                        <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
+                          th:value="${especialidad}" th:text="${especialidad}">
+                        </option>
+                      </select>
+                    </th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col" class="text-center">Horario
+                      <select name="horario" class="filtro btn btn-outline-secondary dropdown-toggle filtro-horario" onchange="filtrarTabla('horario')">
+                        <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}"
+                          th:value="${horario.texto}" th:text="${horario.texto}">
+                        </option>
+                      </select>
+                    </th>
+                    <th scope="col" class="text-center">Modalidad
+                      <select name="modalidad" class="filtro btn btn-outline-secondary dropdown-toggle filtro-modalidad" onchange="filtrarTabla('modalidad')">
+                        <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
+                          th:value="${modalidad}" th:text="${modalidad}">
+                        </option>
+                      </select>
+                    </th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Calificación</th>
+                    <th scope="col" class="text-center">Estado
+                      <select name="estado" class="filtro btn btn-outline-secondary dropdown-toggle filtro-estado" onchange="filtrarTabla('estado')">
+                        <option th:each="estado : ${T(com.demo.saludApp.enumeraciones.Estado).values()}" th:value="${estado}"
+                          th:text="${estado}">
+                        </option>
+                      </select>
+                    </th>
+                    <th scope="col" class="text-center" sec:authorize="hasAnyRole('PACIENTE')">Acciones</th>
+                  </tr>
+                </thead>  
+                <tbody th:each="consulta : ${consultas}">
+                  <tr>
+                    <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.nombre}">
+                    </td>
+                    <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.apellido}">
+                    </td>
+                    <td class="filtro-especialidad" scope="row" th:if="${consulta.profesional != null}"
+                      th:text="${consulta.profesional.especialidad}"></td>
+                    <td scope="row" th:text="${consulta.fechaConsulta}"></td>
+                    <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
+                    <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
+                    <td scope="row" th:text="${consulta.precioConsulta}"></td>
+                    <td scope="row">
+                      <div class="calificacion" th:text="${consulta.profesional.calificacion}" hidden></div>
+                      <div class="stars-outer">
+                        <div class="stars-inner"></div>
+                      </div>
+                    </td>
+                    <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
+                    <td>
+                      <a class="btn btn-custom" sec:authorize="hasAnyRole('PACIENTE')" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
+                        Turno</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
-
-    <!------------- Historia Clinica ------------->
-    <div class="container">
-        <a class="btn btn-custom" th:href="@{/consulta/__${session.usuariosession.id}__}" method="GET" sec:authorize="hasAnyRole('PACIENTE')">Ver</a>
-    </div>
-
-    <!------------- Mis Consultas ------------->
-    <div class="container mt-5" sec:authorize="hasAnyRole('PACIENTE')">
-      <h1>Mis Consultas</h1>
-      <table class="table tablaFiltro table-hover custom-table">
-        <thead>
-          <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Especialidad
-              <select name="especialidad" class="form-select especialidad filtro-especialidad "
-                onchange="filtrarTabla('especialidad')">
-                <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
-                  th:value="${especialidad}" th:text="${especialidad}">
-                </option>
-              </select>
-            </th>
-            <th scope="col">Fecha</th>
-            <th scope="col" class="text-center">Horario
-              <select name="horario" class="form-select filtro-horario " onchange="filtrarTabla('horario')">
-                <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}"
-                  th:value="${horario.texto}" th:text="${horario.texto}">
-                </option>
-              </select>
-            </th>
-            <th scope="col" class="text-center">Modalidad
-              <select name="modalidad" class="form-select filtro-modalidad " onchange="filtrarTabla('modalidad')">
-                <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
-                  th:value="${modalidad}" th:text="${modalidad}">
-                </option>
-              </select>
-            </th>
-            <th scope="col">Precio</th>
-            <th scope="col">Calificación</th>
-            <th scope="col" class="text-center">Estado
-              <select name="estado" class="form-select filtro-estado " onchange="filtrarTabla('estado')">
-                <option th:each="estado : ${T(com.demo.saludApp.enumeraciones.Estado).values()}" th:value="${estado}"
-                  th:text="${estado}">
-                </option>
-              </select>
-            </th>
-            <th scope="col" class="text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody th:each="consulta : ${misconsultas}">
-          <tr>
-            <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.nombre}">
-            </td>
-            <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.apellido}">
-            </td>
-            <td class="filtro-especialidad" scope="row" th:if="${consulta.profesional != null}"
-              th:text="${consulta.profesional.especialidad}"></td>
-            <td scope="row" th:text="${consulta.fechaConsulta}"></td>
-            <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
-            <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
-            <td scope="row" th:text="${consulta.precioConsulta}"></td>
-            <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
-            <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
-            <td>
-              <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#calificar"
-                data-paciente-id="${profesional.id}">Calificar</button>
-            </td>
-            <td>
-              <a class="btn btn-custom" th:href="@{/paciente/cancelar/__${consulta.id}__}">Cancelar</a>
-            </td>
-          </tr>
-
-          <!------------- Formulario Clificar -------------->
-          <div class="modal fade" id="calificar" tabindex="-1" role="dialog" aria-labelledby="calificarLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="container">
-                    <form id="calificar-form" class="formulario" th:action="@{/paciente/calificar}" method="POST"
-                      enctype="multipart/form-data">
-                      <input type="hidden" name="idUsuario" th:if="${consulta.profesional != null}"
-                        th:value="${consulta.profesional.nombre}">
-                      <div class="form-group my-3 text-center">
-                        <h4 class="mb-5">¿Con cuantas estrellas calificaría esta consulta?</h4>
-                      </div>
-                      <div class="stars">
-                        <input class="star star-5" id="star-5" type="radio" name="calificacion" value="5">
-                        <label class="star star-5" for="star-5"></label>
-                        <input class="star star-4" id="star-4" type="radio" name="calificacion" value="4">
-                        <label class="star star-4" for="star-4"></label>
-                        <input class="star star-3" id="star-3" type="radio" name="calificacion" value="3">
-                        <label class="star star-3" for="star-3"></label>
-                        <input class="star star-2" id="star-2" type="radio" name="calificacion" value="2">
-                        <label class="star star-2" for="star-2"></label>
-                        <input class="star star-1" id="star-1" type="radio" name="calificacion" value="1">
-                        <label class="star star-1" for="star-1"></label>
-                      </div>
-                      <div class="text-center">
-                        <button type="submit" class="btn btn-primary mt-3 w-25 botones m-3">
-                          Aceptar
-                        </button>
-                        <button type="button" class="btn btn-primary mt-3 w-25 cancelar m-3" data-bs-dismiss="modal">
-                          Cancelar
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </tbody>
-      </table>
-    </div>
-
-
-    <!------------- Consultas Disponibles ------------->
-    <div class="container mt-5">
-      <h1>Consultas Disponibles</h1>
-      <table class="table tablaFiltro table-hover custom-table">
-        <thead>
-          <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Especialidad
-              <select name="especialidad" class="form-select especialidad filtro-especialidad "
-                onchange="filtrarTabla('especialidad')">
-                <option th:each="especialidad : ${T(com.demo.saludApp.enumeraciones.Especialidad).values()}"
-                  th:value="${especialidad}" th:text="${especialidad}">
-                </option>
-              </select>
-            </th>
-            <th scope="col">Fecha</th>
-            <th scope="col" class="text-center">Horario
-              <select name="horario" class="form-select filtro-horario " onchange="filtrarTabla('horario')">
-                <option th:each="horario : ${T(com.demo.saludApp.enumeraciones.Horario).values()}"
-                  th:value="${horario.texto}" th:text="${horario.texto}">
-                </option>
-              </select>
-            </th>
-            <th scope="col" class="text-center">Modalidad
-              <select name="modalidad" class="form-select filtro-modalidad " onchange="filtrarTabla('modalidad')">
-                <option th:each="modalidad : ${T(com.demo.saludApp.enumeraciones.Modalidad).values()}"
-                  th:value="${modalidad}" th:text="${modalidad}">
-                </option>
-              </select>
-            </th>
-            <th scope="col">Precio</th>
-            <th scope="col">Calificación</th>
-            <th scope="col" class="text-center">Estado
-              <select name="estado" class="form-select filtro-estado " onchange="filtrarTabla('estado')">
-                <option th:each="estado : ${T(com.demo.saludApp.enumeraciones.Estado).values()}" th:value="${estado}"
-                  th:text="${estado}">
-                </option>
-              </select>
-            </th>
-            <th scope="col" class="text-center" sec:authorize="hasAnyRole('PACIENTE')">Acciones</th>
-          </tr>
-        </thead>  
-        <tbody th:each="consulta : ${consultas}">
-          <tr>
-            <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.nombre}">
-            </td>
-            <td scope="row" th:if="${consulta.profesional != null}" th:text="${consulta.profesional.apellido}">
-            </td>
-            <td class="filtro-especialidad" scope="row" th:if="${consulta.profesional != null}"
-              th:text="${consulta.profesional.especialidad}"></td>
-            <td scope="row" th:text="${consulta.fechaConsulta}"></td>
-            <td class="filtro-horario" scope="row" th:text="${consulta.horario.texto}"></td>
-            <td class="filtro-modalidad" scope="row" th:text="${consulta.modalidad}"></td>
-            <td scope="row" th:text="${consulta.precioConsulta}"></td>
-            <td scope="row" th:text="${consulta.profesional.calificacion}"></td>
-            <td class="filtro-estado" scope="row" th:text="${consulta.estado}"></td>
-            <td>
-              <a class="btn btn-custom" sec:authorize="hasAnyRole('PACIENTE')" th:href="@{/paciente/reservar/__${consulta.id}__}">Agendar
-                Turno</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!------------- Footer -------------->
+  </main>
+<!------------- Footer ------------->
   <footer th:replace="/fragments/footer  :: footer"></footer>
 </body>
 </html>

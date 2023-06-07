@@ -40,9 +40,17 @@ public class PortalControlador {
     @GetMapping("")
     public String index(ModelMap modelo) {
         
+        int calificaciones = profesionalS.contarCalificacionesProfesionales();
+        int nProfesionales = profesionalS.contarProfesionales();
+        int nPacientes = pacienteS.contarPacientes();
+        
         List<Profesional> profesionales = profesionalS.listar();
-        modelo.addAttribute("profesionales", profesionales);  
+        modelo.addAttribute("profesionales", profesionales);
+        modelo.addAttribute("calificaciones", calificaciones);
+        modelo.addAttribute("nProfesionales", nProfesionales);
+        modelo.addAttribute("nPacientes", nPacientes);
         return "index.html";
+
     }
     
     //------------- Registro de Paciente -------------

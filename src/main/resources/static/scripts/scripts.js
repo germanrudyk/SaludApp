@@ -72,96 +72,51 @@ headers.forEach(function (header) {
     });
 });
 
-//------------- Estrella------------- 
-const starTotal = 5;
-
-rows.forEach(function (row) {
-    const rating = document.getElementById('calification').value;
-    const starTotal = 5; // Agregar esta línea para definir la variable starTotal
-    const starPercentage = (rating / starTotal) * 100;
-    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-    row.querySelector('.stars-inner').style.width = starPercentageRounded;
-});
-
-
-/*------------- UP Button -------------*/
-window.onscroll = function () { scrollFunction() };
-
-function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("myBtn").style.display = "block";
-    } else {
-        document.getElementById("myBtn").style.display = "none";
-    }
-}
-
-/*------------- Up Section -------------*/
-const upSections = document.querySelectorAll('.up-section');
-window.addEventListener('scroll', function () {
-    var upSections = document.querySelectorAll('.up-section'); // Selecionamos todas las secciones
-
-    for (var i = 0; i < upSections.length; i++) {
-        var upSectionPosition = upSections[i].getBoundingClientRect().top;
-        var screenPosition = window.innerHeight / 1.3;
-
-        if (upSectionPosition < screenPosition) {
-            upSections[i].style.opacity = "1";
-            upSections[i].style.transform = "translateY(0)";
-        }
-    }
-});
-
-/*------------- Profesional Filter -------------*/
-const filterContainer = document.querySelector(".categories");
-const galleryItems = document.querySelectorAll(".card");
-filterContainer.addEventListener("click", (event) => {
-    if (event.target.classList.contains("filter-item")) {
-        filterContainer.querySelector(".active").classList.remove("active");
-        event.target.classList.add("active")
-        const filterValue = event.target.getAttribute("data-filter")
-        galleryItems.forEach(item => {
-            if (item.classList.contains(filterValue) || filterValue === "all") {
-                item.classList.remove("hide")
-                item.classList.add("show")
-            } else {
-                item.classList.remove("show")
-                item.classList.add("hide")
-            }
-        })
-    }
-})
-
 /*------------- Filtrar tabla de turnos -------------*/
 function filtrarTabla(filtro) {
-    var filtroElegido = document.querySelector(`.filtro-${filtro}`).value;
-    var tabla = document.querySelector(".tablaFiltro"); 
-    var filas = tabla.getElementsByTagName("tr");
-  
-    for (var i = 1; i < filas.length; i++) { 
-      var celdaFiltro= filas[i].querySelector(`.filtro-${filtro}`);
-  
-      if (celdaFiltro && (filtroElegido === "TODOS" || celdaFiltro.textContent === filtroElegido)) {
-        filas[i].style.display = "";
-      } else {
-        filas[i].style.display = "none";
-      }
+  var filtroElegido = document.querySelector(`.filtro-${filtro}`).value;
+  var tabla = document.querySelector(".tablaFiltro"); 
+  var filas = tabla.getElementsByTagName("tr");
+
+  for (var i = 1; i < filas.length; i++) { 
+    var celdaFiltro= filas[i].querySelector(`.filtro-${filtro}`);
+
+    if (celdaFiltro && (filtroElegido === "TODOS" || celdaFiltro.textContent === filtroElegido)) {
+      filas[i].style.display = "";
+    } else {
+      filas[i].style.display = "none";
     }
   }
-
-/* ------- Profesional horizontalScroll -------- */
-function horizontalScroll(event) {
-        if (event.deltaY !== 0) {
-            event.preventDefault();
-            document.querySelector('.overflow-container').scrollLeft += event.deltaY;
-        }
-    }
-
-function resaltarRegistro() {
-
-  var registrarseButton = document.getElementById("registrarse");
-  registrarseButton.classList.toggle("resaltarRegistro");
-    setTimeout(function() {
-    registrarseButton.classList.remove("resaltarRegistro");
-  }, 1000);
-
 }
+
+/*------------- Calificación -------------*/ 
+const calificacionElements = document.getElementsByClassName('calificacion');
+const starTotal = 5;
+
+for (let i = 0; i < calificacionElements.length; i++) {
+  const calificacionValue = parseFloat(calificacionElements[i].innerText);
+  const starPercentage = (calificacionValue / starTotal) * 100;
+  const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+
+  const starsInnerElement = calificacionElements[i].nextElementSibling.querySelector('.stars-inner');
+  starsInnerElement.style.width = starPercentageRounded;
+}
+
+/*------------- Modal Calificar -------------*/ 
+var starsContainer = document.querySelector('.stars-container');
+var starInputs = starsContainer.querySelectorAll('input[type="radio"]');
+var starLabels = starsContainer.querySelectorAll('label');
+
+starLabels.forEach(function(label) {
+  label.addEventListener('click', function() {
+    var clickedRating = parseInt(this.getAttribute('for').split('-')[1]);
+
+    starLabels.forEach(function(label, index) {
+      if (index < clickedRating) {
+        label.classList.add('filled');
+      } else {
+        label.classList.remove('filled');
+      }
+    });
+  });
+});

@@ -29,24 +29,24 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller //Declara un controlador para la gestion de la comunicación usuario/aplicación
 @RequestMapping("/paciente") //Mapea la ruta de la petición y el método del controlador
-public class PacienteControlador {
-
+public class PacienteControlador {  
+    
     @Autowired
     private PacienteServicio pacienteS;
     @Autowired
     private ProfesionalServicio profesionalS;
     @Autowired
-    private ConsultaServicio consultaS;
-
+    private ConsultaServicio consultaS;     
+    
     //------------- Vista General -------------
     @GetMapping("") //asigna solicitudes HTTP GET
     public String vistaPaciente(HttpSession session, ModelMap modelo) {
-
-        List<Consulta> consultas = consultaS.buscarPorEstado(Estado.DISPONIBLE);
-        modelo.addAttribute("consultas", consultas);
-
+        
+        List<Consulta> consultas = consultaS.buscarPorEstado(Estado.DISPONIBLE);   
+        modelo.addAttribute("consultas", consultas); 
+       
         Usuario logueado = (Paciente) session.getAttribute("usuariosession");
-
+          
         try {
             List<Consulta> misconsultas = consultaS.buscarPorPaciente(logueado.getId());
             modelo.addAttribute("misconsultas", misconsultas);
@@ -54,13 +54,14 @@ public class PacienteControlador {
         } catch (Exception e) {
             return "paciente.html";
         }
-
+                
     }
 
+        
     //------------- Modificar Paciente -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @PostMapping("/modificar")
-    public String modificarPaciente(MultipartFile archivo, @RequestParam String idUsuario, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Integer telefono, @RequestParam String email, @RequestParam String dni, @RequestParam String fechaNacimiento, @RequestParam Genero genero, @RequestParam ObraSocial obrasocial, @RequestParam Boolean activo, ModelMap modelo) {
+    public String modificarPaciente(MultipartFile archivo,@RequestParam String idUsuario,@RequestParam  String nombre,@RequestParam String apellido,@RequestParam Integer telefono,@RequestParam String email,@RequestParam String dni,@RequestParam String fechaNacimiento,@RequestParam Genero genero,@RequestParam ObraSocial obrasocial,@RequestParam Boolean activo, ModelMap modelo) {
 
         try {
             pacienteS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, dni, fechaNacimiento, genero, obrasocial, activo);
@@ -68,38 +69,39 @@ public class PacienteControlador {
         } catch (Exception ex) {
 
             modelo.put("error", ex.getMessage());
-            return "redirect:/paciente";
+            return "redirect:/paciente"; 
         }
-        return "redirect:/paciente";
-    }
-
+        return "redirect:/paciente"; 
+    }   
+    
     //------------- Calificar -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-    @PostMapping("/calificar")
-    public String calificar(@RequestParam String idUsuario, @RequestParam Double calificacion, ModelMap modelo) {
+    @PostMapping("/calificar/{id}")
+    public String calificar(@PathVariable String id, @RequestParam String calificacion, ModelMap modelo) {
 
         try {
-            profesionalS.calificar(idUsuario, calificacion);
+             System.out.println("entra al controlador");
+            profesionalS.calificar(id, Double.parseDouble(calificacion));
             modelo.put("exito", "Modificación exitosa");
         } catch (Exception ex) {
 
             modelo.put("error", ex.getMessage());
-            return "redirect:/paciente";
+            return "redirect:/paciente"; 
         }
-        return "redirect:/paciente";
+        return "redirect:/paciente"; 
     }
-
+    
     //------------- Login -------------
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/reservar/{id}")
-    public String reservar(HttpSession session, @PathVariable String id) {
-
+    public String reservar(HttpSession session, @PathVariable String id){
+        
         Usuario logueado = (Paciente) session.getAttribute("usuariosession");
         Paciente paciente = (Paciente) logueado;
         consultaS.reservarConsulta(id, paciente);
-        return "redirect:/paciente";
+        return "redirect:/paciente";  
     }
-
+    
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/cancelar/{id}")
     public String cancelar(HttpSession session, @PathVariable String id, ModelMap modelo) {

@@ -111,10 +111,20 @@ public class ConsultaServicio {
     //------------- Buscar Por Paciente -------------
     public List<Consulta> buscarPorPaciente(String idPaciente) {
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
-        
+
         if (respuesta.isPresent()) {
             Paciente paciente = respuesta.get();
             return consultaRepositorio.buscarTodoPorPaciente(paciente);
+        }
+        return null;        // ver opciones
+    }
+    
+        public List<Consulta> buscarPorPacientePorEstado(String idPaciente, Estado estado) {
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
+
+        if (respuesta.isPresent()) {
+            Paciente paciente = respuesta.get();
+            return consultaRepositorio.buscarPorPacientePorEstado(paciente, estado);
         }
         return null;        // ver opciones
     }
@@ -136,7 +146,7 @@ public class ConsultaServicio {
         return consultaRepositorio.findAll();
 
     }
-
+    
     public void darBajaConsulta(String idConsulta) {
         Optional<Consulta> respuesta = consultaRepositorio.findById(idConsulta);
 
@@ -177,10 +187,6 @@ public class ConsultaServicio {
 
     }
     
-    public Integer contarConsultas (){
-        return consultaRepositorio.contarConsultas();
-    }
-    
     public Consulta getOne(String id){
         
         return consultaRepositorio.getOne(id);
@@ -218,6 +224,10 @@ public class ConsultaServicio {
                 pacienteRepositorio.save(paciente);
             }
         }
+    }
+    
+    public Integer contarConsultas (){
+        return consultaRepositorio.contarConsultas();
     }
 
     private void validar(String fecha, Horario horario, Profesional profesional, Modalidad modalidad, Double precio) throws MiException {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PacienteRepositorio extends JpaRepository<Paciente, String> {
+    
     @Query(value = "SELECT COUNT(id) FROM Paciente;", nativeQuery = true)
     public Integer contarPacientes();
 }
