@@ -1,135 +1,275 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="/fragments/head  :: head"></head>
+
 <body>
-    <!------------- Navbar------------->
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="./img/LogoSaludApp.png" alt="Logo" class="navbar-logo">
+    <!------------- Navbar ------------->
+    <nav th:replace="/fragments/navbar  :: nav"></nav>
+    <!------------- Flecha ------------->
+    <div id="myBtn">
+        <a href="#navbar">
+            <svg class="bi" width="36" height="36">
+                <use xlink:href="#arrow" />
+            </svg>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <form class="form-inline ml-auto" th:action="@{/logincheck}" method="POST">
-                        <div class="form-group mr-1">
-                            <label for="email" class="sr-only">Usuario</label>
-                            <input type="email" class="form-control" name="email" placeholder="email">
-                        </div>
-                        <div class="form-group mr-2">
-                            <label for="password" class="sr-only">Contraseña</label>
-                            <input type="password" class="form-control" name="password" placeholder="Contraseña">
-                        </div>
-                        <button type="submit" class="btn btn-custom mr-3">Iniciar Sesión</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!------------- Alerta de exito o error ------------->
-    <div class="contenedor">
-        <div th:if="${error != null}" class="card text-white bg-danger m-5 mensajeError align-center">
-            <div class="card-body">
-                <h4 class="card-title">Error!</h4>
-                <h5 class="card-text" th:text="${error}"></h5>
-            </div>
-        </div>
-        <div th:if="${exito != null}" class="card text-white bg-success m-5 mensajeExito w-50 align-center">
-            <div class="card-body align-center justify-content-center">
-                <h3 class="card-title justify-content-center align-center">Exito!</h3>
-                <h4 class="card-text" th:text="${exito}"></h4>
-            </div>
-        </div>
     </div>
-    <!------------- Home ------------->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h1>¡Bienvenido/a a SaludApp!</h1>
-                <p>Registrate, elige una especialidad médica, selecciona un profesional, agenda tu turno y ¡listo!</p>
-                <button class="btn btn-custom" data-toggle="modal" data-target="#registroModal">Registrarse</button>
+    <!------------- Carousel ------------->
+    <section id="carousel">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
             </div>
-            <div class="col-md-6">
-                <img src="./img/ImagenHomeSaludApp.png" alt="Imagen de Salud" class="img-fluid">
-            </div>
-        </div>
-    </div>
-    <!-------------Modal del boton "Registrarse"------------->
-    <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="registroModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registroModalLabel">Registro de Usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <!------------- Formulario en el modal ------------->
-                <div class="modal-body">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="./img/carousel-1.jpg" alt="" class="d-block w-100">
                     <div class="container">
-                        <form class="custom-form" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="nombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre">
-                            </div>
-                            <div class="form-group">
-                                <label for="apellido">Apellido</label>
-                                <input type="text" class="form-control" name="apellido"
-                                    placeholder="Ingrese su apellido">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">E-mail</label>
-                                <input type="email" class="form-control" name="email" placeholder="Ingrese su e-mail">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Contraseña</label>
-                                <input type="password" class="form-control" name="password"
-                                    placeholder="Ingrese su contraseña">
-                            </div>
-                            <div class="form-group">
-                                <label for="dni">DNI</label>
-                                <input type="text" class="form-control" name="dni" placeholder="Ingrese su DNI">
-                            </div>
-                            <div class="form-group">
-                                <label for="fechaNacimiento">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control" name="fechaNacimiento">
-                            </div>
-                            <div class="form-group">
-                                <label for="genero">Género</label>
-                                <select class="form-control" name="genero">
-                                    <option th:each="genero : ${T(com.demo.saludApp.enumeraciones.Genero).values()}"
-                                        th:value="${genero}" th:text="${genero}">
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="obrasocial">Obra Social</label>
-                                <select class="form-control" name="obraSocial">
-                                    <option
-                                        th:each="obrasocial : ${T(com.demo.saludApp.enumeraciones.ObraSocial).values()}"
-                                        th:value="${obrasocial}" th:text="${obrasocial}">
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="profile-image">Foto de Perfil</label>
-                                <input type="file" id="profile-image" accept="image/*">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-custom">Registrar</button>
-                            </div>
-                        </form>
+                        <div class="carousel-caption text-start">
+                            <h2>¡Únete a SaludApp!</h2>
+                            <p>Elige una especialidad médica, selecciona un profesional, agenda tu turno y ¡listo!</p>
+                            <p><a class="btn btn-lg btn-custom-reverse" href="#about">Únete</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="./img/carousel-2.jpg" alt="" class="d-block w-100">
+                    <div class="container">
+                        <div class="carousel-caption text-end">
+                            <h2>Entendemos que cada paciente es único</h2>
+                            <p>Nos enfocamos en establecer una relación de confianza, nuestro personal está disponible
+                                para brindarte toda lo que necesites</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="./img/carousel-3.jpg" alt="" class="d-block w-100">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h2>En SaludApp, es eficiencia y comodidad</h2>
+                            <p>Trabajamos arduamente para minimizar los tiempos de espera y ofrecerte horarios flexibles
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="./img/carousel-4.jpg" alt="" class="d-block w-100">
+                    <div class="container">
+                        <div class="carousel-caption text-end">
+                            <h2>Unete a nuestros profesionales.</h2>
+                            <p>Aquí, tendrás la oportunidad de trabajar con tecnología de vanguardia y contar con
+                                recursos actualizados, garantizar la excelencia en el diagnóstico y tratamiento.</p>
+                            <p><a class="btn btn-lg btn-custom-reverse" href="#contacto">Contactanos</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <div class="carousel-control-background d-flex align-items-center justify-content-center">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </div>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <div class="carousel-control-background d-flex align-items-center justify-content-center">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </div>
+            </button>
         </div>
+    </section>
+    <!------------- About ------------->
+    <section id="about" class="largeBackground up-section pb-5 pt-5 ">
+        <div class="text-center">
+            <h2>¡Bienvenido/a a SaludApp!</h2>
+            <p> En nuestro centro de salud, valoramos y reconocemos la importancia de tu experiencia, compartimos
+                nuestros conocimientos y pasión por la atención médica. Estamos comprometidos con el cuidado integral de
+                nuestros pacientes y nos esforzamos por ofrecer un entorno de trabajo colaborativo y
+                enriquecedor.Registrate</p>
+            <button class="btn btn-lg btn-custom-reverse" data-bs-toggle="modal"
+                data-bs-target="#registroModal">Registrarse</button>
+        </div>
+    </section>
+    <div class="container">
+    <!------------- Nuestros Profesionales ------------->
+    <section id="Profesionales" class="up-section pb-5 pt-5">
+        <div class="text-center">
+            <h2>Nuestros Profesionales</h2>
+            <p>Contamos con un equipo de profesionales altamente capacitados en diversas especialidades médicas,
+                desde médicos generales hasta especialistas en áreas como cardiología, pediatría, ginecología,
+                dermatología y muchas más. Independientemente de tus necesidades médicas, estamos aquí para
+                escucharte, evaluar tus síntomas y proporcionarte un plan de tratamiento adecuado.
+            </p>
+        </div>
+        <div>
+            <div class="categories mb-5 mt-4">
+                <ul class="d-flex list-unstyled flex-wrap justify-content-center gap-3">
+                    <li class="filter-item active" data-filter="all">Todos</li>
+                    <li class="filter-item " data-filter="CLINICA">Clínica</li>
+                    <li class="filter-item " data-filter="PEDIATRIA">Pediatría</li>
+                    <li class="filter-item " data-filter="GINECOLOGIA">Ginecología</li>
+                    <li class="filter-item " data-filter="ODONTOLOGIA">Odontología</li>
+                    <li class="filter-item " data-filter="CARDIOLOGIA">Cardiología</li>
+                </ul>
+            </div>
+            <div class="container"  onwheel="horizontalScroll(event)">
+                <div class="overflow-container">
+                    <div class="card-deck text-center">
+                        <div class="card card1 text-center mb-3  flex-column " th:each="profesional : ${profesionales}" th:classappend="${profesional.especialidad}" style="width:  250px; height: auto;">
+                            <div class="card-body m-2">
+                                <img th:if="${profesional.imagen != null}" class=" bd-placeholder-img rounded-circle"
+                                        th:src="@{/imagen/perfil/__${profesional.id}__}" style="width: 120px; height: 120px;">
+                                <img th:if="${profesional.imagen == null}" class="bd-placeholder-img  rounded-circle" 
+                                        src="./img/indefinido.png" style="width: 120px; height: 120px;"> 
+                                <h4 class="card-title fw-normal" th:text="${profesional.nombre + ' ' +profesional.apellido}"></h4>
+                                <p th:text="${profesional.detalleEspecialidad}" class="card-text"></p>
+                                <a class="btn btn-custom m-2"  th:href="@{/paciente}">Ver Turnos</a>
+                            </div> 
+                        </div> 
+                        </div>
+                    </div>      
+                </div>
+            </div>
+    </section>
     </div>
+    <!------------- Clientes ------------->
+    <section id="clientes" class="largeBackground py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6 pt-4 mb-5 up-section">
+                    <div class="d-flex align-items-center flex-wrap gap-3 flex-column">
+                        <div class="row border rounded shadow p-4 mb-4 w-100">
+                            <div class="col-6">
+                                <h1>Pacientes Registrados</h1>
+                            </div>
+                            <div class="col-6 d-flex align-items-center justify-content-end">
+                                <div class="d-flex flex-column align-items-center">
+                                    <svg class="bi f-icon cliente-icon">
+                                        <use xlink:href="#cliente" />
+                                    </svg>
+                                    <div class="row">
+                                        <h1 id="nPacientes" th:text="${nPacientes}"></h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row border rounded shadow p-4 mb-4 w-100">
+                            <div class="col-6">
+                                <h1>Profesionales Registrados</h1>
+                            </div>
+                            <div class="col-6 d-flex align-items-center justify-content-end">
+                                <div class="d-flex flex-column align-items-center">
+                                    <svg class="bi f-icon cliente-icon">
+                                        <use xlink:href="#profesional" />
+                                    </svg>
+                                    <div class="row">
+                                        <h1 id="nProfesionales" th:text="${nProfesionales}"></h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row border rounded shadow p-4 mb-4 w-100">
+                            <div class="col-6">
+                                <h1>Calificaciones Positivas</h1>
+                            </div>
+                            <div class="col-6 d-flex align-items-center justify-content-end">
+                                <div class="d-flex flex-column align-items-center">
+                                    <svg class="bi f-icon cliente-icon">
+                                        <use xlink:href="#star" />
+                                    </svg>
+                                    <div class="row">
+                                        <h1 id="calificaciones" th:text="${calificaciones}"></h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>               
+                </div>                
+                <div class="col-12 col-lg-6 pt-4 mb-5 up-section">
+                    <img src="./img/clientes.jpg" alt="" class="border rounded shadow d-block w-100">
+                </div>
+            </div>
+        </div>   
+    </section>           
+    <!------------- Contacto ------------->
+    <section id="contacto" class="contacto px-5">
+        <div class="row">
+            <div class="alert alert-success d-none"  id="cartel" role="alert" >
+                <h4 class="alert-heading">¡Mensaje enviado!</h4>
+                <p>Muchas gracias por su mensaje, nos comunicaremos a la brevedad.</p>
+            </div>
+            <div class="col-12 col-lg-6 pt-4 mb-5 up-section">
+                <h2 class="my-2">Contactanos</h2>
+                <form class="custom-form needs-validation" novalidate action="" method="POST" enctype="multipart/form-data" >
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Ingrese su nombre" required>
+                        <div class="invalid-feedback">
+                            Ingrese un nombre válido
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido" required>
+                   <div class="invalid-feedback">
+                            Ingrese un apellido válido
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" name="email" placeholder="Ingrese su e-mail" required>
+                        <div class="invalid-feedback">
+                            Ingrese una dirección de correo válida
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mensaje" class="form-label">Mensaje</label>
+                        <textarea type="text"  class="form-control" name="mensaje" placeholder="Escriba su mensaje" required></textarea>
+                        <div class="invalid-feedback">
+                            El mensaje no puede ir vacío
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-custom" onclick="enviarMensaje()">Enviar</button>
+                    </div>
+                </form>
+           </div>      
+             <div class="col-12 col-lg-6 d-flex align-items-center flex-wrap up-section p-5 my-5">
+                <div class="row d-flex align-items-center w-100">
+                    <div class="col-1">
+                        <svg class="bi" width="20" height="20">
+                            <use xlink:href="#phone" />
+                        </svg>
+                    </div>
+                    <div class="col-11">    
+                        <h3>911 0911-0911</h3>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-center w-100">
+                    <div class="col-1">
+                        <svg class="bi" width="20" height="20">
+                            <use xlink:href="#mail" />
+                        </svg>
+                    </div>
+                    <div class="col-11">   
+                        <h3>saludApp@saludApp.com</h3>
+                    </div>    
+                </div>
+                <div class="row d-flex align-items-center w-100">
+                    <div class="col-1">
+                        <svg class="bi" width="20" height="20">
+                            <use xlink:href="#location" />
+                        </svg>
+                    </div>
+                    <div class="col-11">   
+                        <h3>calle falsa 123</h3>
+                    </div>
+                </div>
+            </div> 
+      </div>
+    </section>
     <!------------- Footer ------------->
     <footer th:replace="/fragments/footer  :: footer"></footer>
 </body>
+
 </html>

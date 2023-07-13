@@ -1,15 +1,17 @@
 package com.demo.saludApp.controladores;
 
+import com.demo.saludApp.entidades.Consulta;
 import com.demo.saludApp.entidades.Paciente;
 import com.demo.saludApp.entidades.Profesional;
-import com.demo.saludApp.entidades.Usuario;
 import com.demo.saludApp.enumeraciones.Especialidad;
+import com.demo.saludApp.enumeraciones.Genero;
 import com.demo.saludApp.enumeraciones.ObraSocial;
+import com.demo.saludApp.servicios.ConsultaServicio;
 import com.demo.saludApp.servicios.PacienteServicio;
 import com.demo.saludApp.servicios.ProfesionalServicio;
 import com.demo.saludApp.servicios.UsuarioServicio;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,66 +30,116 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/admin")
 public class AdminControlador {
-     @Autowired
-    private UsuarioServicio usuarioServicio;
 
     @Autowired
-    private ProfesionalServicio profesionalServicio;
-    
+    private UsuarioServicio usuarioS;
+
     @Autowired
-    private PacienteServicio pacienteServicio;
-    
+    private ProfesionalServicio profesionalS;
+
+    @Autowired
+    private PacienteServicio pacienteS;
+
+    @Autowired
+    private ConsultaServicio consultaS;
+
+    //------------- Vista General -------------
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("")
     public String panelAdministrativo(ModelMap modelo) {
-        
-        List<Paciente> pacientes = pacienteServicio.listarPacientes();
+
+        List<Paciente> pacientes = pacienteS.listar();
         modelo.addAttribute("pacientes", pacientes);
-        
-        List<Profesional> profesionales = profesionalServicio.listarProfesionales();
+
+        List<Profesional> profesionales = profesionalS.listar();
         modelo.addAttribute("profesionales", profesionales);
-        
+
         return "admin.html";
-    }
-    
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/registrar") //asigna solicitudes HTTP GET
-    public String registrar(ModelMap modelo) {
-        
-        return "admin.html";
-    }
-    
-    @PostMapping("/registro") //asigna solicitudes HTTP POST
-    public String registro(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String email, @RequestParam String password, @RequestParam Integer matricula, @RequestParam String locacion, @RequestParam Especialidad especialidad, ModelMap modelo, MultipartFile archivo) {
-        //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
-        try {
-            profesionalServicio.crearProfesional(nombre, apellido, email, password, matricula, locacion,especialidad);
-            modelo.put("exito", "Profesional registrado con exito");
-        } catch (Exception ex) {            
-            modelo.put("error", ex.getMessage());
-            return "admin.html";
-            
-        }
-        return "admin.html";        
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/modificar/{id}")
-    public String modificarUsuario(@PathVariable String id, ModelMap modelo) {
-          Usuario usuario =  usuarioServicio.getOne(id);
-          modelo.addAttribute("usuario", usuario);
-          //ver vista
-        return "redirect:/admin/usuarios";
+    //------------- Registro de Profesional -------------
+    @PostMapping("/registro") //asigna solicitudes HTTP POST
+    public String registro(@RequestParam String nombre, @RequestParam String apellido, @RequestParam Integer telefono, @RequestParam String email, @RequestParam String password, @RequestParam String password2, @RequestParam Integer matricula, @RequestParam String locacion, @RequestParam Especialidad especialidad, ModelMap modelo, MultipartFile archivo) {
+        //@RequestParam vincula los parámetros de una petición HTTP a los argumentos de un método
+        try {
+            profesionalS.crear(nombre, apellido, telefono, email, password, password2, matricula, locacion, especialidad, archivo);
+            modelo.put("exito", "Profesional registrado con exito");
+        } catch (Exception ex) {
+            modelo.put("error", ex.getMessage());
+            return "redirect:/admin";
+
+        }
+        return "redirect:/admin";
     }
-    
+
+    //------------- Modificar Profesional -------------
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/eliminar/{id}")
-    public String eliminarUsuario(@PathVariable String id, ModelMap modelo) {
-    usuarioServicio.eliminarUsuario(id);
-         return "redirect:/admin/";
+    @PostMapping("/modificarProfesional")
+    public String modificarProfesional(MultipartFile archivo, @RequestParam String idUsuario, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Integer telefono, @RequestParam String email, @RequestParam Integer matricula, @RequestParam String locacion, @RequestParam Especialidad especialidad, @RequestParam Boolean activo, ModelMap modelo) {
+
+        try {
+            profesionalS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, matricula, locacion, especialidad, activo);
+            modelo.put("exito", "Modificación exitosa");
+        } catch (Exception ex) {
+
+            modelo.put("error", ex.getMessage());
+            return "redirect:/admin";
+        }
+        return "redirect:/admin";
     }
-    
-       
-    
-     
+
+    //------------- Modificar Paciente -------------
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/modificarPaciente")
+    public String modificarPaciente(MultipartFile archivo, @RequestParam String idUsuario, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Integer telefono, @RequestParam String email, @RequestParam String dni, @RequestParam String fechaNacimiento, @RequestParam Genero genero, @RequestParam ObraSocial obrasocial, @RequestParam Boolean activo, ModelMap modelo) {
+
+        try {
+            pacienteS.modificar(archivo, idUsuario, nombre, apellido, telefono, email, dni, fechaNacimiento, genero, obrasocial, activo);
+            modelo.put("exito", "Modificación exitosa");
+        } catch (Exception ex) {
+
+            modelo.put("error", ex.getMessage());
+            return "redirect:/admin";
+        }
+        return "redirect:/admin";
+    }
+
+    //------------- Eliminar Profesional -------------
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/eliminar/profesional/{id}")
+    public String eliminarProfesional(@PathVariable String id, ModelMap modelo) {
+
+        if (consultaS.buscarPorProfesional(id).isEmpty()) {
+
+            profesionalS.eliminar(id);
+
+            return "redirect:/admin";
+        } else {
+
+            profesionalS.darDeBaja(id);
+
+            return "redirect:/admin";
+
+        }
+
+    }
+
+    //------------- Eliminar Paciente -------------
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/eliminar/paciente/{id}")
+    public String eliminarPaciente(@PathVariable String id, ModelMap modelo) {
+
+        if (consultaS.buscarPorPaciente(id).isEmpty()) {
+
+            pacienteS.eliminar(id);
+
+            return "redirect:/admin";
+        } else {
+
+            pacienteS.darDeBaja(id);
+
+            return "redirect:/admin";
+
+        }
+    }
 }

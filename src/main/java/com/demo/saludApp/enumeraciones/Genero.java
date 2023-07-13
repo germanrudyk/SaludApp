@@ -7,5 +7,6 @@ package com.demo.saludApp.enumeraciones;
 public enum Genero {
     MASCULINO,
     FEMENINO,
-    INDEFINIDO;
+    INDEFINIDO,
+    TODOS;
 }

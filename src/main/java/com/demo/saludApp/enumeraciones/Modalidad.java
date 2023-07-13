@@ -7,5 +7,6 @@ package com.demo.saludApp.enumeraciones;
 public enum Modalidad {
     TELEMEDICINA,
     PRESENCIAL,
-    INDISTINTO;
+    INDISTINTO,
+    TODOS;
 }

@@ -1,40 +1,3 @@
-/*------------- Index -------------*/
-.btn-custom {
-    background-color: #03989E;
-    color: #ffffff;
-}
-
-.btn-custom:hover {
-    background-color: #01767a;
-    color: #ffffff;
-}
-
-/*------------- Navbar -------------*/
-.navbar-logo {
-    max-height: 30px;
-}
-
-/*------------- Form -------------*/
-.custom-form {
-    max-width: 400px;
-    padding: 20px;
-    border: 2px solid #03989E;
-    border-radius: 5px;
-}
-
-/*------------- Footer -------------*/
-.text-linkedin {
-    color: #fff;
-}
-
-.text-facebook {
-    color: #fff;
-}
-
-.text-instagram {
-    color: #fff;
-}
-
 /*------------- Ordenar -------------*/
 .sortable-header {
     position: relative;
@@ -70,42 +33,383 @@
     margin-top: 2px;
 }
 
-/*------------- Estrella -------------*/
+/*------------- GENERAL STYLES -------------*/
+:root {
+    --bg-color: hsl(0, 0%, 93%);
+    --text-color: hsl(0, 0%, 7%);
+    --primary-bg-color: hsl(175, 100%, 33%);
+    --secondary-bg-color: hsl(175, 56%, 44%);
+    --font: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.f-icon {
+    fill: var(--bg-color);
+    width: 24px;
+    height: 24px;
+}
+.alert {
+    z-index: 9999;
+    position: fixed;
+}
+
+.cliente-icon {
+    color: var(--text-color);
+    width: 48px;
+    height: 48px;
+}
+
+body {
+    background-color: var(--bg-color);
+}
+.btn-custom {
+    border: solid 2px var(--primary-bg-color);
+}
+
+.btn-custom:hover {
+    background-color: var(--primary-bg-color);
+    color: var(--bg-color);
+}
+
+.btn-custom2 {
+    background-color: var(--primary-bg-color);
+    color: var(--bg-color);
+    border: solid 2px var(--primary-bg-color);
+}
+
+.btn-custom2:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.btn-custom-reverse {
+    border: solid 2px var(--bg-color);
+    color: var(--bg-color);
+}
+
+.btn-custom-reverse:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/*------------- Navbar -------------*/
+.navbar {
+    font-size: large;
+    font-weight: bolder;
+    width: 100%;
+    border-bottom: 2px solid var(--primary-bg-color);
+    z-index: 9999;
+    background-color: var(--bg-color);
+    transition: all 0.7s ease-in-out;
+}
+
+.navbar.transparent {
+    background-color: transparent;
+}
+
+.navbar.fixed {
+    position: fixed;
+}
+
+.navbar-logo {
+    max-height: 30px;
+}
+
+/*------------- SideBar -------------*/
+.sidebar {
+    background-color: var(--primary-bg-color);
+}
+
+/*------------- Form -------------*/
+.modal {
+    margin-top: 80px;
+}
+
+.custom-form {
+    padding: 20px;
+    border: 2px solid var(--primary-bg-color);
+    border-radius: 5px;
+}
+
+.custom-table {
+    border: 2px solid var(--primary-bg-color);
+    box-shadow: 0px 4px 6px var(--text-color);
+    border-radius: 5px;
+}
+
+.especialidad {
+    width: 120px;
+}
+
+.genero {
+    width: 110px;
+}
+
+.obraSocial {
+    width: 80px;
+}
+
+.fecha {
+    width: 100px;
+}
+
+.filtro {
+    width: 3px;
+    height: 3px;
+    border: none;
+}
+
+/*------------- Calificación -------------*/
 .stars-outer {
     display: inline-block;
     position: relative;
     font-family: FontAwesome;
-}
-
-.stars-outer::before {
+  }
+  
+  .stars-outer::before {
     content: "\f006 \f006 \f006 \f006 \f006";
-}
-
-.stars-inner {
+  }
+  
+  .stars-inner {
     position: absolute;
     top: 0;
     left: 0;
     white-space: nowrap;
     overflow: hidden;
     width: 0;
-}
-
-.stars-inner::before {
+  }
+  
+  .stars-inner::before {
     content: "\f005 \f005 \f005 \f005 \f005";
     color: #f8ce0b;
+  }
+  
+  /*------------- Modal Calificar -------------*/
+  .stars-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .stars-container label {
+      display: inline-block;
+      font-size: 24px;
+      color: #ddd;
+      cursor: pointer;
+      margin: 0;
+  }
+  
+  .stars-container label::before {
+      content: "\f005";
+      font-family: FontAwesome;
+      font-weight: 900;
+      margin: 25px;
+  }
+  
+  .stars-container input[type="radio"] {
+      display: none;
+  }
+  
+  .stars-container .filled:before {
+      color: #f8ce0b;
+  }
+    
+/*------------- Perfil desplegable -------------*/
+.imagenPerfil {
+    border: 2px solid var(--primary-bg-color);
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
 }
 
-.attribution {
-    font-size: 12px;
-    color: #444;
-    text-decoration: none;
-    text-align: center;
+.editarFoto {
+    display: none;
+}
+
+/*------------- Arrow -------------*/
+#myBtn {
+    display: none;
     position: fixed;
-    right: 10px;
-    bottom: 10px;
-    z-index: -1;
+    bottom: 5vh;
+    right: 5vh;
+    z-index: 1;
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.5;
 }
 
-.attribution:hover {
-    color: #1fa67a;
+#myBtn:hover {
+    opacity: 1;
+}
+
+/*------------- Section -------------*/
+.up-section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease;
+}
+
+/*------------- Carousel -------------*/
+.carousel-control-background {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+}
+
+.carousel-caption {
+    width: 50%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/*------------- About -------------*/
+.largeBackground {
+    background-color: var(--primary-bg-color);
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+}
+
+.largeBackground h2,
+.largeBackground p {
+    color: var(--bg-color);
+    padding: 0 3% 0 3%;
+}
+
+/*------------- Profesionales -------------*/
+.categories ul li {
+    font-size: 11pt;
+    cursor: pointer;
+}
+
+.categories .filter-item.active {
+    border-bottom: 2px solid var(--primary-bg-color);
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+.card img {
+    border: 2px solid var(--text-color);
+    background-color: var(--bg-color);
+    height: 12rem;
+    width: 12rem;
+}
+
+.card.hide {
+    display: none;
+}
+
+.overflow-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: #888888 #F5F5F5;
+}
+
+.overflow-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflow-container::-webkit-scrollbar-track {
+    background: #F5F5F5;
+}
+
+.overflow-container::-webkit-scrollbar-thumb {
+    background-color: hsl(175, 100%, 33%);
+    border-radius: 5px;
+}
+
+.card1 {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+.overflow-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: #888888 #F5F5F5;
+}
+
+.overflow-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflow-container::-webkit-scrollbar-track {
+    background: #F5F5F5;
+}
+
+.overflow-container::-webkit-scrollbar-thumb {
+    background-color: hsl(175, 100%, 33%);
+    border-radius: 5px;
+}
+
+.card1 {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+/*------------- Contacto -------------*/
+.contacto {
+    padding-top: 20px;
+
+}
+
+/*------------- Footer -------------*/
+.footer-icon {
+    fill: var(--bg-color);
+    width: 24px;
+    height: 24px;
+}
+
+.trash {
+    fill: red;
+    width: 16px;
+    height: 16px;
+}
+
+.footer {
+    width: 100%;
+    bottom: 0;
+    background-color: var(--primary-bg-color);
+}
+
+/*------------- Boton cancelar -------------*/
+
+.btn-cancelar{
+    border: 2px solid rgb(241, 108, 157, 0.881);
+}
+
+.btn-cancelar:hover {
+    background-color: rgb(241, 108, 157, 0.881);
+}
+
+.imagenEstudio{
+    width: 150px;
+    height: 150px;
+}
+
+/*------------- Main de vistas de tablas -------------*/
+.main{
+    min-height: 84vh;
+}
+
+/*------------- Index escalar boton registro -------------*/
+.anchoColumna{
+    width: 10%;
+}
+
+/*------------- Index verificar pass registro -------------*/
+.verificarPass{
+    height: 10px;
+    font-size: 14px;
 }
